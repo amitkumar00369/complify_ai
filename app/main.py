@@ -11,6 +11,8 @@ DEBUG_DIR = "ocr_debug"
 os.makedirs(DEBUG_DIR, exist_ok=True)
 import cv2
 import numpy as np
+import pytesseract
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
@@ -20,68 +22,37 @@ app = FastAPI()
 
 BASE_DIR = "products_data"
 os.makedirs(BASE_DIR, exist_ok=True)
+import os
+os.environ["FLAGS_use_mkldnn"] = "0"
+os.environ["FLAGS_use_pir_api"] = "0"
 
 ocr = PaddleOCR(use_angle_cls=True, lang='en')
-def debug_ocr_pipeline(img, page_num):
+
+def tesseract_ocr(img):
     try:
-        base_name = f"page_{page_num}"
-
-        # 1. original
-        orig_path = os.path.join(DEBUG_DIR, base_name + "_original.png")
-        cv2.imwrite(orig_path, img)
-
-        # 2. resized
-        resized = cv2.resize(img, None, fx=2, fy=2)
-        resized_path = os.path.join(DEBUG_DIR, base_name + "_resized.png")
-        cv2.imwrite(resized_path, resized)
-
-        # 3. grayscale
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        gray_path = os.path.join(DEBUG_DIR, base_name + "_gray.png")
-        cv2.imwrite(gray_path, gray)
-
-        # 4. enhanced
-        enhanced = cv2.convertScaleAbs(gray, alpha=1.5, beta=20)
-        enhanced_path = os.path.join(DEBUG_DIR, base_name + "_enhanced.png")
-        cv2.imwrite(enhanced_path, enhanced)
-
-        # convert for OCR
-        enhanced_bgr = cv2.cvtColor(enhanced, cv2.COLOR_GRAY2BGR)
-
-        # 🔥 OCR run
-        result = ocr.ocr(enhanced_bgr)
-
-        debug_img = enhanced_bgr.copy()
-
-        text_log = []
-
-        if result:
-            for line in result:
-                for word in line:
-                    text = word[1][0]
-                    conf = word[1][1]
-                    box = word[0]
-
-                    text_log.append(f"{text} ({conf:.2f})")
-
-                    # draw box
-                    pts = np.array(box, dtype=np.int32)
-                    cv2.polylines(debug_img, [pts], True, (0,255,0), 2)
-
-        # save bounding box image
-        bbox_path = os.path.join(DEBUG_DIR, base_name + "_bbox.png")
-        cv2.imwrite(bbox_path, debug_img)
-
-        # save text output
-        txt_path = os.path.join(DEBUG_DIR, base_name + "_text.txt")
-        with open(txt_path, "w", encoding="utf-8") as f:
-            f.write("\n".join(text_log))
-
-        print(f"DEBUG saved for page {page_num}")
-
+        text = pytesseract.image_to_string(
+    gray,
+    config="--oem 3 --psm 6"
+)
+        return text.strip()
     except Exception as e:
-        print("Debug OCR error:", e)
+        print("Tesseract error:", e)
+        return ""
 
+def deskew(img):
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    coords = np.column_stack(np.where(gray > 0))
+    angle = cv2.minAreaRect(coords)[-1]
+
+    if angle < -45:
+        angle = -(90 + angle)
+    else:
+        angle = -angle
+
+    (h, w) = img.shape[:2]
+    M = cv2.getRotationMatrix2D((w//2, h//2), angle, 1.0)
+    return cv2.warpAffine(img, M, (w, h))
 
 # =========================
 # UTILS
@@ -107,7 +78,7 @@ def normalize_text(text):
     text = re.sub(r'http\S+', '', text)
 
     # remove weird symbols
-    text = re.sub(r'[^a-z0-9\s\.\-:/]', ' ', text)
+    re.sub(r'[^a-z0-9\s\.\-:/]', ' ', text)
 
     # normalize spaces
     text = re.sub(r'\s+', ' ', text)
@@ -131,23 +102,7 @@ def validate_file(file_path):
 # =========================
 # OCR (STRONGER FOR SCANNED)
 # =========================
-def preprocess_image_for_ocr(image_path):
-    try:
-        img = cv2.imread(image_path)
-        if img is None:
-            return image_path
 
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-        gray = cv2.equalizeHist(gray)
-        blur = cv2.GaussianBlur(gray, (5, 5), 0)
-
-        _, thresh = cv2.threshold(blur, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-        out = image_path + "_proc.png"
-        cv2.imwrite(out, thresh)
-        return out
-    except:
-        return image_path
 
 
 def safe_ocr(image_path):
@@ -234,83 +189,11 @@ def get_candidate_regions(image):
 
     return regions
 
-def is_blue_stamp(crop):
-    try:
-        hsv = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
-
-        lower_blue = np.array([90, 60, 60])
-        upper_blue = np.array([140, 255, 255])
-
-        mask = cv2.inRange(hsv, lower_blue, upper_blue)
-
-        blue_ratio = np.sum(mask > 0) / (crop.shape[0] * crop.shape[1])
-
-        # 🔥 stricter threshold
-        if blue_ratio < 0.15:
-            return False
-
-        # circular check
-        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-        circles = cv2.HoughCircles(
-            gray,
-            cv2.HOUGH_GRADIENT,
-            1, 50,
-            param1=50, param2=30,
-            minRadius=20, maxRadius=200
-        )
-
-        return circles is not None
-
-    except:
-        return False
 
 
-def is_signature_like(crop):
-    try:
-        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-        edges = cv2.Canny(gray, 50, 150)
-
-        density = np.sum(edges) / (crop.shape[0] * crop.shape[1])
-
-        # 🔥 tighter range
-        if density < 0.01 or density > 0.08:
-            return False
-
-        # width > height → signature-like
-        h, w = gray.shape
-        if w < h:
-            return False
-
-        return True
-
-    except:
-        return False
 
 
-def is_logo_like(crop):
-    try:
-        text, conf = safe_ocr_crop(crop)
 
-        h, w, _ = crop.shape
-        area = h * w
-
-        # logo size range
-        if area < 3000 or area > 50000:
-            return False
-
-        # OCR based
-        if conf > 0.5 and len(text.strip()) > 2:
-            return True
-
-        # fallback: edge density
-        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
-        edges = cv2.Canny(gray, 50, 150)
-        density = np.sum(edges) / (h * w)
-
-        return 0.05 < density < 0.25
-
-    except:
-        return False
 def infer_from_text(text):
     t = text.lower()
 
@@ -338,22 +221,45 @@ def detect_visual_elements(image_path):
     for (x, y, w, h) in regions:
         crop = img[y:y+h, x:x+w]
 
+        gray = cv2.cvtColor(crop, cv2.COLOR_BGR2GRAY)
+        edges = cv2.Canny(gray, 50, 150)
+
+        edge_density = np.sum(edges) / (h * w)
+
+        hsv = cv2.cvtColor(crop, cv2.COLOR_BGR2HSV)
+        blue_mask = cv2.inRange(hsv, np.array([90,50,50]), np.array([140,255,255]))
+        blue_ratio = np.sum(blue_mask > 0) / (h * w)
+
         label = "unknown"
+        score = 0
 
-        if is_blue_stamp(crop):
-            result["stamp"] = True
+        # STAMP
+        if blue_ratio > 0.05 and 0.02 < edge_density < 0.2:
             label = "stamp"
-        elif is_signature_like(crop):
-            result["signature"] = True
-            label = "signature"
-        elif is_logo_like(crop):
-            result["logo"] = True
-            label = "logo"
+            result["stamp"] = True
+            score = blue_ratio
 
-        result["regions"].append({
-            "bbox": [int(x), int(y), int(w), int(h)],
-            "label": label
-        })
+        # SIGNATURE
+        elif 0.01 < edge_density < 0.08 and w > h:
+            label = "signature"
+            result["signature"] = True
+            score = edge_density
+
+        # LOGO
+        else:
+            text, conf = safe_ocr_crop(crop)
+            if conf > 0.6 and h < 300 and y < img.shape[0] * 0.3:
+                label = "logo"
+                result["logo"] = True
+                score = conf
+
+        # 🔥 FILTER WEAK
+        if label != "unknown" and score > 0.05:
+            result["regions"].append({
+                "bbox": [int(x), int(y), int(w), int(h)],
+                "label": label,
+                "score": round(score, 3)
+            })
 
     return result
 
@@ -361,31 +267,10 @@ def detect_visual_elements(image_path):
 # =========================
 # PDF EXTRACTION (SMART: TEXT + OCR)
 # =========================
-def enhance_for_ocr(img):
-    try:
-        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-
-        # 🔥 contrast boost
-        gray = cv2.convertScaleAbs(gray, alpha=2.0, beta=30)
-
-        # 🔥 sharpening
-        kernel = np.array([[0,-1,0],[-1,5,-1],[0,-1,0]])
-        sharp = cv2.filter2D(gray, -1, kernel)
-
-        # 🔥 adaptive threshold
-        thresh = cv2.adaptiveThreshold(
-            sharp, 255,
-            cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
-            cv2.THRESH_BINARY,
-            11, 2
-        )
-
-        return thresh
-    except:
-        return img
 
 
 def multi_ocr(img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = []
 
     # pass 1
@@ -415,7 +300,6 @@ def safe_ocr_image(img):
         if img is None:
             return "", 0.0
 
-        # 🔥 convert BGR → RGB (CRITICAL FIX)
         img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
 
         result = ocr.ocr(img_rgb)
@@ -425,12 +309,13 @@ def safe_ocr_image(img):
 
         if result:
             for line in result:
-                if line:
-                    for word in line:
-                        text += word[1][0] + " "
-                        confs.append(word[1][1])
+                for word in line:
+                    text += word[1][0] + " "
+                    confs.append(word[1][1])
 
         avg = sum(confs)/len(confs) if confs else 0.0
+
+        # 🔥 fallback
 
         return text.strip(), avg
 
@@ -439,8 +324,33 @@ def safe_ocr_image(img):
         return "", 0.0
 
 def is_scanned_page(page):
-    text = page.get_text().strip()
-    return len(text) < 10
+    try:
+            text = page.get_text().strip()
+            images = page.get_images(full=True)
+
+            text_len = len(text)
+            image_count = len(images)
+
+            print(f"[DEBUG] text_len={text_len}, images={image_count}")
+
+            # 🔥 RULE 1: no text but images → scanned
+            if text_len < 10 and image_count > 0:
+                return True
+
+            # 🔥 RULE 2: too many images → likely scanned
+            if image_count >= 1 and text_len < 50:
+                return True
+
+            # 🔥 RULE 3: strong text → digital
+            if text_len > 100:
+                return False
+
+            # 🔥 fallback
+            return text_len < 20
+
+    except Exception as e:
+            print("scan detection error:", e)
+            return True
 
 
 def extract_text_from_pdf(file_path):
@@ -471,14 +381,20 @@ def extract_text_from_pdf(file_path):
             pix.save(tmp)
 
             img = cv2.imread(tmp)
+            # img = deskew(img)
+
+            kernel = np.array([[0,-1,0],[-1,5,-1],[0,-1,0]])
+            img = cv2.filter2D(img, -1, kernel)
+            # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
             # debug_ocr_pipeline(img, page.number)
 
             #  OCR ALWAYS (even if digital)
             ocr_text, conf = multi_ocr(img)
-
             if scanned:
-                # print(f"Page {page.number} is scanned. Using OCR text only. and file path: {tmp} and conf: {conf}")
-                chosen_text = ocr_text
+                print(f"Page {page.number} is scanned. Using OCR text only. and file path: {tmp} and conf: {conf}")
+                chosen_text = tesseract_ocr(img)  
+                print(f"file_path {file_path}: text layer length={len(chosen_text)}, OCR length={len(ocr_text)}",chosen_text[:100], ocr_text[:100]) 
+                # print(f"file_path {file_path}: text layer length={len(chosen_text)}, OCR length={len(ocr_text)}",chosen_text[:100], ocr_text[:100])
             else:
                 text_layer = page.get_text()
                 # print(f"Page {page.number}: text layer length={len(text_layer)}, OCR length={len(ocr_text)}",text_layer[:100], ocr_text[:100])
@@ -612,28 +528,22 @@ def process_documents(files):
             continue
 
         raw_text, structured, method, conf = extract_text_from_file(file)
+        doc["confidence"] = min(1.0, conf + (len(raw_text) / 2000))
 
         doc["extraction_method"] = method
-        doc["confidence"] = conf if conf > 0 else (len(raw_text) / 1000)
+        # doc["confidence"] = conf if conf > 0 else (len(raw_text) / 1000)
         # doc["raw_text"] = (raw_text or "")
 
         visual = structured.get("visual", {})
         # doc["visual_analysis"] = visual
 
-        if not raw_text.strip():
-            doc["failure_reason"] = "empty_text"
+        if not raw_text or len(raw_text.strip()) < 10:
+             doc["failure_reason"] = "empty_text"
 
         clean_text = normalize_text(raw_text)
         text_lower = clean_text.lower()
         text_flags = infer_from_text(clean_text)
-        if "signature" in text_lower or "signed" in text_lower:
-            visual["signature"] = True
 
-        if "stamp" in text_lower or "official seal" in text_lower:
-            visual["stamp"] = True
-
-        if "logo" in text_lower or "company" in text_lower:
-            visual["logo"] = True
         # visual["logo"] = visual.get("logo") or text_flags["logo"]
         # visual["stamp"] = visual.get("stamp") or text_flags["stamp"]
         # visual["signature"] = visual.get("signature") or text_flags["signature"]
@@ -717,3 +627,42 @@ async def upload_case(file: UploadFile = File(...)):
     result = process_case(path)
 
     return JSONResponse({"success": True, "data": result}, status_code=200)
+
+
+
+# from fastapi import FastAPI, UploadFile, File
+# from fastapi.responses import JSONResponse
+# import os
+# import uuid
+
+# from app.file_process import extract_text_from_pdf
+
+# app = FastAPI()
+
+# UPLOAD_DIR = "uploads"
+# os.makedirs(UPLOAD_DIR, exist_ok=True)
+
+
+# @app.post("/ocr-pdf")
+# async def ocr_pdf(file: UploadFile = File(...)):
+    if not file.filename.endswith(".pdf"):
+        return JSONResponse({"error": "Only PDF allowed"}, status_code=400)
+
+    file_id = str(uuid.uuid4())[:8]
+    file_path = os.path.join(UPLOAD_DIR, f"{file_id}.pdf")
+
+    with open(file_path, "wb") as f:
+        f.write(await file.read())
+
+    try:
+        text = extract_text_from_pdf(file_path)
+
+        return {
+            "success": True,
+            "file": file.filename,
+            "text_length": len(text),
+            "text": text[:2000]  # preview
+        }
+
+    except Exception as e:
+        return JSONResponse({"error": str(e)}, status_code=500)

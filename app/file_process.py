@@ -1,273 +1,157 @@
+# ocr_engine.py
+
 import os
-import json
-import re
-import hashlib
-import asyncio
+os.environ["FLAGS_use_mkldnn"] = "0"   # 🔥 disable OneDNN (fix crash)
+os.environ["FLAGS_use_pir_api"] = "0"  # 🔥 avoid PIR issues
+
+import cv2
+import numpy as np
 import fitz  # PyMuPDF
-import pandas as pd
+import tempfile
+
 from paddleocr import PaddleOCR
+import pytesseract
+# import pytesseract
 
-# -------------------------------
-# CONFIG
-# -------------------------------
-DATA_STORE = "data_store.json"
+pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
+# Initialize once
 ocr = PaddleOCR(use_angle_cls=True, lang='en')
 
 
-# -------------------------------
-# UTIL
-# -------------------------------
-def generate_hash(file_path):
-    with open(file_path, "rb") as f:
-        return hashlib.sha256(f.read()).hexdigest()
+# -----------------------------
+# IMAGE PREPROCESSING
+# -----------------------------
+def preprocess(img):
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.convertScaleAbs(gray, alpha=1.8, beta=25)  # contrast boost
+    return cv2.cvtColor(gray, cv2.COLOR_GRAY2BGR)
 
 
-async def save_json(data):
-    if not os.path.exists(DATA_STORE):
-        with open(DATA_STORE, "w") as f:
-            json.dump([], f)
+# -----------------------------
+# PADDLE OCR
+# -----------------------------
+def paddle_ocr(img):
+    try:
+        img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        result = ocr.ocr(img_rgb)
 
-    with open(DATA_STORE, "r") as f:
-        existing = json.load(f)
+        text = []
+        if result:
+            for line in result:
+                if line:
+                    for word in line:
+                        text.append(word[1][0])
 
-    existing.append(data)
-
-    with open(DATA_STORE, "w") as f:
-        json.dump(existing, f, indent=2)
-
-
-# -------------------------------
-# FILE TYPE
-# -------------------------------
-def detect_file_type(file_path):
-    if file_path.endswith(".pdf"):
-        return "pdf"
-    elif file_path.endswith((".png", ".jpg", ".jpeg")):
-        return "image"
-    elif file_path.endswith((".xlsx", ".xls")):
-        return "excel"
-    else:
-        return "unknown"
+        return " ".join(text).strip()
+    except Exception as e:
+        print("Paddle OCR error:", e)
+        return ""
 
 
-# -------------------------------
-# PDF HANDLING
-# -------------------------------
-def is_scanned_pdf(path):
-    doc = fitz.open(path)
-    text = ""
-
-    for page in doc:
-        text += page.get_text()
-
-    return len(text.strip()) < 50
-
-
-async def extract_pdf_text(path):
-    doc = fitz.open(path)
-    text = ""
-
-    for page in doc:
-        text += page.get_text()
-
-    return text
+# -----------------------------
+# TESSERACT FALLBACK
+# -----------------------------
+def tesseract_ocr(img):
+    try:
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        text = pytesseract.image_to_string(gray)
+        return text.strip()
+    except Exception as e:
+        print("Tesseract error:", e)
+        return ""
 
 
-async def extract_scanned_pdf(path):
-    result = ocr.ocr(path)
+# -----------------------------
+# MULTI-OCR (ROBUST)
+# -----------------------------
+def run_ocr(img):
+    # resize for better detection
+    img_big = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_CUBIC)
 
-    text = ""
-    for line in result:
-        for word in line:
-            text += word[1][0] + " "
+    img_proc = preprocess(img_big)
+
+    text = paddle_ocr(img_proc)
+
+    # 🔥 fallback if paddle fails
+    if not text:
+        print("⚠️ Paddle failed → using Tesseract fallback")
+        text = tesseract_ocr(img_proc)
 
     return text
 
 
-async def hybrid_pdf_extraction(path):
-    doc = fitz.open(path)
-    final_text = ""
+# -----------------------------
+# PDF → TEXT
+# -----------------------------
+def extract_text_from_pdf(file_path):
+    doc = fitz.open(file_path)
 
-    for page in doc:
-        txt = page.get_text()
+    all_text = []
 
-        if len(txt.strip()) > 20:
-            final_text += txt
+    for i, page in enumerate(doc):
+        pix = page.get_pixmap(matrix=fitz.Matrix(3, 3))
+
+        fd, tmp = tempfile.mkstemp(suffix=".png")
+        os.close(fd)
+        pix.save(tmp)
+
+        img = cv2.imread(tmp)
+
+        # check text layer first
+        text_layer = page.get_text().strip()
+
+        if len(text_layer) > 20:
+            print(f"[Page {i}] using text layer")
+            all_text.append(text_layer)
         else:
-            # OCR fallback
-            pix = page.get_pixmap()
-            img_path = "temp_page.png"
-            pix.save(img_path)
-            ocr_text = await extract_scanned_pdf(img_path)
-            final_text += ocr_text
-            os.remove(img_path)
+            print(f"[Page {i}] using OCR")
+            ocr_text = run_ocr(img)
+            all_text.append(ocr_text)
 
-    return final_text
+        try:
+            os.remove(tmp)
+        except:
+            pass
 
+    doc.close()
 
-# -------------------------------
-# IMAGE HANDLING
-# -------------------------------
-async def extract_image_text(path):
-    return await extract_scanned_pdf(path)
+    return "\n".join(all_text).strip()
 
 
-# -------------------------------
-# EXCEL HANDLING
-# -------------------------------
-async def extract_excel(path):
-    df = pd.read_excel(path)
-    return df.to_dict(orient="records")
+# from fastapi import FastAPI, UploadFile, File
+# from fastapi.responses import JSONResponse
+# import os
+# import uuid
+
+# from ocr_engine import extract_text_from_pdf
+
+# app = FastAPI()
+
+# UPLOAD_DIR = "uploads"
+# os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 
-# -------------------------------
-# NORMALIZATION
-# -------------------------------
-def normalize_text(text):
-    text = text.lower()
-    text = re.sub(r'\s+', ' ', text)
-    text = re.sub(r'\b(v|hz|volts)\b', '', text)
-    return text.strip()
+# @app.post("/ocr-pdf")
+# async def ocr_pdf(file: UploadFile = File(...)):
+#     if not file.filename.endswith(".pdf"):
+#         return JSONResponse({"error": "Only PDF allowed"}, status_code=400)
 
+#     file_id = str(uuid.uuid4())[:8]
+#     file_path = os.path.join(UPLOAD_DIR, f"{file_id}.pdf")
 
-# -------------------------------
-# CLAUSE DETECTION
-# -------------------------------
-def extract_candidate_clauses(text):
-    sentences = re.split(r'[.\n]', text)
+#     with open(file_path, "wb") as f:
+#         f.write(await file.read())
 
-    candidates = []
-    for s in sentences:
-        s = s.strip()
-        if len(s) > 25:
-            candidates.append(s)
+#     try:
+#         text = extract_text_from_pdf(file_path)
 
-    return candidates
+#         return {
+#             "success": True,
+#             "file": file.filename,
+#             "text_length": len(text),
+#             "text": text[:2000]  # preview
+#         }
 
-
-# -------------------------------
-# LLaMA PARSER (DYNAMIC)
-# -------------------------------
-async def llama_parse(text):
-    """
-    Replace this with your actual LLaMA API call
-    """
-    # Mock dynamic parsing
-    numbers = re.findall(r'\d+', text)
-
-    result = {
-        "field": None,
-        "rule_type": None,
-        "action": {},
-        "raw_text": text
-    }
-
-    # dynamic guess (LLM-style fallback)
-    if "between" in text:
-        result["rule_type"] = "range"
-        if len(numbers) >= 2:
-            result["action"]["min"] = int(numbers[0])
-            result["action"]["max"] = int(numbers[1])
-
-    elif "must" in text:
-        result["rule_type"] = "required"
-
-    else:
-        result["rule_type"] = "unknown"
-
-    return result
-
-
-# -------------------------------
-# CLAUSE PARSER (HYBRID)
-# -------------------------------
-async def parse_clause(text):
-    clause = {
-        "raw_text": text,
-        "source": "regex",
-        "confidence": 0.6,
-        "field": None,
-        "rule_type": None,
-        "action": {}
-    }
-
-    numbers = re.findall(r'\d+', text)
-
-    if "between" in text and len(numbers) >= 2:
-        clause["rule_type"] = "range"
-        clause["action"] = {
-            "min": int(numbers[0]),
-            "max": int(numbers[1])
-        }
-        clause["confidence"] = 0.9
-
-    else:
-        # fallback to LLaMA
-        llama_result = await llama_parse(text)
-        clause.update(llama_result)
-        clause["source"] = "llama"
-        clause["confidence"] = 0.7
-
-    return clause
-
-
-# -------------------------------
-# MAIN PIPELINE
-# -------------------------------
-async def process_file(file_path):
-
-    # STEP 1: VALIDATION
-    if not os.path.exists(file_path):
-        raise Exception("File not found")
-
-    file_hash = generate_hash(file_path)
-
-    # STEP 2: TYPE
-    file_type = detect_file_type(file_path)
-
-    # STEP 3: EXTRACTION
-    if file_type == "pdf":
-        if is_scanned_pdf(file_path):
-            text = await extract_scanned_pdf(file_path)
-        else:
-            text = await hybrid_pdf_extraction(file_path)
-
-    elif file_type == "image":
-        text = await extract_image_text(file_path)
-
-    elif file_type == "excel":
-        data = await extract_excel(file_path)
-        text = json.dumps(data)
-
-    else:
-        return {"error": "Unsupported file"}
-
-    # STEP 4: NORMALIZE
-    text = normalize_text(text)
-
-    # STEP 5: CLAUSE DETECT
-    candidates = extract_candidate_clauses(text)
-
-    # STEP 6: PARSE
-    parsed_clauses = []
-    for c in candidates:
-        parsed = await parse_clause(c)
-        parsed_clauses.append(parsed)
-
-    # STEP 7: STORE
-    document_record = {
-        "file_path": file_path,
-        "hash": file_hash,
-        "type": file_type,
-        "clauses": parsed_clauses
-    }
-
-    await save_json(document_record)
-
-    return document_record
-
-
-# -------------------------------
-# RUN
-# -------------------------------
+#     except Exception as e:
+#         return JSONResponse({"error": str(e)}, status_code=500)
