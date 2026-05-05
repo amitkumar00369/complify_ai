@@ -77,6 +77,7 @@ def process_page(page):
 # EXTRACT PDF (PARALLEL)
 # =========================
 def extract_pdf(file_path):
+    # print(f"Processing PDF: {file_path}")   
     doc = fitz.open(file_path)
 
     texts = []

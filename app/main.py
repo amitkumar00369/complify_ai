@@ -1,3 +1,5 @@
+from app.utils.zip_common import extract_zip, get_files
+
 from .routes.tr_routes import router as tr_router
 
 
@@ -15,27 +17,10 @@ from app.core.processor import process_documents
 app = FastAPI()
 
 BASE_DIR = "products_data"
-os.makedirs(BASE_DIR, exist_ok=True)
 
 
-def extract_zip(zip_path, case_id):
-    path = os.path.join(BASE_DIR, case_id)
-    os.makedirs(path, exist_ok=True)
-
-    with zipfile.ZipFile(zip_path, 'r') as z:
-        z.extractall(path)
-
-    return path
 
 
-def get_files(folder):
-    files = []
-    for root, _, names in os.walk(folder):
-        for name in names:
-            if name.startswith("."):
-                continue
-            files.append(os.path.join(root, name))
-    return files
 
 
 @app.post("/uploadCase")
