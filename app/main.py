@@ -1,6 +1,8 @@
 from app.utils.zip_common import extract_zip, get_files
 
 from .routes.tr_routes import router as tr_router
+from .routes.std_routes import router as std_router
+
 
 
 
@@ -45,3 +47,4 @@ async def upload_case(file: UploadFile = File(...)):
     return {"case_id": case_id, "documents": docs}
 
 app.include_router(tr_router, prefix="/tr", tags=["TR"])
+app.include_router(std_router, prefix="/std", tags=["STD"])
