@@ -5,7 +5,7 @@ import tempfile
 
 from fastapi.responses import JSONResponse
 from app.controllers.tr_controller import process_std
-from app.utils.zip_common import BASE_DIR, extract_zip1, get_files
+from app.utils.zip_common import BASE_DIR, extract_zip2, get_files
 # BASE_DIR = "products_data"
     
 router = APIRouter()
@@ -25,7 +25,7 @@ async def upload_std(file: UploadFile = File(...)):
 
     case_id = str(uuid.uuid4())[:8]
 
-    folder = extract_zip1(path, "STD"+ case_id)
+    folder = extract_zip2(path, "STD"+ case_id)
     files = get_files(folder)
 
     # create temp directory
