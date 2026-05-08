@@ -1,3 +1,4 @@
+from app.services.llama_service import databyhscode_usingllm
 from app.utils.zip_common import extract_zip, get_files
 
 from .routes.tr_routes import router as tr_router
@@ -106,6 +107,19 @@ async def get_products():
         "total_products": len(docs),
         "products": docs
     }
+@app.get("/getHSCodeData")
+async def get_hs_code_data(data: dict):
+    payload = data.get("hs_code")
+    if not payload:
+        return JSONResponse({"error": "HS code is required"}, status_code=400)
+    result  = databyhscode_usingllm(payload)
+    return {
+        "result": result
+    }
+    
+
+
+    
 app.include_router(tr_router, prefix="/tr", tags=["TR"])
 app.include_router(std_router, prefix="/std", tags=["STD"])
 app.include_router(saber_router, prefix="/saber", tags=["SABER"])

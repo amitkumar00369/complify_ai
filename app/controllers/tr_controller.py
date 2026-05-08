@@ -13,6 +13,8 @@ from ..services.hs_mapper import extract_hs_mapping
 
 def process_tr(file_path):
     ext = file_path.lower()
+    fileName =os.path.splitext(os.path.basename(file_path))[0]
+    print(f"Processing TR file: {file_path}, extracted name: {fileName}")
     text, structured, method, conf = "", {}, "unknown", 0.0
     if ext.endswith(".pdf"):
         # import pdfplumber
@@ -37,6 +39,7 @@ def process_tr(file_path):
         "tr_id": str(uuid.uuid4()),
         "tr_name": file_path.split("/")[-1],
         "file_name": os.path.basename(file_path),
+        # "title": os.path.splitext(os.path.basename(file_path))[0],
         "metaJson": {
             "total_standards": hs_mapping.get("total_standards", 0),
             "total_hs_codes": hs_mapping.get("total_hs_codes", 0),

@@ -1,7 +1,9 @@
 # =========================================================
 # FILE: app/services/query_service.py
 # =========================================================
+from numpy import ma
 
+from app.utils.response_formatter import ResponseFormatter
 import json
 import os
 
@@ -59,10 +61,29 @@ class QueryService:
     @staticmethod
     def match_product(product_name, item):
 
-        text = QueryService.normalize_text(json.dumps(item))
-        # print(f"Matching product '{product_name}' in item:...")  # Debug print
+        text = QueryService.normalize_text(
+            json.dumps(item)
+        )
 
-        return QueryService.normalize_text(product_name) in text
+        product_words = QueryService.normalize_text(
+            product_name
+        ).split()
+
+        matched_words = 0
+
+        for word in product_words:
+
+            if word in text:
+
+                matched_words += 1
+
+        # ------------------------------------------------
+        # MATCH SCORE
+        # ------------------------------------------------
+
+        score = matched_words / len(product_words)
+
+        return score >= 0.7
 
     # =====================================================
     # MAIN ENGINE
@@ -144,8 +165,18 @@ class QueryService:
                 matched_product = item
 
                 break
-        # print(f"Matched product: {matched_product}")
+        # print(f"Matched product: {matched_product}")cls
+        if matched_product is None:
 
+            compliance_result["message"] = "No matching product found in database"
+
+            return compliance_result
+        TR_NAME = matched_product.get("clause", {})
+        for item in TR_NAME:
+             if item.get("type", "").lower() == "Technical Regulation".lower():
+                TR_NAME = item.get("value")
+                break
+        print(f"Extracted TR_NAME from matched product: {TR_NAME}")
         if matched_product:
 
             compliance_result["product"] = matched_product
@@ -263,7 +294,11 @@ class QueryService:
             missing.append("standards")
 
         if not matched_tr:
-            missing.append("technical regulations")
+            for item in technical_regulations:
+                if QueryService.match_product(TR_NAME, item):
+                    matched_tr.append(item)
+            if not matched_tr:
+                missing.append("technical regulations")
 
         if not matched_saber:
             missing.append("saber requirements")
@@ -283,5 +318,6 @@ class QueryService:
         # =================================================
         # STEP 13: FINAL RESPONSE
         # =================================================
+        # formatted_response = ResponseFormatter.format_response(compliance_result)
 
         return compliance_result
