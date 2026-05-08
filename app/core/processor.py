@@ -26,7 +26,7 @@ def extract_codes(data):
                     result.append(sub['hs_code'])
 
     return result
-def process_documents(files,hs_code=None):
+def process_documents(files,file_name=None):
     docs = []
     hscode = None
     modelName = []
@@ -112,6 +112,10 @@ def process_documents(files,hs_code=None):
             "standard_name": hscode.iloc[0]['Applicable Std.*'],
             "modelName":modelName,
             "product_info" :os.path.basename(os.path.dirname(file)),
+            "file_name": os.path.basename(file),
+            "product_name":file_name,
+            "folder_name": os.path.basename(os.path.dirname(os.path.dirname(file))),
+            "sub_folder_name": os.path.basename(os.path.dirname(file)),
             "file_name": os.path.basename(file),
             "file_path": file,
             "TR_name": TR_name[0] if TR_name else None,

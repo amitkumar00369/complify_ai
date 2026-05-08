@@ -1,4 +1,15 @@
 fastenv
-/tr_results.json
+
 products_data
 ocr_debug
+=======
+products_data
+__pycache__
+venv
+Saber Data
+Standard Data
+TR
+KSA Data
+ITEM
+complify_data
+

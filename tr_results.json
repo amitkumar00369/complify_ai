@@ -1,0 +1,4434 @@
+[
+  {
+    "tr_id": "e43b0f7d-d188-417e-ad61-3a2fadf38526",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\Glue-and-adhesive-materials.pdf",
+    "file_name": "Glue-and-adhesive-materials.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 5,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "3503"
+        },
+        {
+          "hs_code": "3506"
+        },
+        {
+          "hs_code": "3501"
+        },
+        {
+          "hs_code": "5906"
+        },
+        {
+          "hs_code": "4811"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "a32c845e-c7c7-487e-825a-5918d83d301c",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\GSO-Technical-Regulation-On-Toys.pdf",
+    "file_name": "GSO-Technical-Regulation-On-Toys.pdf",
+    "metaJson": {
+      "total_standards": 59,
+      "total_hs_codes": 53,
+      "standards": [
+        {
+          "standard_number": 3,
+          "code": "GSO 5",
+          "title_en": "Conformity Assessment Regulation Children Toys BD1"
+        },
+        {
+          "standard_number": 10,
+          "code": "GSO 6",
+          "title_en": "Whereas the toys placed on the desired common mark"
+        },
+        {
+          "standard_number": 13,
+          "code": "GSO 7",
+          "title_en": "Article (1): Definitions For the purposes of this "
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 8",
+          "title_en": "Organization: Standardization Organization for the"
+        },
+        {
+          "standard_number": 12,
+          "code": "GSO 9",
+          "title_en": "Activity toy: Means a toy for domestic use in whic"
+        },
+        {
+          "standard_number": 22,
+          "code": "GSO 10",
+          "title_en": "Supply chean: All the stages of the toy after the "
+        },
+        {
+          "standard_number": 32,
+          "code": "GSO 11",
+          "title_en": "GC Type examination certificate: Is a certificate "
+        },
+        {
+          "standard_number": 40,
+          "code": "GSO 12",
+          "title_en": "GC marking: Is a specific marking of the Cooperati"
+        },
+        {
+          "standard_number": 49,
+          "code": "GSO 13",
+          "title_en": "Risk: Means the probable rate of occurrence of a h"
+        },
+        {
+          "standard_number": 18,
+          "code": "GSO 14",
+          "title_en": "Conformity Assessment Regulation Children Toys BD1"
+        },
+        {
+          "standard_number": 9,
+          "code": "GSO 15",
+          "title_en": "Manufacturer shall ensure that the toy is accompan"
+        },
+        {
+          "standard_number": 3,
+          "code": "GSO 16",
+          "title_en": "c) cooperate with the competent national authoriti"
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 17",
+          "title_en": "Conformity Assessment Regulation Children Toys BD1"
+        },
+        {
+          "standard_number": 8,
+          "code": "GSO 18",
+          "title_en": "When deemed appropriate with regard to the risks p"
+        },
+        {
+          "standard_number": 6,
+          "code": "GSO 19",
+          "title_en": "Conformity Assessment Regulation Children Toys BD1"
+        },
+        {
+          "standard_number": 6,
+          "code": "GSO 20",
+          "title_en": "The Distributor shall, further to a request from c"
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 21",
+          "title_en": "c) Labels affixed in accordance with Article 11(4)"
+        },
+        {
+          "standard_number": 5,
+          "code": "GSO 22",
+          "title_en": "as the case may be. Conformity Assessment Regulati"
+        },
+        {
+          "standard_number": 3,
+          "code": "GSO 23",
+          "title_en": "When it is required to amend the Gulf Standard, th"
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 24",
+          "title_en": "c) By drawing up the GC declaration of conformity,"
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 25",
+          "title_en": "Before placing a toy on the market, the importer w"
+        },
+        {
+          "standard_number": 7,
+          "code": "GSO 26",
+          "title_en": "Member States shall ensure that their notified bod"
+        },
+        {
+          "standard_number": 6,
+          "code": "GSO 27",
+          "title_en": "If the manufacturer or the importer does not compl"
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 28",
+          "title_en": "Conformity Assessment Regulation Children Toys BD1"
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 29",
+          "title_en": "If a market surveillance authority finds that a to"
+        },
+        {
+          "standard_number": 5,
+          "code": "GSO 30",
+          "title_en": "The relevant economic operator shall ensure that a"
+        },
+        {
+          "standard_number": 10,
+          "code": "GSO 31",
+          "title_en": "Member States shall ensure that appropriate restri"
+        },
+        {
+          "standard_number": 3,
+          "code": "GSO 32",
+          "title_en": "Where the national measure is considered by the Or"
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 33",
+          "title_en": "e) Amend periodically the Annex (8) attached to th"
+        },
+        {
+          "standard_number": 4,
+          "code": "GSO 34",
+          "title_en": "The amendments carried out by the Gulf Committee o"
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 35",
+          "title_en": "Any measure taken pursuant to this Directive to pr"
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 36",
+          "title_en": "BD 07070502) dated 27/11/2007 and which were place"
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 37",
+          "title_en": "References to the repealed technical regulation sh"
+        },
+        {
+          "standard_number": 7,
+          "code": "GSO 38",
+          "title_en": "Aquatic equipment intended to be used in deep wate"
+        },
+        {
+          "standard_number": 19,
+          "code": "GSO 39",
+          "title_en": "Fashion accessories for children which are not for"
+        },
+        {
+          "standard_number": 4,
+          "code": "GSO 40",
+          "title_en": "a) Toys and their parts and their packagings, in w"
+        },
+        {
+          "standard_number": 8,
+          "code": "GSO 41",
+          "title_en": "The form and composition of projectiles and the ki"
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 42",
+          "title_en": "s chemical composition, they are designed so as to"
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 43",
+          "title_en": "a) Toys shall be designed and manufactured in such"
+        },
+        {
+          "standard_number": 4,
+          "code": "GSO 44",
+          "title_en": "Points 2 and 3 shall not apply to nickel in stainl"
+        },
+        {
+          "standard_number": 8,
+          "code": "GSO 1943",
+          "title_en": "Cosmetic toys, such as play cosmetics for dolls, s"
+        },
+        {
+          "standard_number": 10,
+          "code": "GSO 45",
+          "title_en": "c) if applicable, those fragrances comply with the"
+        },
+        {
+          "standard_number": 12,
+          "code": "GSO 46",
+          "title_en": "of the mass of plastics, in toys and childcare art"
+        },
+        {
+          "standard_number": 7,
+          "code": "GSO 47",
+          "title_en": "Toys which have an electronic control system must "
+        },
+        {
+          "standard_number": 2,
+          "code": "GSO 48",
+          "title_en": "phthalate 117-84-0 DNOP di-n-octyl phthalate Confo"
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 57",
+          "title_en": "or a warning in the form of the following graphic:"
+        },
+        {
+          "standard_number": 3,
+          "code": "GSO 58",
+          "title_en": "normally associated with the appliance or product "
+        },
+        {
+          "standard_number": 5,
+          "code": "GSO 59",
+          "title_en": "Moreover, the instructions for use shall contain a"
+        },
+        {
+          "standard_number": 10,
+          "code": "GSO 60",
+          "title_en": "Age to be specified by the manufacturer. Conformit"
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 61",
+          "title_en": "a copy of the GC-type examination certificate and "
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 62",
+          "title_en": "vis the notifying authorities, the notified body s"
+        },
+        {
+          "standard_number": 6,
+          "code": "GSO 65",
+          "title_en": "Conformity marking and declaration of conformity: "
+        },
+        {
+          "standard_number": 7,
+          "code": "GSO 66",
+          "title_en": "s authorized representative may lodge the applicat"
+        },
+        {
+          "standard_number": 1,
+          "code": "GSO 67",
+          "title_en": "The importer shall keep the technical documentatio"
+        },
+        {
+          "standard_number": 4,
+          "code": "GSO 68",
+          "title_en": "Verification of conformity by examination and test"
+        },
+        {
+          "standard_number": 4,
+          "code": "GSO 69",
+          "title_en": "Statistical verification of conformity: (a) The im"
+        },
+        {
+          "standard_number": 5,
+          "code": "GSO 70",
+          "title_en": "Declaration of Conformity 1 . ("
+        },
+        {
+          "standard_number": 8,
+          "code": "GSO 71",
+          "title_en": "Declaration of conformity 1 ."
+        },
+        {
+          "standard_number": 7,
+          "code": "GSO 72",
+          "title_en": "STOT SE 3 Skin Irrit. 2 Eye Dam. 1 2"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1309"
+        },
+        {
+          "hs_code": "1018"
+        },
+        {
+          "hs_code": "7786"
+        },
+        {
+          "hs_code": "1336"
+        },
+        {
+          "hs_code": "7446"
+        },
+        {
+          "hs_code": "2580"
+        },
+        {
+          "hs_code": "7646"
+        },
+        {
+          "hs_code": "2006"
+        },
+        {
+          "hs_code": "7775"
+        },
+        {
+          "hs_code": "7789"
+        },
+        {
+          "hs_code": "1662"
+        },
+        {
+          "hs_code": "1186"
+        },
+        {
+          "hs_code": "3333"
+        },
+        {
+          "hs_code": "1058"
+        },
+        {
+          "hs_code": "2009"
+        },
+        {
+          "hs_code": "1251"
+        },
+        {
+          "hs_code": "1013"
+        },
+        {
+          "hs_code": "1022"
+        },
+        {
+          "hs_code": "1112"
+        },
+        {
+          "hs_code": "2007"
+        },
+        {
+          "hs_code": "2010"
+        },
+        {
+          "hs_code": "1376"
+        },
+        {
+          "hs_code": "7790"
+        },
+        {
+          "hs_code": "6474"
+        },
+        {
+          "hs_code": "1681"
+        },
+        {
+          "hs_code": "7778"
+        },
+        {
+          "hs_code": "7784"
+        },
+        {
+          "hs_code": "5202"
+        },
+        {
+          "hs_code": "1304"
+        },
+        {
+          "hs_code": "2015"
+        },
+        {
+          "hs_code": "1200"
+        },
+        {
+          "hs_code": "1335"
+        },
+        {
+          "hs_code": "9000"
+        },
+        {
+          "hs_code": "4500"
+        },
+        {
+          "hs_code": "2122"
+        },
+        {
+          "hs_code": "9199"
+        },
+        {
+          "hs_code": "1500"
+        },
+        {
+          "hs_code": "7440"
+        },
+        {
+          "hs_code": "1010"
+        },
+        {
+          "hs_code": "7758"
+        },
+        {
+          "hs_code": "1313"
+        },
+        {
+          "hs_code": "1314"
+        },
+        {
+          "hs_code": "1333"
+        },
+        {
+          "hs_code": "1757"
+        },
+        {
+          "hs_code": "3930"
+        },
+        {
+          "hs_code": "1205"
+        },
+        {
+          "hs_code": "3750"
+        },
+        {
+          "hs_code": "1203"
+        },
+        {
+          "hs_code": "1012"
+        },
+        {
+          "hs_code": "1560"
+        },
+        {
+          "hs_code": "1030"
+        },
+        {
+          "hs_code": "7572"
+        },
+        {
+          "hs_code": "1306"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "f2bb4c67-1e77-4fe7-9874-d3216fd0aa77",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\Gulf-Technical-Regulation-for-Low-Voltage-Electrical-Equipment-and-Appliances-BD-142004-01.pdf",
+    "file_name": "Gulf-Technical-Regulation-for-Low-Voltage-Electrical-Equipment-and-Appliances-BD-142004-01.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 7,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "2009"
+        },
+        {
+          "hs_code": "2007"
+        },
+        {
+          "hs_code": "2006"
+        },
+        {
+          "hs_code": "2010"
+        },
+        {
+          "hs_code": "1500"
+        },
+        {
+          "hs_code": "2008"
+        },
+        {
+          "hs_code": "1000"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "ddb80000-20f2-4fd5-b48e-81af39027b7f",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\Leather-products.pdf",
+    "file_name": "Leather-products.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 17,
+      "standards": [
+        {
+          "standard_number": 6,
+          "code": "SASO-ISO-17234-1",
+          "title_en": "s letterhead papers 1) Supplier data: - Name: ----"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "4303"
+        },
+        {
+          "hs_code": "4115"
+        },
+        {
+          "hs_code": "4301"
+        },
+        {
+          "hs_code": "4205"
+        },
+        {
+          "hs_code": "9113"
+        },
+        {
+          "hs_code": "4105"
+        },
+        {
+          "hs_code": "4104"
+        },
+        {
+          "hs_code": "4302"
+        },
+        {
+          "hs_code": "4202"
+        },
+        {
+          "hs_code": "4106"
+        },
+        {
+          "hs_code": "4113"
+        },
+        {
+          "hs_code": "4203"
+        },
+        {
+          "hs_code": "4206"
+        },
+        {
+          "hs_code": "6506"
+        },
+        {
+          "hs_code": "4112"
+        },
+        {
+          "hs_code": "4107"
+        },
+        {
+          "hs_code": "4201"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "a40a79fc-33c4-47df-9429-4726c94396b3",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\R-Paints-and-Varnishes.pdf",
+    "file_name": "R-Paints-and-Varnishes.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 10,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1189"
+        },
+        {
+          "hs_code": "2881"
+        },
+        {
+          "hs_code": "3856"
+        },
+        {
+          "hs_code": "2982"
+        },
+        {
+          "hs_code": "2590"
+        },
+        {
+          "hs_code": "3203"
+        },
+        {
+          "hs_code": "2981"
+        },
+        {
+          "hs_code": "3205"
+        },
+        {
+          "hs_code": "3207"
+        },
+        {
+          "hs_code": "4457"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "02a68411-7da8-4f36-a144-5fb22a0fefb4",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Degradable Plastic Products.pdf",
+    "file_name": "TR - Degradable Plastic Products.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 17,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1485"
+        },
+        {
+          "hs_code": "0520"
+        },
+        {
+          "hs_code": "6306"
+        },
+        {
+          "hs_code": "0400"
+        },
+        {
+          "hs_code": "3920"
+        },
+        {
+          "hs_code": "2110"
+        },
+        {
+          "hs_code": "1755"
+        },
+        {
+          "hs_code": "2879"
+        },
+        {
+          "hs_code": "3921"
+        },
+        {
+          "hs_code": "0382"
+        },
+        {
+          "hs_code": "1863"
+        },
+        {
+          "hs_code": "0276"
+        },
+        {
+          "hs_code": "3923"
+        },
+        {
+          "hs_code": "0698"
+        },
+        {
+          "hs_code": "1535"
+        },
+        {
+          "hs_code": "2500"
+        },
+        {
+          "hs_code": "3926"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "924e464f-1872-47a2-9b1d-7ab04100eed0",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Electric Vehicles.pdf",
+    "file_name": "TR - Electric Vehicles.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 28,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "IEC 61851-1",
+          "title_en": "arne: --------------------------------------------"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "6100"
+        },
+        {
+          "hs_code": "6030"
+        },
+        {
+          "hs_code": "6219"
+        },
+        {
+          "hs_code": "6722"
+        },
+        {
+          "hs_code": "3537"
+        },
+        {
+          "hs_code": "2110"
+        },
+        {
+          "hs_code": "6185"
+        },
+        {
+          "hs_code": "6289"
+        },
+        {
+          "hs_code": "1816"
+        },
+        {
+          "hs_code": "4501"
+        },
+        {
+          "hs_code": "2203"
+        },
+        {
+          "hs_code": "8714"
+        },
+        {
+          "hs_code": "1066"
+        },
+        {
+          "hs_code": "1437"
+        },
+        {
+          "hs_code": "8544"
+        },
+        {
+          "hs_code": "1276"
+        },
+        {
+          "hs_code": "8702"
+        },
+        {
+          "hs_code": "8511"
+        },
+        {
+          "hs_code": "8504"
+        },
+        {
+          "hs_code": "8501"
+        },
+        {
+          "hs_code": "1490"
+        },
+        {
+          "hs_code": "8703"
+        },
+        {
+          "hs_code": "8507"
+        },
+        {
+          "hs_code": "1771"
+        },
+        {
+          "hs_code": "1315"
+        },
+        {
+          "hs_code": "1457"
+        },
+        {
+          "hs_code": "8536"
+        },
+        {
+          "hs_code": "1815"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "b9d18827-5542-48f6-9b26-b349cdc1e2b3",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Electrical Lifts Used in Buildings and Facilities - Version 1  Amendment 1.pdf",
+    "file_name": "TR - Electrical Lifts Used in Buildings and Facilities - Version 1  Amendment 1.pdf",
+    "metaJson": {
+      "total_standards": 5,
+      "total_hs_codes": 1,
+      "standards": [
+        {
+          "standard_number": 15,
+          "code": "SASO EN 81-20",
+          "title_en": "Insulation Resistance The insulation resistance sh"
+        },
+        {
+          "standard_number": 6,
+          "code": "SASO GSO 318",
+          "title_en": "part 10: single speed three-phase induction motors"
+        },
+        {
+          "standard_number": 9,
+          "code": "EN 81",
+          "title_en": "e) Protection against the cut off of the electrica"
+        },
+        {
+          "standard_number": 20,
+          "code": "EN 81-20",
+          "title_en": "Electric switch for lightening the well accessible"
+        },
+        {
+          "standard_number": 24,
+          "code": "IEC 17067",
+          "title_en": "s official paper 1) Declaration of conformity to s"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "4190"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "c3ee75ac-f49b-43af-8271-61550cdeb3b0",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Electronic Devices Used in Electronic Smoking Systems.pdf",
+    "file_name": "TR - Electronic Devices Used in Electronic Smoking Systems.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 1,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "8543"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "75cec868-1c3f-46c4-bd7a-01898d955a80",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Fire Control Materials and Equipment.pdf",
+    "file_name": "TR - Fire Control Materials and Equipment.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 7,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO 7165",
+          "title_en": "Page 21 of2 1"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1160"
+        },
+        {
+          "hs_code": "4009"
+        },
+        {
+          "hs_code": "1301"
+        },
+        {
+          "hs_code": "8413"
+        },
+        {
+          "hs_code": "1796"
+        },
+        {
+          "hs_code": "7165"
+        },
+        {
+          "hs_code": "1119"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "5eb769bb-17f1-47d3-a4da-6124e767459e",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Fireworks.pdf",
+    "file_name": "TR - Fireworks.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 3,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "9505"
+        },
+        {
+          "hs_code": "2110"
+        },
+        {
+          "hs_code": "1126"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "5d0d7758-12de-49c9-929b-a6050cf29890",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Food Safety of Tools and Appliances Used in the Kitchen.pdf",
+    "file_name": "TR - Food Safety of Tools and Appliances Used in the Kitchen.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 28,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "2043"
+        },
+        {
+          "hs_code": "8208"
+        },
+        {
+          "hs_code": "6912"
+        },
+        {
+          "hs_code": "4481"
+        },
+        {
+          "hs_code": "2075"
+        },
+        {
+          "hs_code": "8215"
+        },
+        {
+          "hs_code": "8438"
+        },
+        {
+          "hs_code": "2332"
+        },
+        {
+          "hs_code": "7508"
+        },
+        {
+          "hs_code": "2888"
+        },
+        {
+          "hs_code": "2179"
+        },
+        {
+          "hs_code": "3924"
+        },
+        {
+          "hs_code": "4823"
+        },
+        {
+          "hs_code": "4419"
+        },
+        {
+          "hs_code": "2911"
+        },
+        {
+          "hs_code": "6911"
+        },
+        {
+          "hs_code": "8205"
+        },
+        {
+          "hs_code": "7615"
+        },
+        {
+          "hs_code": "2887"
+        },
+        {
+          "hs_code": "2939"
+        },
+        {
+          "hs_code": "2769"
+        },
+        {
+          "hs_code": "2770"
+        },
+        {
+          "hs_code": "8309"
+        },
+        {
+          "hs_code": "2940"
+        },
+        {
+          "hs_code": "2933"
+        },
+        {
+          "hs_code": "8435"
+        },
+        {
+          "hs_code": "2173"
+        },
+        {
+          "hs_code": "4811"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "359dc748-3578-4a21-b904-5db5422ab4cc",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Modified Vehicles and Limited Production Models.pdf",
+    "file_name": "TR - Modified Vehicles and Limited Production Models.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "b66388e5-6246-4b09-a1c7-487d352b4765",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Solar Photovoltaic Systems - Version 2 (1).pdf",
+    "file_name": "TR - Solar Photovoltaic Systems - Version 2 (1).pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 2,
+      "standards": [
+        {
+          "standard_number": 3,
+          "code": "SASO IEC 61215-1",
+          "title_en": "attached thereto. Person in Charge: .............."
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "6121"
+        },
+        {
+          "hs_code": "6293"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "cfe131bf-8e00-437a-af17-34a82f82d055",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Solar Photovoltaic Systems - Version 2.pdf",
+    "file_name": "TR - Solar Photovoltaic Systems - Version 2.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 2,
+      "standards": [
+        {
+          "standard_number": 3,
+          "code": "SASO IEC 61215-1",
+          "title_en": "attached thereto. Person in Charge: .............."
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "6121"
+        },
+        {
+          "hs_code": "6293"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "6fb95693-e788-46d7-8bc0-be84c6a5f2b0",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Tanks \u2013 Part 1 Petromleum Prodcuts Transportation Tanks.pdf",
+    "file_name": "TR - Tanks \u2013 Part 1 Petromleum Prodcuts Transportation Tanks.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "c6b35b6b-d9b1-4d2c-84c3-4e3b4547a1c4",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Trailers and Semi-Trailers - Version 1 - Amendment 1.pdf",
+    "file_name": "TR - Trailers and Semi-Trailers - Version 1 - Amendment 1.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 3,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1782"
+        },
+        {
+          "hs_code": "2910"
+        },
+        {
+          "hs_code": "2110"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "26c9adab-5bd2-4f9e-8931-df3f88977cc0",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR - Water Rationalization Tools.pdf",
+    "file_name": "TR - Water Rationalization Tools.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 5,
+      "standards": [
+        {
+          "standard_number": 3,
+          "code": "SASO EN 246",
+          "title_en": "Contact Person: Email: ---------------------------"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1473"
+        },
+        {
+          "hs_code": "3922"
+        },
+        {
+          "hs_code": "1477"
+        },
+        {
+          "hs_code": "7324"
+        },
+        {
+          "hs_code": "2500"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "d7743ac5-e297-4a39-b795-225cf4dea392",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-BM-Part1-Steel-Sections -Alloys.pdf",
+    "file_name": "TR-BM-Part1-Steel-Sections -Alloys.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 13,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "7605"
+        },
+        {
+          "hs_code": "1400"
+        },
+        {
+          "hs_code": "7220"
+        },
+        {
+          "hs_code": "7212"
+        },
+        {
+          "hs_code": "7225"
+        },
+        {
+          "hs_code": "7229"
+        },
+        {
+          "hs_code": "7606"
+        },
+        {
+          "hs_code": "7210"
+        },
+        {
+          "hs_code": "9406"
+        },
+        {
+          "hs_code": "7211"
+        },
+        {
+          "hs_code": "7219"
+        },
+        {
+          "hs_code": "7223"
+        },
+        {
+          "hs_code": "7226"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "36911a72-a006-405a-a4b7-237fc5cdba02",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-BM-Part2-Insulation-and-Building-Cladding-Materials.pdf",
+    "file_name": "TR-BM-Part2-Insulation-and-Building-Cladding-Materials.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 33,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1029"
+        },
+        {
+          "hs_code": "6807"
+        },
+        {
+          "hs_code": "1424"
+        },
+        {
+          "hs_code": "7004"
+        },
+        {
+          "hs_code": "6811"
+        },
+        {
+          "hs_code": "1316"
+        },
+        {
+          "hs_code": "1370"
+        },
+        {
+          "hs_code": "5321"
+        },
+        {
+          "hs_code": "2457"
+        },
+        {
+          "hs_code": "3397"
+        },
+        {
+          "hs_code": "1389"
+        },
+        {
+          "hs_code": "5320"
+        },
+        {
+          "hs_code": "2219"
+        },
+        {
+          "hs_code": "7005"
+        },
+        {
+          "hs_code": "4005"
+        },
+        {
+          "hs_code": "7008"
+        },
+        {
+          "hs_code": "2752"
+        },
+        {
+          "hs_code": "6809"
+        },
+        {
+          "hs_code": "3920"
+        },
+        {
+          "hs_code": "4008"
+        },
+        {
+          "hs_code": "1615"
+        },
+        {
+          "hs_code": "4586"
+        },
+        {
+          "hs_code": "1398"
+        },
+        {
+          "hs_code": "1490"
+        },
+        {
+          "hs_code": "1478"
+        },
+        {
+          "hs_code": "1324"
+        },
+        {
+          "hs_code": "1397"
+        },
+        {
+          "hs_code": "6810"
+        },
+        {
+          "hs_code": "3921"
+        },
+        {
+          "hs_code": "3399"
+        },
+        {
+          "hs_code": "1420"
+        },
+        {
+          "hs_code": "3398"
+        },
+        {
+          "hs_code": "4811"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "78e86e7a-4462-4979-a478-ec9bc79df246",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-BM-Part3-Hydraulic-Connections-and-Related-Products.pdf",
+    "file_name": "TR-BM-Part3-Hydraulic-Connections-and-Related-Products.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 8,
+      "standards": [
+        {
+          "standard_number": 2,
+          "code": "ISO 9001",
+          "title_en": "s letterhead papers 1) Supplier data: - Name: ----"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "2522"
+        },
+        {
+          "hs_code": "1914"
+        },
+        {
+          "hs_code": "3816"
+        },
+        {
+          "hs_code": "3824"
+        },
+        {
+          "hs_code": "2520"
+        },
+        {
+          "hs_code": "2523"
+        },
+        {
+          "hs_code": "6810"
+        },
+        {
+          "hs_code": "2517"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "6c058d1b-266f-441e-8e1f-660cc5a83b56",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-BM-Part4-Bricks-Tiles-Ceramics-Sanitary-Ware-and-Related-Products.pdf",
+    "file_name": "TR-BM-Part4-Bricks-Tiles-Ceramics-Sanitary-Ware-and-Related-Products.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 7,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "6802"
+        },
+        {
+          "hs_code": "1400"
+        },
+        {
+          "hs_code": "6801"
+        },
+        {
+          "hs_code": "2854"
+        },
+        {
+          "hs_code": "1276"
+        },
+        {
+          "hs_code": "2922"
+        },
+        {
+          "hs_code": "2270"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "312c25eb-8193-4470-b0d3-068824c41b4d",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-BM-Part5-Pipes-Used-in-Water-Electricity-and-Gas-Networks1.pdf",
+    "file_name": "TR-BM-Part5-Pipes-Used-in-Water-Electricity-and-Gas-Networks1.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 26,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "7304"
+        },
+        {
+          "hs_code": "6191"
+        },
+        {
+          "hs_code": "1382"
+        },
+        {
+          "hs_code": "1745"
+        },
+        {
+          "hs_code": "6254"
+        },
+        {
+          "hs_code": "7411"
+        },
+        {
+          "hs_code": "6195"
+        },
+        {
+          "hs_code": "3917"
+        },
+        {
+          "hs_code": "1213"
+        },
+        {
+          "hs_code": "6042"
+        },
+        {
+          "hs_code": "7608"
+        },
+        {
+          "hs_code": "6244"
+        },
+        {
+          "hs_code": "6227"
+        },
+        {
+          "hs_code": "6108"
+        },
+        {
+          "hs_code": "1228"
+        },
+        {
+          "hs_code": "1822"
+        },
+        {
+          "hs_code": "7412"
+        },
+        {
+          "hs_code": "1491"
+        },
+        {
+          "hs_code": "1500"
+        },
+        {
+          "hs_code": "1509"
+        },
+        {
+          "hs_code": "6153"
+        },
+        {
+          "hs_code": "8547"
+        },
+        {
+          "hs_code": "1567"
+        },
+        {
+          "hs_code": "8307"
+        },
+        {
+          "hs_code": "1613"
+        },
+        {
+          "hs_code": "7507"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "09fe1b19-0665-4e11-a82f-3e9b2516736d",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-child-restraint-systems-and-strollers.pdf",
+    "file_name": "TR-child-restraint-systems-and-strollers.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 2,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "IEC 17067",
+          "title_en": "s official letterhead. 1) Supplier data - Name: --"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "9401"
+        },
+        {
+          "hs_code": "8715"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "f79cadc3-2a63-46d4-be58-5d73825bfec8",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-escalators-and-moving-walkways.pdf",
+    "file_name": "TR-escalators-and-moving-walkways.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 1,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "8428"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "bf620a40-4ea3-4479-896e-328e0912c9cd",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Footwear-and-thier-Accessories.pdf",
+    "file_name": "TR-Footwear-and-thier-Accessories.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "4f4828f5-062b-4db9-99de-eabc9e5f7ba3",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Front-rear-and-Side-barriers.pdf",
+    "file_name": "TR-Front-rear-and-Side-barriers.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 1,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "8708"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "96be82d7-4310-4078-8f64-e8e9af8f175a",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Gas-Appliances.pdf",
+    "file_name": "TR-Gas-Appliances.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 14,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "7019"
+        },
+        {
+          "hs_code": "2299"
+        },
+        {
+          "hs_code": "7613"
+        },
+        {
+          "hs_code": "1424"
+        },
+        {
+          "hs_code": "1111"
+        },
+        {
+          "hs_code": "3917"
+        },
+        {
+          "hs_code": "1254"
+        },
+        {
+          "hs_code": "1612"
+        },
+        {
+          "hs_code": "8481"
+        },
+        {
+          "hs_code": "1281"
+        },
+        {
+          "hs_code": "8416"
+        },
+        {
+          "hs_code": "7419"
+        },
+        {
+          "hs_code": "7311"
+        },
+        {
+          "hs_code": "9032"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "92a1b967-a8cb-4781-b49e-a6821af79389",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Hydrogen-Vehicles.pdf",
+    "file_name": "TR-Hydrogen-Vehicles.pdf",
+    "metaJson": {
+      "total_standards": 39,
+      "total_hs_codes": 1,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO/TS 20100",
+          "title_en": "Gaseous Hydrogen \u2014 Fueling stations"
+        },
+        {
+          "standard_number": 2,
+          "code": "SAE J 2601",
+          "title_en": "Fueling Protocols For Light Duty Gaseous Hydrogen "
+        },
+        {
+          "standard_number": 8,
+          "code": "ISO 17268",
+          "title_en": "Gaseous Hydrogen land vehicle refueling connection"
+        },
+        {
+          "standard_number": 4,
+          "code": "ISO 26142",
+          "title_en": "Hydrogen detection apparatus \u2014 Stationary applicat"
+        },
+        {
+          "standard_number": 5,
+          "code": "ISO/TS 19883",
+          "title_en": "Safety of pressure swing adsorption systems for Hy"
+        },
+        {
+          "standard_number": 6,
+          "code": "ISO 19882",
+          "title_en": "Gaseous Hydrogen \u2014 Thermally activated pressure re"
+        },
+        {
+          "standard_number": 7,
+          "code": "ISO 19881",
+          "title_en": "Gaseous Hydrogen \u2014 Land vehicle fuel containers"
+        },
+        {
+          "standard_number": 9,
+          "code": "ISO 16110-1",
+          "title_en": "Hydrogen generators using fuel processing technolo"
+        },
+        {
+          "standard_number": 10,
+          "code": "ISO 16110-2",
+          "title_en": "Hydrogen generators using fuel processing technolo"
+        },
+        {
+          "standard_number": 11,
+          "code": "ISO/TR 15916",
+          "title_en": "Basic considerations for the safety of Hydrogen sy"
+        },
+        {
+          "standard_number": 12,
+          "code": "ISO 13985",
+          "title_en": "Liquid Hydrogen \u2014 Land vehicle fuel containers"
+        },
+        {
+          "standard_number": 13,
+          "code": "ISO 13984",
+          "title_en": "Liquid Hydrogen \u2014 Land vehicle fueling system inte"
+        },
+        {
+          "standard_number": 14,
+          "code": "SASO-ISO- 8820-1",
+          "title_en": "Road vehicles -- Fuse-links -- Part 1: Definitions"
+        },
+        {
+          "standard_number": 15,
+          "code": "SASO-ISO- 8820-6",
+          "title_en": "Road vehicles -- Fuse-links -- Part 6: Single-bolt"
+        },
+        {
+          "standard_number": 17,
+          "code": "SASO GSO 42",
+          "title_en": "Motor vehicles - General requirements"
+        },
+        {
+          "standard_number": 27,
+          "code": "SASO GSO 279",
+          "title_en": "Testing Methods of Fabric for Car Seats"
+        },
+        {
+          "standard_number": 28,
+          "code": "SASO GSO 280",
+          "title_en": "Fabric for Car Seats"
+        },
+        {
+          "standard_number": 39,
+          "code": "GSO 1052",
+          "title_en": "Motor vehicles tiers - temporary use spare wheels "
+        },
+        {
+          "standard_number": 53,
+          "code": "SASO ISO 3537",
+          "title_en": "Road vehicles - Safety glazing materials - Mechani"
+        },
+        {
+          "standard_number": 54,
+          "code": "SASO ISO 3538",
+          "title_en": "Road Vehicles - Safety Glasses - Test Methods for "
+        },
+        {
+          "standard_number": 55,
+          "code": "SASO GSO ISO 6311",
+          "title_en": "part 1: internal shear strength of lining material"
+        },
+        {
+          "standard_number": 63,
+          "code": "SASO ISO 3917",
+          "title_en": "Road vehicles - Safety glazing materials -- Test m"
+        },
+        {
+          "standard_number": 64,
+          "code": "SASO ISO 6310",
+          "title_en": "road vehicle - brake linings - compressive strain "
+        },
+        {
+          "standard_number": 65,
+          "code": "SASO ISO 6312",
+          "title_en": "Road vehicles - Brake linings - Shear test procedu"
+        },
+        {
+          "standard_number": 66,
+          "code": "SASO ISO 6313",
+          "title_en": "Road vehicles - brake linings - effects of heat on"
+        },
+        {
+          "standard_number": 67,
+          "code": "SASO GSO ISO 4000-2",
+          "title_en": "Passenger car tires and rims - Part 2: rims"
+        },
+        {
+          "standard_number": 68,
+          "code": "SASO GSO ISO 4209-2",
+          "title_en": "Truck and bus tires and rims (metric series) - Par"
+        },
+        {
+          "standard_number": 69,
+          "code": "ISO 23273",
+          "title_en": "Fuel cell road vehicles \u2014 Safety specifications \u2014 "
+        },
+        {
+          "standard_number": 70,
+          "code": "ECE R 100",
+          "title_en": "The safety requirements specific to the electric p"
+        },
+        {
+          "standard_number": 71,
+          "code": "UN/ECE134",
+          "title_en": "Uniform provisions concerning the approval of moto"
+        },
+        {
+          "standard_number": 72,
+          "code": "SASO ISO 3894",
+          "title_en": "Road vehicles - Wheels/rims for commercial vehicle"
+        },
+        {
+          "standard_number": 73,
+          "code": "SASO IEC 60095-1",
+          "title_en": "Lead-acid batteries for starters - Part : 1 01-02-"
+        },
+        {
+          "standard_number": 74,
+          "code": "SASO IEC 60095-2",
+          "title_en": "Lead-acid batteries for starters - Part : 2"
+        },
+        {
+          "standard_number": 75,
+          "code": "SASO ISO 6469-1",
+          "title_en": "RESS ) Electrically propelled road vehicles \u2014 Safe"
+        },
+        {
+          "standard_number": 76,
+          "code": "SASO ISO 6469-2",
+          "title_en": "Electrically propelled road vehicles \u2014 Safety spec"
+        },
+        {
+          "standard_number": 77,
+          "code": "SASO ISO 6469-3",
+          "title_en": "Electrically propelled road vehicles \u2014 Safety spec"
+        },
+        {
+          "standard_number": 78,
+          "code": "SASO ISO 6469-4",
+          "title_en": "Electrically propelled road vehicles \u2014 Safety spec"
+        },
+        {
+          "standard_number": 79,
+          "code": "SASO GSO ISO 3006",
+          "title_en": "Road vehicles - Passenger car wheels for road use "
+        },
+        {
+          "standard_number": 16,
+          "code": "IEC 17067",
+          "title_en": "and the Saudi standards/- ------------------- incl"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "8702"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "a5e57e87-fd62-47f0-aabf-36c143e625df",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Machinery-Safety-Part1-Portable-and-Hand-oriented-Machines.pdf",
+    "file_name": "TR-Machinery-Safety-Part1-Portable-and-Hand-oriented-Machines.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 1,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "8467"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "3aa510bb-0681-4cc9-b543-4a22c36fb061",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Machinery-Safety-Part2-Mobile-Machinery-and-Heavy-Duty-Equipment.pdf",
+    "file_name": "TR-Machinery-Safety-Part2-Mobile-Machinery-and-Heavy-Duty-Equipment.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 7,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "8430"
+        },
+        {
+          "hs_code": "8424"
+        },
+        {
+          "hs_code": "8429"
+        },
+        {
+          "hs_code": "8431"
+        },
+        {
+          "hs_code": "8479"
+        },
+        {
+          "hs_code": "8433"
+        },
+        {
+          "hs_code": "8432"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "0e744c3c-08d4-44cb-97b5-8a401bff94d5",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Machinery-Safety-Part3-Lifting-Equipment.pdf",
+    "file_name": "TR-Machinery-Safety-Part3-Lifting-Equipment.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 8,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1677"
+        },
+        {
+          "hs_code": "2291"
+        },
+        {
+          "hs_code": "9001"
+        },
+        {
+          "hs_code": "8427"
+        },
+        {
+          "hs_code": "1356"
+        },
+        {
+          "hs_code": "8428"
+        },
+        {
+          "hs_code": "8426"
+        },
+        {
+          "hs_code": "8425"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "5af309f9-024a-4a87-a2d3-5954b009ebff",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Motorcycles.pdf",
+    "file_name": "TR-Motorcycles.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 1,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "2980"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "28305758-ac0d-46c3-b497-2629d3b64af2",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-ornaments-and-accessories.pdf",
+    "file_name": "TR-ornaments-and-accessories.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 5,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "9101"
+        },
+        {
+          "hs_code": "9113"
+        },
+        {
+          "hs_code": "7018"
+        },
+        {
+          "hs_code": "7117"
+        },
+        {
+          "hs_code": "7116"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "67c91142-cdf2-441a-9d5a-96ebb4a43e0b",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Paper-and-Cardboard.pdf",
+    "file_name": "TR-Paper-and-Cardboard.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 13,
+      "standards": [
+        {
+          "standard_number": 5,
+          "code": "IEC 17067",
+          "title_en": "s letterhead papers 1) Supplier data: - Name: ----"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "4806"
+        },
+        {
+          "hs_code": "4822"
+        },
+        {
+          "hs_code": "3703"
+        },
+        {
+          "hs_code": "4811"
+        },
+        {
+          "hs_code": "3704"
+        },
+        {
+          "hs_code": "4812"
+        },
+        {
+          "hs_code": "4808"
+        },
+        {
+          "hs_code": "4807"
+        },
+        {
+          "hs_code": "4805"
+        },
+        {
+          "hs_code": "1500"
+        },
+        {
+          "hs_code": "4801"
+        },
+        {
+          "hs_code": "4821"
+        },
+        {
+          "hs_code": "4804"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "82c2d270-5ba6-41d0-a364-1424c674ea08",
+    "tr_name": "products_data\\TRdad4fd14\\TR in English\\TR-Tanks-Part2-LPG-Tankers.pdf",
+    "file_name": "TR-Tanks-Part2-LPG-Tankers.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 10,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "7613"
+        },
+        {
+          "hs_code": "9001"
+        },
+        {
+          "hs_code": "8716"
+        },
+        {
+          "hs_code": "1249"
+        },
+        {
+          "hs_code": "1225"
+        },
+        {
+          "hs_code": "1433"
+        },
+        {
+          "hs_code": "7309"
+        },
+        {
+          "hs_code": "7419"
+        },
+        {
+          "hs_code": "7311"
+        },
+        {
+          "hs_code": "1377"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "583b8f37-18e3-4dcb-bf81-74f7b5fc8258",
+    "tr_name": "products_data\\TR98e8cd9a\\bd-131704-01.pdf",
+    "file_name": "bd-131704-01.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 45,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1560"
+        },
+        {
+          "hs_code": "7646"
+        },
+        {
+          "hs_code": "9000"
+        },
+        {
+          "hs_code": "1203"
+        },
+        {
+          "hs_code": "1336"
+        },
+        {
+          "hs_code": "1662"
+        },
+        {
+          "hs_code": "5202"
+        },
+        {
+          "hs_code": "1205"
+        },
+        {
+          "hs_code": "1058"
+        },
+        {
+          "hs_code": "1306"
+        },
+        {
+          "hs_code": "1304"
+        },
+        {
+          "hs_code": "1757"
+        },
+        {
+          "hs_code": "1013"
+        },
+        {
+          "hs_code": "3333"
+        },
+        {
+          "hs_code": "6474"
+        },
+        {
+          "hs_code": "7784"
+        },
+        {
+          "hs_code": "2580"
+        },
+        {
+          "hs_code": "1012"
+        },
+        {
+          "hs_code": "3930"
+        },
+        {
+          "hs_code": "7778"
+        },
+        {
+          "hs_code": "7440"
+        },
+        {
+          "hs_code": "7790"
+        },
+        {
+          "hs_code": "1681"
+        },
+        {
+          "hs_code": "1010"
+        },
+        {
+          "hs_code": "7758"
+        },
+        {
+          "hs_code": "7786"
+        },
+        {
+          "hs_code": "7789"
+        },
+        {
+          "hs_code": "1251"
+        },
+        {
+          "hs_code": "9199"
+        },
+        {
+          "hs_code": "1335"
+        },
+        {
+          "hs_code": "1030"
+        },
+        {
+          "hs_code": "2010"
+        },
+        {
+          "hs_code": "7572"
+        },
+        {
+          "hs_code": "1333"
+        },
+        {
+          "hs_code": "1018"
+        },
+        {
+          "hs_code": "2122"
+        },
+        {
+          "hs_code": "1112"
+        },
+        {
+          "hs_code": "1309"
+        },
+        {
+          "hs_code": "7775"
+        },
+        {
+          "hs_code": "1376"
+        },
+        {
+          "hs_code": "1022"
+        },
+        {
+          "hs_code": "1200"
+        },
+        {
+          "hs_code": "1313"
+        },
+        {
+          "hs_code": "1314"
+        },
+        {
+          "hs_code": "7446"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "2a13be91-2466-4e3a-8fa5-f1230d6ea00d",
+    "tr_name": "products_data\\TR98e8cd9a\\bd-142004-01-20141028-bd-v2ab-ar.pdf",
+    "file_name": "bd-142004-01-20141028-bd-v2ab-ar.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "c42c8ead-483d-4adf-b8f1-034632921d9a",
+    "tr_name": "products_data\\TR98e8cd9a\\Building materials en-US.pdf",
+    "file_name": "Building materials en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "20e24319-441e-4c27-bdf3-be9c09287eb2",
+    "tr_name": "products_data\\TR98e8cd9a\\building-materials-part2.pdf",
+    "file_name": "building-materials-part2.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "7a65d364-87c1-4c17-b203-ef341d5c143d",
+    "tr_name": "products_data\\TR98e8cd9a\\Cableway installations en-US.pdf",
+    "file_name": "Cableway installations en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "aa4f7f55-2e51-4f15-a7ca-fa14518e2cbc",
+    "tr_name": "products_data\\TR98e8cd9a\\Communication Devices  en-US.pdf",
+    "file_name": "Communication Devices  en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "49c47016-218d-4db4-be5f-8fe3c9627bd6",
+    "tr_name": "products_data\\TR98e8cd9a\\Devices that operate with gas and accessories en-US.pdf",
+    "file_name": "Devices that operate with gas and accessories en-US.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO 9001",
+          "title_en": "t affect safety. The appliances and accessories mu"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "bc363db0-4c1a-4b0d-8f8e-21ee99659bfb",
+    "tr_name": "products_data\\TR98e8cd9a\\Electric personal mobility devices en-US.pdf",
+    "file_name": "Electric personal mobility devices en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "13627525-90ad-45f6-b943-9ff26e915a3e",
+    "tr_name": "products_data\\TR98e8cd9a\\Electric vehicles en-US.pdf",
+    "file_name": "Electric vehicles en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 1,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1000"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "a3e57e01-c96e-4edb-bd8e-23d2bd1d8f36",
+    "tr_name": "products_data\\TR98e8cd9a\\Electromagnetic compatibility (EMC) en-US.pdf",
+    "file_name": "Electromagnetic compatibility (EMC) en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "a913f27c-0a11-463a-9de4-6eb46219268a",
+    "tr_name": "products_data\\TR98e8cd9a\\Electronic smoking systems en-US.pdf",
+    "file_name": "Electronic smoking systems en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "e10d6e51-504e-4ec2-b3a5-2158a0204682",
+    "tr_name": "products_data\\TR98e8cd9a\\Equipment and protective systems intended for use in potentially explosive atmospheres en-US.pdf",
+    "file_name": "Equipment and protective systems intended for use in potentially explosive atmospheres en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "ebc3bf3a-0fb5-4a47-afb8-c2ca6485231e",
+    "tr_name": "products_data\\TR98e8cd9a\\Escalators and moving walkways en-US.pdf",
+    "file_name": "Escalators and moving walkways en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "35b2759b-e116-4974-b0e8-025b9968782f",
+    "tr_name": "products_data\\TR98e8cd9a\\fire works TR1.pdf",
+    "file_name": "fire works TR1.pdf",
+    "metaJson": {
+      "total_standards": 2,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO 14001",
+          "title_en": "il j .J w"
+        },
+        {
+          "standard_number": 1,
+          "code": "ISO 26261",
+          "title_en": "yh i 9 la th V4 Ga V8 daca"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "52f809e6-acc4-42f4-acfe-1a3e6230d6f9",
+    "tr_name": "products_data\\TR98e8cd9a\\Gulf_Technical_Regulation_for_Tyres.pdf",
+    "file_name": "Gulf_Technical_Regulation_for_Tyres.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "32fae1bc-acdb-48f8-b333-33e96553489a",
+    "tr_name": "products_data\\TR98e8cd9a\\Hazardous substances en-US.pdf",
+    "file_name": "Hazardous substances en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 1,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1500"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "8f9f60fd-611d-49b7-bf76-abf5249ef47e",
+    "tr_name": "products_data\\TR98e8cd9a\\Machinery safety en-US.pdf",
+    "file_name": "Machinery safety en-US.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO 9001",
+          "title_en": "When the total vibration value above cannot be mea"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "cffa2302-9696-4b74-b346-64d7a2d0969a",
+    "tr_name": "products_data\\TR98e8cd9a\\Motorcycles, including mopeds, and cycles fitted with an auxiliary motor, with or without side-cars en-US.pdf",
+    "file_name": "Motorcycles, including mopeds, and cycles fitted with an auxiliary motor, with or without side-cars en-US.pdf",
+    "metaJson": {
+      "total_standards": 2,
+      "total_hs_codes": 1,
+      "standards": [
+        {
+          "standard_number": 2,
+          "code": "GSO 1782",
+          "title_en": "s documents. . 1.2 Ensure that the vehicle identif"
+        },
+        {
+          "standard_number": 9,
+          "code": "SASO GSO 1798",
+          "title_en": "s contact line. 14 Footrests 14.1 Ensure that the "
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1599"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "231b61f2-02ef-40a3-9619-2161baffdb73",
+    "tr_name": "products_data\\TR98e8cd9a\\Packaging en-US.pdf",
+    "file_name": "Packaging en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "8ba264be-cff6-4d9e-bdc1-e781f87af8ec",
+    "tr_name": "products_data\\TR98e8cd9a\\Paper and board en-US.pdf",
+    "file_name": "Paper and board en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "b5817164-96bc-49bc-a05a-b4b7a28eac03",
+    "tr_name": "products_data\\TR98e8cd9a\\Personal protective clothing and equipments en-US.pdf",
+    "file_name": "Personal protective clothing and equipments en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "b33fd619-820e-4b85-86b6-81eb6e281414",
+    "tr_name": "products_data\\TR98e8cd9a\\Simple pressure vessels en-US.pdf",
+    "file_name": "Simple pressure vessels en-US.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "1806426d-540a-4c06-b685-57053eb6f602",
+    "tr_name": "products_data\\TR98e8cd9a\\Technical Regulation for Child Restraint Systems and Stroller (1st Version) 01-02-06-22-184 [Official] (Mar 31, 2022).pdf",
+    "file_name": "Technical Regulation for Child Restraint Systems and Stroller (1st Version) 01-02-06-22-184 [Official] (Mar 31, 2022).pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 2,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "IEC 17067",
+          "title_en": "s official letterhead. 1) Supplier data - Name: --"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "8715"
+        },
+        {
+          "hs_code": "9401"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "45a53195-df7d-4a4d-ba01-2616ac47972b",
+    "tr_name": "products_data\\TR98e8cd9a\\Technical-Regulation-for-Cableway-Installations (1).pdf",
+    "file_name": "Technical-Regulation-for-Cableway-Installations (1).pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "125627ac-0d9e-4f07-accd-b2f6b2cb64a3",
+    "tr_name": "products_data\\TR98e8cd9a\\Technical-Regulation-for-Cableway-Installations.pdf",
+    "file_name": "Technical-Regulation-for-Cableway-Installations.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "39cf30c8-68cc-4f86-9a22-8756e682cfd9",
+    "tr_name": "products_data\\TR98e8cd9a\\Technical-Regulations-for-Tanks-Part3-Dry-Gas-Transport-Tanks.pdf",
+    "file_name": "Technical-Regulations-for-Tanks-Part3-Dry-Gas-Transport-Tanks.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 2,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "2382"
+        },
+        {
+          "hs_code": "1380"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "aa6e2641-940d-4a40-9b04-3858294754f9",
+    "tr_name": "products_data\\TR98e8cd9a\\Technical_Regulation_for_Auto_Spare_Parts.pdf",
+    "file_name": "Technical_Regulation_for_Auto_Spare_Parts.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 2,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "3895"
+        },
+        {
+          "hs_code": "3896"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "4b541899-4906-4a55-a627-d243dbe968b0",
+    "tr_name": "products_data\\TR98e8cd9a\\Technical_Regulation_for_Packaging.pdf",
+    "file_name": "Technical_Regulation_for_Packaging.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "0da9ce0b-be65-4496-9985-05e79903226b",
+    "tr_name": "products_data\\TR98e8cd9a\\TR- Paints-and-Varnishes.pdf",
+    "file_name": "TR- Paints-and-Varnishes.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 4,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "4457"
+        },
+        {
+          "hs_code": "1189"
+        },
+        {
+          "hs_code": "2590"
+        },
+        {
+          "hs_code": "3856"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "af2a2ca6-f226-4535-8d12-3590b0b7a343",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Amusement-Parks-Games-and-Devices.pdf",
+    "file_name": "TR-Amusement-Parks-Games-and-Devices.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 6,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1176"
+        },
+        {
+          "hs_code": "1257"
+        },
+        {
+          "hs_code": "1784"
+        },
+        {
+          "hs_code": "6033"
+        },
+        {
+          "hs_code": "6236"
+        },
+        {
+          "hs_code": "6211"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "3a9264c6-abd4-4b13-b117-32ef8d139c48",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Communications-and-Information-Technology-Devices.pdf",
+    "file_name": "TR-Communications-and-Information-Technology-Devices.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 1,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1454"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "198afd3d-c45c-404f-b1cb-006b1471b407",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Detergents.pdf",
+    "file_name": "TR-Detergents.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "f91dce98-3987-4029-9034-01dd19ae539d",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Doors-Windows-and-thier-Accessories.pdf",
+    "file_name": "TR-Doors-Windows-and-thier-Accessories.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 9,
+          "code": "SASO-EN-1125",
+          "title_en": "ISO/IEC 17067 ) )("
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "d6a0d47f-2013-4bae-9b91-2739abfe566b",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Electric-Personal-Mobility-Devices-Scooter.pdf",
+    "file_name": "TR-Electric-Personal-Mobility-Devices-Scooter.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "6c7b44b5-fcab-46d9-8640-bbe939fa9101",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Electrical-Batteries.pdf",
+    "file_name": "TR-Electrical-Batteries.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 2,
+      "standards": [
+        {
+          "standard_number": 2,
+          "code": "IEC 17067",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "7000"
+        },
+        {
+          "hs_code": "6266"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "f4f6bd9c-f95a-4747-8ce7-b49a9b92f3a5",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Electromagnetic-Compatibility.pdf",
+    "file_name": "TR-Electromagnetic-Compatibility.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 1,
+      "standards": [
+        {
+          "standard_number": 2,
+          "code": "SASO IEC 60034-1",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "6100"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "42b02803-a3fb-443c-89ad-eaec9ff561ec",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Equipment-and-Protective-Systems-Intended-for-Use-in-Potentially-Explosive-Atmospheres.pdf",
+    "file_name": "TR-Equipment-and-Protective-Systems-Intended-for-Use-in-Potentially-Explosive-Atmospheres.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "2a53d599-1064-4aee-99cd-5bf5f4512222",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-hydrogen-vehicles.pdf",
+    "file_name": "TR-hydrogen-vehicles.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 39,
+      "standards": [
+        {
+          "standard_number": 9,
+          "code": "IEC 17067",
+          "title_en": "Supplier Declaration of Conformity )"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "6312"
+        },
+        {
+          "hs_code": "1066"
+        },
+        {
+          "hs_code": "2252"
+        },
+        {
+          "hs_code": "1726"
+        },
+        {
+          "hs_code": "1490"
+        },
+        {
+          "hs_code": "1444"
+        },
+        {
+          "hs_code": "1398"
+        },
+        {
+          "hs_code": "1771"
+        },
+        {
+          "hs_code": "1052"
+        },
+        {
+          "hs_code": "8820"
+        },
+        {
+          "hs_code": "1136"
+        },
+        {
+          "hs_code": "4209"
+        },
+        {
+          "hs_code": "2253"
+        },
+        {
+          "hs_code": "1134"
+        },
+        {
+          "hs_code": "1677"
+        },
+        {
+          "hs_code": "2210"
+        },
+        {
+          "hs_code": "3006"
+        },
+        {
+          "hs_code": "3538"
+        },
+        {
+          "hs_code": "1315"
+        },
+        {
+          "hs_code": "2250"
+        },
+        {
+          "hs_code": "6009"
+        },
+        {
+          "hs_code": "1611"
+        },
+        {
+          "hs_code": "3894"
+        },
+        {
+          "hs_code": "3917"
+        },
+        {
+          "hs_code": "6469"
+        },
+        {
+          "hs_code": "1988"
+        },
+        {
+          "hs_code": "6310"
+        },
+        {
+          "hs_code": "2601"
+        },
+        {
+          "hs_code": "2209"
+        },
+        {
+          "hs_code": "2327"
+        },
+        {
+          "hs_code": "2249"
+        },
+        {
+          "hs_code": "3537"
+        },
+        {
+          "hs_code": "2251"
+        },
+        {
+          "hs_code": "6313"
+        },
+        {
+          "hs_code": "6311"
+        },
+        {
+          "hs_code": "2614"
+        },
+        {
+          "hs_code": "1135"
+        },
+        {
+          "hs_code": "4000"
+        },
+        {
+          "hs_code": "1437"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "0563158d-b152-46c2-bff5-d9d939c05070",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Lubricating-Oils.pdf",
+    "file_name": "TR-Lubricating-Oils.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "0e8d4130-829f-4799-a0e3-42aab2762ff3",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Machinery-Safety4.pdf",
+    "file_name": "TR-Machinery-Safety4.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "IEC 17067",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "0c341ff0-d252-4362-acbd-7deb552776b2",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Personal-Protective-Equipment-and-Clothing.pdf",
+    "file_name": "TR-Personal-Protective-Equipment-and-Clothing.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 51,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1348"
+        },
+        {
+          "hs_code": "1632"
+        },
+        {
+          "hs_code": "1868"
+        },
+        {
+          "hs_code": "2598"
+        },
+        {
+          "hs_code": "1077"
+        },
+        {
+          "hs_code": "1460"
+        },
+        {
+          "hs_code": "1991"
+        },
+        {
+          "hs_code": "1452"
+        },
+        {
+          "hs_code": "1888"
+        },
+        {
+          "hs_code": "2340"
+        },
+        {
+          "hs_code": "2338"
+        },
+        {
+          "hs_code": "2034"
+        },
+        {
+          "hs_code": "1385"
+        },
+        {
+          "hs_code": "1247"
+        },
+        {
+          "hs_code": "1383"
+        },
+        {
+          "hs_code": "1938"
+        },
+        {
+          "hs_code": "1080"
+        },
+        {
+          "hs_code": "1602"
+        },
+        {
+          "hs_code": "1533"
+        },
+        {
+          "hs_code": "1025"
+        },
+        {
+          "hs_code": "1456"
+        },
+        {
+          "hs_code": "2142"
+        },
+        {
+          "hs_code": "1742"
+        },
+        {
+          "hs_code": "1378"
+        },
+        {
+          "hs_code": "1414"
+        },
+        {
+          "hs_code": "1078"
+        },
+        {
+          "hs_code": "3873"
+        },
+        {
+          "hs_code": "1240"
+        },
+        {
+          "hs_code": "8194"
+        },
+        {
+          "hs_code": "1384"
+        },
+        {
+          "hs_code": "1981"
+        },
+        {
+          "hs_code": "2032"
+        },
+        {
+          "hs_code": "5028"
+        },
+        {
+          "hs_code": "2192"
+        },
+        {
+          "hs_code": "1852"
+        },
+        {
+          "hs_code": "5036"
+        },
+        {
+          "hs_code": "2256"
+        },
+        {
+          "hs_code": "1863"
+        },
+        {
+          "hs_code": "1538"
+        },
+        {
+          "hs_code": "1284"
+        },
+        {
+          "hs_code": "1660"
+        },
+        {
+          "hs_code": "1509"
+        },
+        {
+          "hs_code": "1149"
+        },
+        {
+          "hs_code": "1199"
+        },
+        {
+          "hs_code": "9151"
+        },
+        {
+          "hs_code": "1607"
+        },
+        {
+          "hs_code": "1303"
+        },
+        {
+          "hs_code": "1891"
+        },
+        {
+          "hs_code": "1731"
+        },
+        {
+          "hs_code": "1231"
+        },
+        {
+          "hs_code": "2596"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "b0e84a85-22f8-435d-b9be-ad7e4377ea55",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Pressure-Equipment.pdf",
+    "file_name": "TR-Pressure-Equipment.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 4,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "7291"
+        },
+        {
+          "hs_code": "1521"
+        },
+        {
+          "hs_code": "2503"
+        },
+        {
+          "hs_code": "1576"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "110d930d-61ac-4bff-b1a9-7ccedad42871",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Regulation-Energy-Efficiency.pdf",
+    "file_name": "TR-Regulation-Energy-Efficiency.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 14,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "2847"
+        },
+        {
+          "hs_code": "2892"
+        },
+        {
+          "hs_code": "2870"
+        },
+        {
+          "hs_code": "2857"
+        },
+        {
+          "hs_code": "3029"
+        },
+        {
+          "hs_code": "2874"
+        },
+        {
+          "hs_code": "2893"
+        },
+        {
+          "hs_code": "2883"
+        },
+        {
+          "hs_code": "2927"
+        },
+        {
+          "hs_code": "2902"
+        },
+        {
+          "hs_code": "8418"
+        },
+        {
+          "hs_code": "2885"
+        },
+        {
+          "hs_code": "2663"
+        },
+        {
+          "hs_code": "2884"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "bcd81f53-7082-428f-b610-45f2e75f6901",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Requirements-Electrical-Electronic-Equipment.pdf",
+    "file_name": "TR-Requirements-Electrical-Electronic-Equipment.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 85,
+          "code": "EN 50564",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "be7f25dd-ca38-4333-85de-8a92c1c64440",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Requirements-Machinery-Safety.pdf",
+    "file_name": "TR-Requirements-Machinery-Safety.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 4,
+      "standards": [
+        {
+          "standard_number": 4,
+          "code": "IEC 17067",
+          "title_en": "Type Approval ) 1/1"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1446"
+        },
+        {
+          "hs_code": "6206"
+        },
+        {
+          "hs_code": "8489"
+        },
+        {
+          "hs_code": "1303"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "337e22a4-bc1f-4123-aa73-6a58d0c88008",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Restriction-of-hazardous-Substance-in-Electrical-and-Electronic-Equipment.pdf",
+    "file_name": "TR-Restriction-of-hazardous-Substance-in-Electrical-and-Electronic-Equipment.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 3,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "6232"
+        },
+        {
+          "hs_code": "6247"
+        },
+        {
+          "hs_code": "6300"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "2a3210a9-9595-4ca5-94bd-ea0d35fc3c98",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-simple-pressure-vessels.pdf",
+    "file_name": "TR-simple-pressure-vessels.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 1,
+      "standards": [
+        {
+          "standard_number": 2,
+          "code": "IEC 17067",
+          "title_en": "ISO/IEC 17067 ) )("
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "4706"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "64d4546c-64e4-495a-af08-ae77ad7550c7",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Special-Use-Vehicle-Equipment-and-Accessories.pdf",
+    "file_name": "TR-Special-Use-Vehicle-Equipment-and-Accessories.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "98f2ae91-f2f6-4906-9a92-1181e3bd61d2",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-tankers-Part2.pdf",
+    "file_name": "TR-tankers-Part2.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "41f7fa9c-c794-49ff-83c8-6c4c9491ce5b",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Textile-Products.pdf",
+    "file_name": "TR-Textile-Products.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 2,
+          "code": "IEC 17067",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "05a7e154-963f-4568-a749-38b93b007255",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Used-Imported-Vehicles.pdf",
+    "file_name": "TR-Used-Imported-Vehicles.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 10,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1284"
+        },
+        {
+          "hs_code": "2956"
+        },
+        {
+          "hs_code": "1782"
+        },
+        {
+          "hs_code": "1677"
+        },
+        {
+          "hs_code": "2957"
+        },
+        {
+          "hs_code": "2955"
+        },
+        {
+          "hs_code": "1780"
+        },
+        {
+          "hs_code": "2864"
+        },
+        {
+          "hs_code": "1783"
+        },
+        {
+          "hs_code": "1052"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "b24ae873-ab23-4031-8e54-1f2c1ef0c210",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Watercrafts (1).pdf",
+    "file_name": "TR-Watercrafts (1).pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 5,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "6185"
+        },
+        {
+          "hs_code": "4566"
+        },
+        {
+          "hs_code": "1221"
+        },
+        {
+          "hs_code": "1159"
+        },
+        {
+          "hs_code": "8845"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "01cb3a0d-9227-49e6-b04f-230501b3b0a7",
+    "tr_name": "products_data\\TR98e8cd9a\\TR-Watercrafts.pdf",
+    "file_name": "TR-Watercrafts.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 5,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "6185"
+        },
+        {
+          "hs_code": "4566"
+        },
+        {
+          "hs_code": "1221"
+        },
+        {
+          "hs_code": "1159"
+        },
+        {
+          "hs_code": "8845"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "3160fbc2-a195-4bb8-841a-debdba51c709",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0623\u062f\u0648\u0627\u062a \u062a\u0631\u0634\u064a\u062f \u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0627\u0644\u0645\u064a\u0627\u0647.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0623\u062f\u0648\u0627\u062a \u062a\u0631\u0634\u064a\u062f \u0627\u0633\u062a\u0647\u0644\u0627\u0643 \u0627\u0644\u0645\u064a\u0627\u0647.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "SASO EN 246",
+          "title_en": "t.. ........., - J,.J.j"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "60c90294-f3c9-4970-92f1-e588f1901534",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0623\u0646\u0638\u0645\u0629 \u0627\u0644\u0637\u0627\u0642\u0629 \u0627\u0644\u0634\u0645\u0633\u064a\u0629 \u0627\u0644\u0643\u0647\u0631\u0648\u0636\u0648\u0626\u064a\u0629 \u0627\u0644\u0635\u063a\u064a\u0631\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0623\u0646\u0638\u0645\u0629 \u0627\u0644\u0637\u0627\u0642\u0629 \u0627\u0644\u0634\u0645\u0633\u064a\u0629 \u0627\u0644\u0643\u0647\u0631\u0648\u0636\u0648\u0626\u064a\u0629 \u0627\u0644\u0635\u063a\u064a\u0631\u0629.pdf",
+    "metaJson": {
+      "total_standards": 2,
+      "total_hs_codes": 20,
+      "standards": [
+        {
+          "standard_number": 111,
+          "code": "ISO 9001",
+          "title_en": "W)UI .il,, .. u ..:.1"
+        },
+        {
+          "standard_number": 1,
+          "code": "SASOIEC 61215",
+          "title_en": "JI ,....., ----------------------- :"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "6112"
+        },
+        {
+          "hs_code": "6209"
+        },
+        {
+          "hs_code": "6143"
+        },
+        {
+          "hs_code": "6292"
+        },
+        {
+          "hs_code": "6090"
+        },
+        {
+          "hs_code": "6254"
+        },
+        {
+          "hs_code": "6230"
+        },
+        {
+          "hs_code": "6244"
+        },
+        {
+          "hs_code": "6121"
+        },
+        {
+          "hs_code": "6100"
+        },
+        {
+          "hs_code": "6168"
+        },
+        {
+          "hs_code": "6185"
+        },
+        {
+          "hs_code": "8544"
+        },
+        {
+          "hs_code": "6291"
+        },
+        {
+          "hs_code": "6006"
+        },
+        {
+          "hs_code": "6164"
+        },
+        {
+          "hs_code": "6271"
+        },
+        {
+          "hs_code": "6285"
+        },
+        {
+          "hs_code": "6025"
+        },
+        {
+          "hs_code": "6094"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "e8eec9a3-065a-48d8-a22f-596c571dbef9",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0633\u0644\u0627\u0645\u0629 \u0627\u0644\u0622\u0644\u0627\u062a \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u0623\u0648\u0644.  \u0662.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0633\u0644\u0627\u0645\u0629 \u0627\u0644\u0622\u0644\u0627\u062a \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u0623\u0648\u0644.  \u0662.pdf",
+    "metaJson": {
+      "total_standards": 3,
+      "total_hs_codes": 2,
+      "standards": [
+        {
+          "standard_number": 4,
+          "code": "ISO 9001",
+          "title_en": "Part 2-100: Particular Aol olibidl"
+        },
+        {
+          "standard_number": 1,
+          "code": "SASO-IEC-60745",
+          "title_en": "OM a VV daicall"
+        },
+        {
+          "standard_number": 4,
+          "code": "IEC 17067",
+          "title_en": "igaigil OF cys OF Andall F 1 SG www.saso.gov.sa s"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1574"
+        },
+        {
+          "hs_code": "1114"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "ef0b3a7f-b5d9-4f0c-9172-cb0432fed1ff",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0633\u0644\u0627\u0645\u0629 \u0627\u0644\u0622\u0644\u0627\u062a-\u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u062b\u0627\u0644\u062b-\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0631\u0641\u0639.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0633\u0644\u0627\u0645\u0629 \u0627\u0644\u0622\u0644\u0627\u062a-\u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u062b\u0627\u0644\u062b-\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0631\u0641\u0639.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 35,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "IEC 17067",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1162"
+        },
+        {
+          "hs_code": "8589"
+        },
+        {
+          "hs_code": "1494"
+        },
+        {
+          "hs_code": "7363"
+        },
+        {
+          "hs_code": "1166"
+        },
+        {
+          "hs_code": "1662"
+        },
+        {
+          "hs_code": "1495"
+        },
+        {
+          "hs_code": "1320"
+        },
+        {
+          "hs_code": "2291"
+        },
+        {
+          "hs_code": "4302"
+        },
+        {
+          "hs_code": "2330"
+        },
+        {
+          "hs_code": "1587"
+        },
+        {
+          "hs_code": "2033"
+        },
+        {
+          "hs_code": "6292"
+        },
+        {
+          "hs_code": "3287"
+        },
+        {
+          "hs_code": "1677"
+        },
+        {
+          "hs_code": "2855"
+        },
+        {
+          "hs_code": "1315"
+        },
+        {
+          "hs_code": "5057"
+        },
+        {
+          "hs_code": "2413"
+        },
+        {
+          "hs_code": "1526"
+        },
+        {
+          "hs_code": "1493"
+        },
+        {
+          "hs_code": "1756"
+        },
+        {
+          "hs_code": "4305"
+        },
+        {
+          "hs_code": "3266"
+        },
+        {
+          "hs_code": "1356"
+        },
+        {
+          "hs_code": "1057"
+        },
+        {
+          "hs_code": "1451"
+        },
+        {
+          "hs_code": "1248"
+        },
+        {
+          "hs_code": "0955"
+        },
+        {
+          "hs_code": "1509"
+        },
+        {
+          "hs_code": "2089"
+        },
+        {
+          "hs_code": "1199"
+        },
+        {
+          "hs_code": "4309"
+        },
+        {
+          "hs_code": "9373"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "00d08a3e-de84-423c-897f-efedaa1cbccf",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0635\u0647\u0627\u0631\u064a\u062c.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0635\u0647\u0627\u0631\u064a\u062c.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "82b0adfd-da03-4f62-9def-ffab6ffa0cee",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0622\u0644\u0627\u062a \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u062b\u0627\u0646\u064a \u0627\u0644\u0622\u0644\u0627\u062a \u0627\u0644\u0645\u062a\u0646\u0642\u0644\u0629 \u0648\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0623\u0634\u063a\u0627\u0644 \u0627\u0644\u062b\u0642\u064a\u0644\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0622\u0644\u0627\u062a \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u062b\u0627\u0646\u064a \u0627\u0644\u0622\u0644\u0627\u062a \u0627\u0644\u0645\u062a\u0646\u0642\u0644\u0629 \u0648\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0623\u0634\u063a\u0627\u0644 \u0627\u0644\u062b\u0642\u064a\u0644\u0629.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "27026e6d-0973-4dcd-b8eb-67df610c5080",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0623\u062d\u0630\u064a\u0629 \u0648\u0645\u0644\u062d\u0642\u0627\u062a\u0647\u0627 - \u0646\u0634\u0631\u0629 \u0641\u064a \u0627\u0644\u062c\u0631\u064a\u062f\u0629 \u0627\u0644\u0631\u0633\u0645\u064a\u0629 \u0628\u062a\u0627\u0631\u064a\u062e 12-04-1442\u0647\u0640.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0623\u062d\u0630\u064a\u0629 \u0648\u0645\u0644\u062d\u0642\u0627\u062a\u0647\u0627 - \u0646\u0634\u0631\u0629 \u0641\u064a \u0627\u0644\u062c\u0631\u064a\u062f\u0629 \u0627\u0644\u0631\u0633\u0645\u064a\u0629 \u0628\u062a\u0627\u0631\u064a\u062e 12-04-1442\u0647\u0640.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "81fe4e84-6bec-44b1-afa2-9a18e162781a",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u063a\u0631\u0627\u0621 \u0648\u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0644\u0627\u0635\u0642\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u063a\u0631\u0627\u0621 \u0648\u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0644\u0627\u0635\u0642\u0629.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 60,
+          "code": "IEC 17067",
+          "title_en": "Yt Go YY datuoll - Supplier Declaration of Conform"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "5d7db028-7756-47e5-a03c-539f215fa3ab",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0631\u0643\u0628\u0627\u062a \u0627\u0644\u0645\u0639\u062f\u0644\u0629 \u0648\u0627\u0644\u0637\u0631\u0627\u0632\u0627\u062a \u0630\u0627\u062a \u0627\u0644\u0627\u0646\u062a\u0627\u062c \u0627\u0644\u0645\u062d\u062f\u0648\u062f 1361440.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0631\u0643\u0628\u0627\u062a \u0627\u0644\u0645\u0639\u062f\u0644\u0629 \u0648\u0627\u0644\u0637\u0631\u0627\u0632\u0627\u062a \u0630\u0627\u062a \u0627\u0644\u0627\u0646\u062a\u0627\u062c \u0627\u0644\u0645\u062d\u062f\u0648\u062f 1361440.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 2,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "SASO GSO 42",
+          "title_en": "I : :.i.S y:J I r"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1624"
+        },
+        {
+          "hs_code": "1040"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "40ba21a0-0435-47d1-9057-b3af7c05d407",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0635\u0627\u0639\u062f \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0644\u0644\u0645\u0628\u0627\u0646\u064a \u0648\u0627\u0644\u0645\u0646\u0634\u0622\u062a - \u0627\u0644\u0625\u0635\u062f\u0627\u0631 1 - \u0627\u0644\u062a\u0639\u062f\u064a\u0644 1.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0635\u0627\u0639\u062f \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0644\u0644\u0645\u0628\u0627\u0646\u064a \u0648\u0627\u0644\u0645\u0646\u0634\u0622\u062a - \u0627\u0644\u0625\u0635\u062f\u0627\u0631 1 - \u0627\u0644\u062a\u0639\u062f\u064a\u0644 1.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "59c7269c-8c30-40de-a659-315340f7f968",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0646\u062a\u062c\u0627\u062a \u0627\u0644\u0628\u0644\u0627\u0633\u062a\u064a\u0643\u064a\u0629 \u0627\u0644\u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u062a\u062d\u0644\u0644.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0646\u062a\u062c\u0627\u062a \u0627\u0644\u0628\u0644\u0627\u0633\u062a\u064a\u0643\u064a\u0629 \u0627\u0644\u0642\u0627\u0628\u0644\u0629 \u0644\u0644\u062a\u062d\u0644\u0644.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 6,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "SASO ISO 14855-1",
+          "title_en": "l E. r- f :E c."
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1863"
+        },
+        {
+          "hs_code": "1535"
+        },
+        {
+          "hs_code": "2879"
+        },
+        {
+          "hs_code": "3926"
+        },
+        {
+          "hs_code": "1755"
+        },
+        {
+          "hs_code": "1485"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "4202c52e-cca9-4a60-b3ef-f4dba777aee2",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629-\u0627\u0644\u0641\u0646\u064a\u0629-\u0644\u0645\u0648\u0627\u062f-\u0627\u0644\u0628\u0646\u0627\u0621-\u0627\u0644\u062c\u0632\u0621-\u0627\u0644\u062e\u0627\u0645\u0633-\u0627\u0644\u0623\u0646\u0627\u0628\u064a\u0628-\u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629-\u0641\u064a-\u0634\u0628\u0643\u0627\u062a-\u062a\u0645\u062f\u064a\u062f\u0627\u062a-\u0627\u0644\u0645\u064a\u0627\u0647-\u0648\u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0621-\u0648\u0627\u0644\u063a\u0627\u0632.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629-\u0627\u0644\u0641\u0646\u064a\u0629-\u0644\u0645\u0648\u0627\u062f-\u0627\u0644\u0628\u0646\u0627\u0621-\u0627\u0644\u062c\u0632\u0621-\u0627\u0644\u062e\u0627\u0645\u0633-\u0627\u0644\u0623\u0646\u0627\u0628\u064a\u0628-\u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629-\u0641\u064a-\u0634\u0628\u0643\u0627\u062a-\u062a\u0645\u062f\u064a\u062f\u0627\u062a-\u0627\u0644\u0645\u064a\u0627\u0647-\u0648\u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0621-\u0648\u0627\u0644\u063a\u0627\u0632.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "dd14ee41-eee7-4882-9d08-f60eaaf29275",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629-\u0627\u0644\u0641\u0646\u064a\u0629-\u0644\u0645\u0648\u0627\u062f-\u0627\u0644\u0628\u0646\u0627\u0621-\u0627\u0644\u062c\u0632\u0621-\u0627\u0644\u0631\u0627\u0628\u0639-\u0627\u0644\u0637\u0648\u0628-\u0648\u0627\u0644\u0628\u0644\u0627\u0637-\u0648\u0627\u0644\u0633\u064a\u0631\u0627\u0645\u064a\u0643-\u0648\u0627\u0644\u0623\u062f\u0648\u0627\u062a-\u0627\u0644\u0635\u062d\u064a\u0629-\u0648\u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a-\u0630\u0627\u062a-\u0627\u0644\u0639\u0644\u0627\u0642\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629-\u0627\u0644\u0641\u0646\u064a\u0629-\u0644\u0645\u0648\u0627\u062f-\u0627\u0644\u0628\u0646\u0627\u0621-\u0627\u0644\u062c\u0632\u0621-\u0627\u0644\u0631\u0627\u0628\u0639-\u0627\u0644\u0637\u0648\u0628-\u0648\u0627\u0644\u0628\u0644\u0627\u0637-\u0648\u0627\u0644\u0633\u064a\u0631\u0627\u0645\u064a\u0643-\u0648\u0627\u0644\u0623\u062f\u0648\u0627\u062a-\u0627\u0644\u0635\u062d\u064a\u0629-\u0648\u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a-\u0630\u0627\u062a-\u0627\u0644\u0639\u0644\u0627\u0642\u0629.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 4,
+          "code": "IEC 17067",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "6605e174-496a-4850-bc0b-da3a51d2cf55",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629-\u0627\u0644\u0641\u0646\u064a\u0629-\u0644\u0645\u0648\u0627\u062f\u0627\u0644\u0628\u0646\u0627\u0621-\u0627\u0644\u062c\u0632\u0621-\u0627\u0644\u062b\u0627\u0644\u062b-\u0627\u0644\u0631\u0648\u0627\u0628\u0637-\u0627\u0644\u0647\u064a\u062f\u0631\u0648\u0644\u064a\u0643\u064a\u0629-\u0648\u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a-\u0630\u0627\u062a-\u0627\u0644\u0639\u0644\u0627\u0642\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629-\u0627\u0644\u0641\u0646\u064a\u0629-\u0644\u0645\u0648\u0627\u062f\u0627\u0644\u0628\u0646\u0627\u0621-\u0627\u0644\u062c\u0632\u0621-\u0627\u0644\u062b\u0627\u0644\u062b-\u0627\u0644\u0631\u0648\u0627\u0628\u0637-\u0627\u0644\u0647\u064a\u062f\u0631\u0648\u0644\u064a\u0643\u064a\u0629-\u0648\u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a-\u0630\u0627\u062a-\u0627\u0644\u0639\u0644\u0627\u0642\u0629.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 1,
+      "standards": [
+        {
+          "standard_number": 3,
+          "code": "IEC 17026",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "1600"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "a841bca3-5d42-4e8a-9956-f98c93dfed04",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a-\u0627\u0644\u062c\u0644\u062f\u064a\u0629.pdf",
+    "file_name": "\u0627\u0644\u0645\u0646\u062a\u062c\u0627\u062a-\u0627\u0644\u062c\u0644\u062f\u064a\u0629.pdf",
+    "metaJson": {
+      "total_standards": 2,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 6,
+          "code": "SASO-ISO-17234-1",
+          "title_en": "Part 2: Double edge tear SASO ISO 3377-2 :"
+        },
+        {
+          "standard_number": 5,
+          "code": "IEC 17067",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "b8c27d94-57de-4cd5-9c6c-437628941381",
+    "tr_name": "products_data\\TR98e8cd9a\\\u062a\u0639\u062f\u064a\u0644 \u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0633\u0644\u0627\u0645\u0629 \u0627\u0644\u063a\u0630\u0627\u0626\u064a\u0629 \u0641\u064a \u0627\u0644\u0623\u062f\u0648\u0627\u062a \u0648\u0627\u0644\u0623\u062c\u0647\u0632\u0629 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629 \u0641\u064a \u0627\u0644\u0645\u0637\u0628\u062e -\u0645\u0625-171-19-06-04.pdf",
+    "file_name": "\u062a\u0639\u062f\u064a\u0644 \u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0633\u0644\u0627\u0645\u0629 \u0627\u0644\u063a\u0630\u0627\u0626\u064a\u0629 \u0641\u064a \u0627\u0644\u0623\u062f\u0648\u0627\u062a \u0648\u0627\u0644\u0623\u062c\u0647\u0632\u0629 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629 \u0641\u064a \u0627\u0644\u0645\u0637\u0628\u062e -\u0645\u0625-171-19-06-04.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 15,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "8391"
+        },
+        {
+          "hs_code": "2173"
+        },
+        {
+          "hs_code": "1254"
+        },
+        {
+          "hs_code": "1652"
+        },
+        {
+          "hs_code": "2770"
+        },
+        {
+          "hs_code": "1298"
+        },
+        {
+          "hs_code": "2179"
+        },
+        {
+          "hs_code": "4481"
+        },
+        {
+          "hs_code": "2769"
+        },
+        {
+          "hs_code": "8442"
+        },
+        {
+          "hs_code": "2939"
+        },
+        {
+          "hs_code": "6486"
+        },
+        {
+          "hs_code": "2075"
+        },
+        {
+          "hs_code": "2043"
+        },
+        {
+          "hs_code": "2940"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "7e0e35bf-3d02-4dc5-94ee-ecfad3b01079",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0645 \u0625-172-19-04-02.pdf",
+    "file_name": "\u0645 \u0625-172-19-04-02.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 2,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1211"
+        },
+        {
+          "hs_code": "7165"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "5e47ce23-9f36-4ab8-9ad6-41dc86b6dfb9",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0645 \u0625-172-19-04-03.pdf",
+    "file_name": "\u0645 \u0625-172-19-04-03.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 1,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO 20768",
+          "title_en": "JtJI ------ ---------------- :"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "6155"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "165f2fa1-b2aa-4b95-aa0a-c1fd3ede8350",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0645.\u0625-156-16-04-01    1006.pdf",
+    "file_name": "\u0645.\u0625-156-16-04-01    1006.pdf",
+    "metaJson": {
+      "total_standards": 2,
+      "total_hs_codes": 4,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "SASO GSO 99",
+          "title_en": "Documentation and reports SASO-ISO Moped and moped"
+        },
+        {
+          "standard_number": 0,
+          "code": "SASO-ISO 28981",
+          "title_en": "JI - ( )"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "4249"
+        },
+        {
+          "hs_code": "5751"
+        },
+        {
+          "hs_code": "1019"
+        },
+        {
+          "hs_code": "2980"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "5606aff9-b84a-4666-89f7-81604928acf3",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0645.\u0625-162-17-04-01.pdf",
+    "file_name": "\u0645.\u0625-162-17-04-01.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 17,
+          "code": "GSO 1780",
+          "title_en": "I Y..JLQ:j Jio :w)4..JI (.) .-"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "85a1685d-a03a-42eb-9116-36079abdb799",
+    "tr_name": "products_data\\TR98e8cd9a\\\u0645.\u0625-172-19-02-01.pdf",
+    "file_name": "\u0645.\u0625-172-19-02-01.pdf",
+    "metaJson": {
+      "total_standards": 2,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO 14001",
+          "title_en": "il j .J w"
+        },
+        {
+          "standard_number": 1,
+          "code": "ISO 26261",
+          "title_en": "yh i 9 la th V4 Ga V8 daca"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "fc4a89af-f3ee-4a1a-ad0d-21be427dad85",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0627\u0644\u062e\u0644\u064a\u062c\u064a\u0629 \u0644\u0644\u0623\u062c\u0647\u0632\u0629 \u0648\u0627\u0644\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0645\u0646\u062e\u0641\u0636\u0629 \u0627\u0644\u062c\u0647\u062f.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0627\u0644\u062e\u0644\u064a\u062c\u064a\u0629 \u0644\u0644\u0623\u062c\u0647\u0632\u0629 \u0648\u0627\u0644\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0645\u0646\u062e\u0641\u0636\u0629 \u0627\u0644\u062c\u0647\u062f.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "b23285a3-3624-4104-9537-9919e34d6dab",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0627\u0644\u062e\u0644\u064a\u062c\u064a\u0629 \u0644\u0644\u0639\u0628 \u0627\u0644\u0623\u0637\u0641\u0627\u0644.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0627\u0644\u062e\u0644\u064a\u062c\u064a\u0629 \u0644\u0644\u0639\u0628 \u0627\u0644\u0623\u0637\u0641\u0627\u0644.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 45,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1010"
+        },
+        {
+          "hs_code": "1309"
+        },
+        {
+          "hs_code": "1251"
+        },
+        {
+          "hs_code": "1314"
+        },
+        {
+          "hs_code": "1662"
+        },
+        {
+          "hs_code": "7446"
+        },
+        {
+          "hs_code": "1200"
+        },
+        {
+          "hs_code": "7646"
+        },
+        {
+          "hs_code": "6474"
+        },
+        {
+          "hs_code": "9000"
+        },
+        {
+          "hs_code": "7775"
+        },
+        {
+          "hs_code": "7440"
+        },
+        {
+          "hs_code": "1336"
+        },
+        {
+          "hs_code": "2122"
+        },
+        {
+          "hs_code": "1333"
+        },
+        {
+          "hs_code": "1058"
+        },
+        {
+          "hs_code": "1203"
+        },
+        {
+          "hs_code": "9199"
+        },
+        {
+          "hs_code": "1304"
+        },
+        {
+          "hs_code": "1205"
+        },
+        {
+          "hs_code": "7789"
+        },
+        {
+          "hs_code": "7758"
+        },
+        {
+          "hs_code": "1560"
+        },
+        {
+          "hs_code": "7786"
+        },
+        {
+          "hs_code": "1757"
+        },
+        {
+          "hs_code": "5202"
+        },
+        {
+          "hs_code": "1112"
+        },
+        {
+          "hs_code": "7572"
+        },
+        {
+          "hs_code": "1335"
+        },
+        {
+          "hs_code": "1012"
+        },
+        {
+          "hs_code": "2580"
+        },
+        {
+          "hs_code": "1313"
+        },
+        {
+          "hs_code": "1306"
+        },
+        {
+          "hs_code": "1022"
+        },
+        {
+          "hs_code": "1376"
+        },
+        {
+          "hs_code": "7784"
+        },
+        {
+          "hs_code": "1030"
+        },
+        {
+          "hs_code": "1013"
+        },
+        {
+          "hs_code": "1018"
+        },
+        {
+          "hs_code": "7778"
+        },
+        {
+          "hs_code": "7790"
+        },
+        {
+          "hs_code": "2010"
+        },
+        {
+          "hs_code": "1681"
+        },
+        {
+          "hs_code": "3930"
+        },
+        {
+          "hs_code": "3333"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "56593f6b-7a5f-48ea-bcdb-6971c2e2be5c",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0632\u064a\u0648\u062a \u0627\u0644\u062a\u0632\u064a\u064a\u062a \u0648\u0627\u0644\u062a\u0634\u062d\u064a\u0645.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0632\u064a\u0648\u062a \u0627\u0644\u062a\u0632\u064a\u064a\u062a \u0648\u0627\u0644\u062a\u0634\u062d\u064a\u0645.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "e101fff3-1401-41d0-b418-1c32b955eba6",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0633\u0644\u0627\u0645\u0629 \u0627\u0644\u0622\u0644\u0627\u062a  \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u062b\u0627\u0646\u064a \u0627\u0644\u0622\u0644\u0627\u062a \u0627\u0644\u0645\u062a\u0646\u0642\u0644\u0629 \u0648\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0623\u0634\u063a\u0627\u0644 \u0627\u0644\u062b\u0642\u064a\u0644\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0633\u0644\u0627\u0645\u0629 \u0627\u0644\u0622\u0644\u0627\u062a  \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u062b\u0627\u0646\u064a \u0627\u0644\u0622\u0644\u0627\u062a \u0627\u0644\u0645\u062a\u0646\u0642\u0644\u0629 \u0648\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0623\u0634\u063a\u0627\u0644 \u0627\u0644\u062b\u0642\u064a\u0644\u0629.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "efa2fc57-82e6-4cb4-b854-7f1cf7e93ad1",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0635\u0647\u0627\u0631\u064a\u062c \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u0627\u0648\u0644 .pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0635\u0647\u0627\u0631\u064a\u062c \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u0627\u0648\u0644 .pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "c86f35e3-c9fa-440d-9989-481b251a6d60",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0623\u062c\u0647\u0632\u0629 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629 \u0641\u064a \u0646\u0638\u0645 \u0627\u0644\u062a\u062f\u062e\u064a\u0646 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0623\u062c\u0647\u0632\u0629 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629 \u0627\u0644\u0645\u0633\u062a\u062e\u062f\u0645\u0629 \u0641\u064a \u0646\u0638\u0645 \u0627\u0644\u062a\u062f\u062e\u064a\u0646 \u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 1,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO 20768",
+          "title_en": "JtJI ------ ---------------- :"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "6155"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "8549ccc1-442c-415a-b703-60e7b4acf956",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0623\u062d\u0630\u064a\u0629 \u0648\u0645\u0644\u062d\u0642\u0627\u062a\u0647\u0627 \u0640.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0623\u062d\u0630\u064a\u0629 \u0648\u0645\u0644\u062d\u0642\u0627\u062a\u0647\u0627 \u0640.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "33a79dbd-556e-4f70-86ce-39837660d789",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u062d\u062f \u0645\u0646 \u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u062e\u0637\u0631\u0629 \u0641\u064a \u0627\u0644\u0623\u062c\u0647\u0632\u0629 \u0648\u0627\u0644\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0648\u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u062d\u062f \u0645\u0646 \u0627\u0644\u0645\u0648\u0627\u062f \u0627\u0644\u062e\u0637\u0631\u0629 \u0641\u064a \u0627\u0644\u0623\u062c\u0647\u0632\u0629 \u0648\u0627\u0644\u0645\u0639\u062f\u0627\u062a \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 \u0648\u0627\u0644\u0625\u0644\u0643\u062a\u0631\u0648\u0646\u064a\u0629.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 3,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "6300"
+        },
+        {
+          "hs_code": "6247"
+        },
+        {
+          "hs_code": "6232"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "e2d4a405-1a7b-4a31-9f41-fef640ef79e3",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u062d\u0648\u0627\u062c\u0632 \u0627\u0644\u0623\u0645\u0627\u0645\u064a\u0629 \u0648\u0627\u0644\u062e\u0644\u0641\u064a\u0629 \u0648\u0627\u0644\u062c\u0627\u0646\u0628\u064a\u0629 \u0644\u0644\u0634\u0627\u062d\u0646\u0627\u062a \u0648\u0627\u0644\u0645\u0642\u0637\u0648\u0631\u0627\u062a .pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u062d\u0648\u0627\u062c\u0632 \u0627\u0644\u0623\u0645\u0627\u0645\u064a\u0629 \u0648\u0627\u0644\u062e\u0644\u0641\u064a\u0629 \u0648\u0627\u0644\u062c\u0627\u0646\u0628\u064a\u0629 \u0644\u0644\u0634\u0627\u062d\u0646\u0627\u062a \u0648\u0627\u0644\u0645\u0642\u0637\u0648\u0631\u0627\u062a .pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 2,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "2956"
+        },
+        {
+          "hs_code": "2913"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "27944353-6dbf-4d2f-9236-8240500e131f",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u062f\u0631\u0627\u062c\u0627\u062a \u0627\u0644\u0622\u0644\u064a\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u062f\u0631\u0627\u062c\u0627\u062a \u0627\u0644\u0622\u0644\u064a\u0629.pdf",
+    "metaJson": {
+      "total_standards": 2,
+      "total_hs_codes": 4,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "SASO GSO 99",
+          "title_en": "Documentation and reports SASO-ISO Moped and moped"
+        },
+        {
+          "standard_number": 0,
+          "code": "SASO-ISO 28981",
+          "title_en": "JI - ( )"
+        }
+      ],
+      "hs_codes": [
+        {
+          "hs_code": "4249"
+        },
+        {
+          "hs_code": "2980"
+        },
+        {
+          "hs_code": "1019"
+        },
+        {
+          "hs_code": "5751"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "d6d178e5-8186-4f9b-94c9-8cbb553ae1e8",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u062f\u0647\u0627\u0646\u0627\u062a (\u0627\u0644\u0623\u0635\u0628\u0627\u063a) \u0648\u0627\u0644\u0648\u0631\u0646\u064a\u0634\u0627\u062a.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u062f\u0647\u0627\u0646\u0627\u062a (\u0627\u0644\u0623\u0635\u0628\u0627\u063a) \u0648\u0627\u0644\u0648\u0631\u0646\u064a\u0634\u0627\u062a.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 4,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "2590"
+        },
+        {
+          "hs_code": "3856"
+        },
+        {
+          "hs_code": "1189"
+        },
+        {
+          "hs_code": "4457"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "806adb8c-5c66-4fef-acde-9e265234acf0",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0631\u0643\u0628\u0627\u062a \u0627\u0644\u0645\u0633\u062a\u0648\u0631\u062f\u0629 \u0627\u0644\u0645\u0633\u062a\u0639\u0645\u0644\u0629.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0631\u0643\u0628\u0627\u062a \u0627\u0644\u0645\u0633\u062a\u0648\u0631\u062f\u0629 \u0627\u0644\u0645\u0633\u062a\u0639\u0645\u0644\u0629.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 10,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "2955"
+        },
+        {
+          "hs_code": "1780"
+        },
+        {
+          "hs_code": "2864"
+        },
+        {
+          "hs_code": "2956"
+        },
+        {
+          "hs_code": "2957"
+        },
+        {
+          "hs_code": "1052"
+        },
+        {
+          "hs_code": "1782"
+        },
+        {
+          "hs_code": "1677"
+        },
+        {
+          "hs_code": "1783"
+        },
+        {
+          "hs_code": "1284"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "2027b630-5f1e-4104-ad78-bbbd148181cc",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0646\u0638\u0641\u0627\u062a.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0645\u0646\u0638\u0641\u0627\u062a.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "b5d2b23d-1791-4622-bbc3-f8859ca44ddb",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0648\u0631\u0642 \u0648\u0627\u0644\u0643\u0631\u062a\u0648\u0646  \u0627.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0648\u0631\u0642 \u0648\u0627\u0644\u0643\u0631\u062a\u0648\u0646  \u0627.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 5,
+          "code": "IEC 17067",
+          "title_en": "Supplier Declaration of Conformity"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "d59840a4-934c-4150-b79b-2c9ed2949858",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0645\u0639\u062f\u0627\u062a \u0648\u0645\u0648\u0627\u062f \u0645\u0643\u0627\u0641\u062d\u0629 \u0627\u0644\u062d\u0631\u0627\u0626\u0642pdf.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0645\u0639\u062f\u0627\u062a \u0648\u0645\u0648\u0627\u062f \u0645\u0643\u0627\u0641\u062d\u0629 \u0627\u0644\u062d\u0631\u0627\u0626\u0642pdf.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 2,
+      "standards": [],
+      "hs_codes": [
+        {
+          "hs_code": "1211"
+        },
+        {
+          "hs_code": "7165"
+        }
+      ]
+    }
+  },
+  {
+    "tr_id": "0537c86c-0ea6-4b19-aa95-a623ac258552",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0628\u0646\u0627\u0621 - \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u062b\u0627\u0646\u064a.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0645\u0648\u0627\u062f \u0627\u0644\u0628\u0646\u0627\u0621 - \u0627\u0644\u062c\u0632\u0621 \u0627\u0644\u062b\u0627\u0646\u064a.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "5692b955-ec23-43e9-9abd-f4a94e844517",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0648\u0633\u0627\u0626\u0644 \u0627\u0644\u062a\u0646\u0642\u0644 \u0627\u0644\u0641\u0631\u062f\u064a\u0629 \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 (\u0627\u0644\u0633\u0643\u0648\u062a\u0631).pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0648\u0633\u0627\u0626\u0644 \u0627\u0644\u062a\u0646\u0642\u0644 \u0627\u0644\u0641\u0631\u062f\u064a\u0629 \u0627\u0644\u0643\u0647\u0631\u0628\u0627\u0626\u064a\u0629 (\u0627\u0644\u0633\u0643\u0648\u062a\u0631).pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "9ddfc633-b9ec-4004-a093-86e485ac9ef4",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629\u0644\u0644\u0645\u0642\u0637\u0648\u0631\u0627\u062a \u0648\u0646\u0635\u0641 \u0627\u0644\u0645\u0642\u0638\u0648\u0631\u0627\u062a.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629\u0644\u0644\u0645\u0642\u0637\u0648\u0631\u0627\u062a \u0648\u0646\u0635\u0641 \u0627\u0644\u0645\u0642\u0638\u0648\u0631\u0627\u062a.pdf",
+    "metaJson": {
+      "total_standards": 1,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 17,
+          "code": "GSO 1780",
+          "title_en": "I Y..JLQ:j Jio :w)4..JI (.) .-"
+        }
+      ],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "92b67f12-fff1-46c3-bb1d-9bd4dcff7669",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0627\u0644\u0644\u0627\u0626\u062d\u0629-\u0627\u0644\u0641\u0646\u064a\u0629-\u0644\u0645\u0648\u0627\u062f-\u0627\u0644\u0628\u0646\u0627\u0621-\u0627\u0644\u062c\u0632\u0621-\u0627\u0644\u0623\u0648\u0644-\u0642\u0637\u0627\u0639\u0627\u062a-\u0627\u0644\u0645\u0639\u0627\u062f\u0646-\u0648\u0633\u0628\u0627\u0626\u0643\u0647\u0627-\u0644\u0644\u0627\u0646\u0634\u0627\u0621\u0627\u062a-\u0648\u0627\u0644\u0645\u0628\u0627\u0646\u064a.pdf",
+    "file_name": "\u0627\u0644\u0644\u0627\u0626\u062d\u0629-\u0627\u0644\u0641\u0646\u064a\u0629-\u0644\u0645\u0648\u0627\u062f-\u0627\u0644\u0628\u0646\u0627\u0621-\u0627\u0644\u062c\u0632\u0621-\u0627\u0644\u0623\u0648\u0644-\u0642\u0637\u0627\u0639\u0627\u062a-\u0627\u0644\u0645\u0639\u0627\u062f\u0646-\u0648\u0633\u0628\u0627\u0626\u0643\u0647\u0627-\u0644\u0644\u0627\u0646\u0634\u0627\u0621\u0627\u062a-\u0648\u0627\u0644\u0645\u0628\u0627\u0646\u064a.pdf",
+    "metaJson": {
+      "total_standards": 0,
+      "total_hs_codes": 0,
+      "standards": [],
+      "hs_codes": []
+    }
+  },
+  {
+    "tr_id": "12199dd7-f2b7-43d0-9434-a219753de896",
+    "tr_name": "products_data\\TRd09ca705\\TR in Arabic\\\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0623\u0644\u0639\u0627\u0628 \u0627\u0644\u0646\u0627\u0631\u064a\u0629.pdf",
+    "file_name": "\u0644\u0644\u0627\u0626\u062d\u0629 \u0627\u0644\u0641\u0646\u064a\u0629 \u0644\u0644\u0623\u0644\u0639\u0627\u0628 \u0627\u0644\u0646\u0627\u0631\u064a\u0629.pdf",
+    "metaJson": {
+      "total_standards": 2,
+      "total_hs_codes": 0,
+      "standards": [
+        {
+          "standard_number": 1,
+          "code": "ISO 14001",
+          "title_en": "il j .J w"
+        },
+        {
+          "standard_number": 1,
+          "code": "ISO 26261",
+          "title_en": "yh i 9 la th V4 Ga V8 daca"
+        }
+      ],
+      "hs_codes": []
+    }
+  }
+]
