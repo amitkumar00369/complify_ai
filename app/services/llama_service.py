@@ -1,117 +1,147 @@
-# from transformers import pipeline, AutoTokenizer
-# import json
-# import re
-
-# MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.2"
-
-# # load tokenizer
-# tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-
-# # load model pipeline
-# generator = pipeline(
-#     "text-generation",
-#     model=MODEL_NAME,
-#     tokenizer=tokenizer,
-#     device_map="auto",
-#     pad_token_id=tokenizer.eos_token_id
-# )
-
-
-
-
-# def generate_aliases_llm(text_chunk: str):
-#     prompt = f"""
-# You are an expert in extracting technical standards.
-
-# From the text below, extract ONLY:
-
-# - standard_number
-# - standard_code
-# - english_title
-
-# Rules:
-# - Ignore Arabic text
-# - Ignore page numbers, footers
-# - Standard code may be like:
-#   ISO 1234, EN 301, SASO-ISO-17075-1, ASTM D6753
-# - English title is the last meaningful English sentence before the code
-
-# Return ONLY JSON array like:
-# [
-#   {{
-#     "standard_number": 1,
-#     "code": "ISO 1234",
-#     "title_en": "example title"
-#   }}
-# ]
-
-# Text:
-# {text_chunk}
-# """
-
-#     response = generator(
-#         prompt,
-#         max_new_tokens=20,
-#         temperature=0.7,
-#         do_sample=True
-#     )[0]["generated_text"]
-
-#     return response.strip()
-
-from transformers import pipeline, AutoTokenizer
+import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
 import json
 import re
 
-MODEL_NAME = "mistralai/Mistral-7B-Instruct-v0.2"
+# =========================================================
+# MODEL
+# =========================================================
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
+MODEL_NAME = "Qwen/Qwen2-1.5B-Instruct"
+# MODEL_NAME = "Qwen/Qwen2.5-1.5B-Instruct"
 
-generator = pipeline(
-    "text-generation",
-    model=MODEL_NAME,
-    tokenizer=tokenizer,
-    device_map="auto",
-    pad_token_id=tokenizer.eos_token_id
+# =========================================================
+# LOAD TOKENIZER
+# =========================================================
+
+tokenizer = AutoTokenizer.from_pretrained(
+    MODEL_NAME
 )
 
+# =========================================================
+# LOAD MODEL
+# =========================================================
 
-def extract_standards_llm(text_chunk: str):
+model = AutoModelForCausalLM.from_pretrained(
+    MODEL_NAME,
+    dtype=torch.float16,
+    device_map="auto"
+)
+
+# =========================================================
+# GENERATE RESPONSE
+# =========================================================
+
+def generate_response(prompt):
+
+    print("Prompt:", prompt)
+
+    messages = [
+        {
+            "role": "system",
+            "content": "You are a helpful compliance assistant."
+        },
+        {
+            "role": "user",
+            "content": prompt
+        }
+    ]
+
+    # Qwen chat template
+    text = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True
+    )
+
+    # tokenize
+    inputs = tokenizer(
+        text,
+        return_tensors="pt"
+    )
+
+    # move tensors to model device
+    inputs = {
+        k: v.to(model.device)
+        for k, v in inputs.items()
+    }
+
+    print("Input shape:", inputs["input_ids"].shape)
+
+    # generate
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=512,
+        do_sample=False,
+        pad_token_id=tokenizer.eos_token_id
+    )
+
+    # remove prompt tokens
+    generated_tokens = outputs[0][inputs["input_ids"].shape[1]:]
+
+    # decode
+    response = tokenizer.decode(
+        generated_tokens,
+        skip_special_tokens=True
+    )
+
+    print("LLM Response:", response)
+
+    return response
+
+
+# =========================================================
+# HS CODE FUNCTION
+# =========================================================
+
+def databyhscode_usingllm(hs_code):
+
+    print("message:", hs_code)
+
     prompt = f"""
-Extract structured data from the text.
+You are a Saudi compliance data extraction assistant.
 
-Return ONLY valid JSON. No explanation.
+Input HS Code:
+{hs_code}
 
-Format:
-[
-  {{
-    "standard_number": <int>,
-    "code": "<standard code>",
-    "title_en": "<english title>"
-  }}
-]
+Task:
+Generate possible matching terms for this HS code.
+
+Return ONLY valid JSON.
+
+Required JSON format:
+{{
+  "hs_code": "{hs_code}",
+  "product_names": [],
+  "category_names": [],
+  "technical_regulation_names": [],
+  "standard_names": [],
+  "search_keywords": []
+}}
 
 Rules:
-- Ignore Arabic
-- Ignore page numbers
-- Extract only valid standards
-- If nothing found → return []
-
-TEXT:
-{text_chunk}
+- Product names should be short and searchable
+- Include English and Arabic names if possible
+- Include spelling variations and typos
+- No explanation
+- No markdown
+- Return JSON only
 """
 
-    response = generator(
-        prompt,
-        max_new_tokens=300,   # 🔥 important
-        temperature=0.0,      # 🔥 deterministic
-        do_sample=False
-    )[0]["generated_text"]
+    output = generate_response(prompt)
 
-    # -------------------------
-    # 🔥 Extract JSON safely
-    # -------------------------
     try:
-        json_text = re.search(r"\[.*\]", response, re.DOTALL).group(0)
-        return json.loads(json_text)
-    except:
-        return []
+
+        # extract JSON
+       
+
+        return output
+
+    except Exception as e:
+
+        print("JSON Parse Error:", e)
+        print(output)
+
+        return {}
+
+
