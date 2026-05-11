@@ -1,3 +1,4 @@
+from calendar import TextCalendar
 import uuid
 
 
@@ -5,6 +6,10 @@ import pdfplumber
 import os
 
 from app.services.std_clause import build_knowledge_objects
+from app.utils.text_cleaner import TextCleaner
+from app.utils.trasnlate import TextTranslator
+from app.utils.arbicChar import SmartTranslator
+
 from ..core.common import sha256, normalize, validate, valid_file
 from app.services.image_service import extract_image
 from ..services.pdf_service import extract_excel, extract_pdf
@@ -23,23 +28,47 @@ def process_tr(file_path):
         # with pdfplumber.open(file_path) as pdf:
         #     for page in pdf.pages:
         #         tables = page.extract_tables()
-        # print("Extracted tables:", len(tables),tables[:2])  # print first 2 tables for debugging
+        print("Extracted tables:")  # print first 2 tables for debugging
         text, structured, method, conf  = extract_pdf(file_path)
     elif ext.endswith((".png", ".jpg", ".jpeg")):
         text, structured, method, conf = extract_image(file_path)
-    hs_mapping = extract_hs_mapping(text)
+    clean_text = TextCleaner.normalize_text(text)
+    print("lenth of text", len(clean_text))
+    # steps = max(len(clean_text) // 20, 1000)
+
+    # translated_parts = [
+
+    #     TextTranslator.translate_to_english(
+    #         clean_text[i:i + steps]
+    #     )
+
+    #     for i in range(
+    #         0,
+    #         len(clean_text),
+    #         steps
+    #     )
+    # ]
+
+    # translatedText = " ".join(translated_parts)
+    # print("adas adas translatedText", translatedText)
+    translatedFileName = SmartTranslator.smart_translate(os.path.splitext(os.path.basename(file_path))[0])
+    print("transsssss",translatedFileName)
+    
+    hs_mapping = extract_hs_mapping(clean_text)
     # return {
     #         "total_standards": len(standards),
     #         "total_hs_codes": len(hs_codes),
     #         "standards": standards,
     #         "hs_codes": hs_codes
     #     }
+    
 
     result = {
         "tr_id": str(uuid.uuid4()),
         "tr_name": file_path.split("/")[-1],
         "file_name": os.path.basename(file_path),
-        # "title": os.path.splitext(os.path.basename(file_path))[0],
+        "title": os.path.splitext(os.path.basename(file_path))[0],
+        "metaText": clean_text,
         "metaJson": {
             "total_standards": hs_mapping.get("total_standards", 0),
             "total_hs_codes": hs_mapping.get("total_hs_codes", 0),
