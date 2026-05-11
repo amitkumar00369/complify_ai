@@ -3,28 +3,62 @@ import os
 import re
 
 
-def sha256(file_path):
-    with open(file_path, "rb") as f:
-        return hashlib.sha256(f.read()).hexdigest()
+# =========================================================
+# SHA256 HASH
+# =========================================================
+
+def sha256(file_path: str) -> str:
+
+    sha = hashlib.sha256()
+
+    with open(file_path, "rb") as file:
+
+        for chunk in iter(
+            lambda: file.read(8192),
+            b""
+        ):
+            sha.update(chunk)
+
+    return sha.hexdigest()
 
 
-def normalize(text):
+# =========================================================
+# NORMALIZE TEXT
+# =========================================================
+
+def normalize(text: str) -> str:
+
+    if not text:
+        return ""
+
     text = text.lower()
-    text = re.sub(r'\s+', ' ', text)
+
+    text = re.sub(
+        r"\s+",
+        " ",
+        text
+    )
+
     return text.strip()
 
 
-def validate(text):
-    if len(text) < 30:
-        return False
-    return True
+# =========================================================
+# VALIDATE TEXT
+# =========================================================
+
+def validate(text: str) -> bool:
+
+    return len(text) >= 30
 
 
-def valid_file(path):
-    return os.path.exists(path) and os.path.getsize(path) > 0
+# =========================================================
+# VALIDATE FILE
+# =========================================================
 
-# def find_hs_code(text):
-#     #  simple regex for HS code (6-10 digits)
-#      # example  843850000002
-#     match = re.search(r'\b\d{6,10}\b', text)
-#     return match.group(0) if match else None
+def valid_file(path: str) -> bool:
+
+    return (
+        os.path.exists(path)
+        and os.path.isfile(path)
+        and os.path.getsize(path) > 0
+    )

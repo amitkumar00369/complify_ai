@@ -1,27 +1,43 @@
 import pandas as pd
 
 
-def extract_excel(file_path):
+def read_excel_file(file_path: str):
+
+    if file_path.lower().endswith(".csv"):
+
+        return pd.read_csv(
+            file_path,
+            dtype=str,
+            low_memory=False
+        )
+
+    return pd.read_excel(
+        file_path,
+        dtype=str
+    )
+
+
+def extract_excel(file_path: str):
+
     try:
-        # =========================
-        # READ FILE (SAFE)
-        # =========================
-        if file_path.endswith(".csv"):
-            df = pd.read_csv(file_path, dtype=str, low_memory=False)
-        else:
-            df = pd.read_excel(file_path, dtype=str)
 
         # =========================
-        # FILL NA (avoid errors)
+        # READ FILE
+        # =========================
+        df = read_excel_file(file_path)
+
+        # =========================
+        # CLEAN NULL VALUES
         # =========================
         df = df.fillna("")
 
         # =========================
-        # TEXT CONVERSION (FAST)
+        # CONVERT DATAFRAME TO TEXT
         # =========================
-        # 🔥 faster than apply(lambda...)
         text = "\n".join(
-            df.astype(str).agg(" ".join, axis=1).tolist()
+            df.astype(str)
+            .agg(" ".join, axis=1)
+            .tolist()
         )
 
         # =========================
@@ -32,38 +48,42 @@ def extract_excel(file_path):
             "rows": len(df)
         }
 
-        return text, structured, "excel", 1.0
+        return (
+            text,
+            structured,
+            "excel",
+            1.0
+        )
 
-    except Exception as e:
-        print("Excel error:", e)
+    except Exception as error:
+
+        print(f"Excel extraction error: {error}")
+
         return "", {}, "failed", 0.0
-    
-    
-    
-    
-def extract_excel1(file_path):
+
+
+def extract_excel1(file_path: str):
+
     try:
-        print(f"Extracting HS code from Excel file: {file_path}")
-        # =========================
-        # READ FILE (SAFE)
-        # =========================
-        if file_path.endswith(".csv"):
-            df = pd.read_csv(file_path, dtype=str, low_memory=False)
-        else:
-            df = pd.read_excel(file_path, dtype=str)
+
+        print(
+            f"Extracting HS code from Excel file: {file_path}"
+        )
 
         # =========================
-        # FILL NA (avoid errors)
+        # READ FILE
+        # =========================
+        df = read_excel_file(file_path)
+
+        # =========================
+        # CLEAN NULL VALUES
         # =========================
         df = df.fillna("")
 
-        # =========================
-        # TEXT CONVERSION (FAST)
-        # =========================
-        # 🔥 faster than apply(lambda...)
-     
         return df
 
-    except Exception as e:
-        print("Excel error:", e)
-        return "", {}, "failed", 0.0
+    except Exception as error:
+
+        print(f"Excel extraction error: {error}")
+
+        return pd.DataFrame()

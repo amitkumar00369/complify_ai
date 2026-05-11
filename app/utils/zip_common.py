@@ -67,3 +67,8 @@ def get_files(folder):
                 continue
             files.append(os.path.join(root, name))
     return files
+def save_file(path: str, content: bytes):
+
+    with open(path, "wb") as file:
+
+        file.write(content)

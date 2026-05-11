@@ -1,245 +1,544 @@
-# import re
-
-# def extract_clauses(text):
-#     if not text:
-#         return []
-
-#     text = text.lower()
-#     clauses = []
-
-#     # 🔹 Regulation
-#     if "machinery safety" in text:
-#         clauses.append({
-#             "type": "Regulation",
-#             "value": "Machinery Safety",
-#             "confidence": 0.9
-#         })
-
-#     # 🔹 Standard
-#     std = re.findall(r"(en\s*\d{4,5}[-–]?\d*)", text)
-#     if std:
-#         clauses.append({
-#             "type": "Standard",
-#             "value": std[0],
-#             "confidence": 0.95
-#         })
-
-#     # 🔹 Certificate
-#     if "certificate of conformity" in text or "coc" in text:
-#         clauses.append({
-#             "type": "Certification",
-#             "value": "COC",
-#             "confidence": 0.9
-#         })
-
-#     # 🔹 Test report
-#     if "test report" in text or "report number" in text:
-#         clauses.append({
-#             "type": "Test Report",
-#             "value": True,
-#             "confidence": 0.85
-#         })
-
-#     # 🔹 Product
-#     if "product name" in text:
-#         clauses.append({
-#             "type": "Product Identification",
-#             "confidence": 0.9
-#         })
-
-#     return clauses
-
 import re
+from typing import List, Dict, Any
 
 
-def extract_clauses(text):
+# =========================================================
+# ENTITY EXTRACTOR
+# =========================================================
+
+class EntityExtractor:
+
+    # ==========================================
+    # MANUFACTURER PATTERNS
+    # ==========================================
+
+    MANUFACTURER_PATTERNS = [
+
+        r'manufacturer\s*(?:name)?\s*[:\-]?\s*([a-zA-Z0-9\s\.\-&(),]+)',
+
+        r'manufactured\s+by\s*[:\-]?\s*([a-zA-Z0-9\s\.\-&(),]+)',
+
+        r'producer\s*[:\-]?\s*([a-zA-Z0-9\s\.\-&(),]+)',
+
+        r'company\s*[:\-]?\s*([a-zA-Z0-9\s\.\-&(),]+)'
+    ]
+
+    # ==========================================
+    # PRODUCT NAME PATTERNS
+    # ==========================================
+
+    PRODUCT_NAME_PATTERNS = [
+
+        r'product\s*name\s*[:\-]?\s*([a-zA-Z0-9\s\.\-/&,]+)',
+
+        r'product\s*description\s*[:\-]?\s*([a-zA-Z0-9\s\.\-/&,]+)',
+
+        r'sample\s*description\s*[:\-]?\s*([a-zA-Z0-9\s\.\-/&,]+)'
+    ]
+
+    # ==========================================
+    # MODEL PATTERNS
+    # ==========================================
+
+    MODEL_PATTERNS = [
+
+        r'model\s*type\s*[:\-]?\s*([a-zA-Z0-9\-_]+)',
+
+        r'model\s*name\s*[:\-]?\s*([a-zA-Z0-9\-_]+)',
+
+        r'model\s*number\s*[:\-]?\s*([a-zA-Z0-9\-_]+)',
+
+        r'model\s*[:\-]?\s*([a-zA-Z0-9\-_]+)'
+    ]
+
+    # ==========================================
+    # COUNTRY PATTERNS
+    # ==========================================
+
+    COUNTRY_PATTERNS = [
+
+        r'country\s*of\s*origin\s*[:\-]?\s*([a-zA-Z\s]+)'
+    ]
+
+    # ==========================================
+    # HS CODE PATTERNS
+    # ==========================================
+
+    HS_CODE_PATTERNS = [
+
+        r'hs\s*code\s*[:\-]?\s*(\d{4,12})'
+    ]
+
+    # ==========================================
+    # GENERIC EXTRACTOR
+    # ==========================================
+
+    @staticmethod
+    def extract_value(
+        text: str,
+        patterns: List[str],
+        stop_words: List[str] = None,
+        max_length: int = 120
+    ):
+
+        if not text:
+            return None
+
+        stop_words = stop_words or []
+
+        cleaned_text = re.sub(
+            r'\s+',
+            ' ',
+            text
+        )
+
+        for pattern in patterns:
+
+            match = re.search(
+                pattern,
+                cleaned_text,
+                re.IGNORECASE
+            )
+
+            if match:
+
+                value = (
+                    match.group(1)
+                    .strip()
+                )
+
+                # ==================================
+                # HARD LENGTH LIMIT
+                # ==================================
+
+                value = value[:max_length]
+
+                # ==================================
+                # SPLIT USING STOP WORDS
+                # ==================================
+
+                for stop_word in stop_words:
+
+                    value = re.split(
+                        stop_word,
+                        value,
+                        flags=re.IGNORECASE
+                    )[0].strip()
+
+                # ==================================
+                # REMOVE GARBAGE SYMBOLS
+                # ==================================
+
+                value = re.sub(
+                    r'[/\\(){}\[\]]',
+                    ' ',
+                    value
+                )
+
+                value = re.sub(
+                    r'\s+',
+                    ' ',
+                    value
+                ).strip()
+
+                return value
+
+        return None
+
+    # ==========================================
+    # MANUFACTURER
+    # ==========================================
+
+    @staticmethod
+    def extract_manufacturer(text: str):
+
+        return EntityExtractor.extract_value(
+
+            text=text,
+
+            patterns=(
+                EntityExtractor
+                .MANUFACTURER_PATTERNS
+            ),
+
+            stop_words=[
+                "manufacturer address",
+                "product name",
+                "trademark",
+                "country of origin",
+                "report number",
+                "product test data"
+            ]
+        )
+
+    # ==========================================
+    # PRODUCT NAME
+    # ==========================================
+
+    @staticmethod
+    def extract_product_name(text: str):
+
+        return EntityExtractor.extract_value(
+
+            text=text,
+
+            patterns=(
+                EntityExtractor
+                .PRODUCT_NAME_PATTERNS
+            ),
+
+            stop_words=[
+                "product description",
+                "manufacturer",
+                "country of origin",
+                "trademark",
+                "report number",
+                "technical regulation"
+            ]
+        )
+
+    # ==========================================
+    # MODEL
+    # ==========================================
+
+    @staticmethod
+    def extract_model(text: str):
+
+        return EntityExtractor.extract_value(
+
+            text=text,
+
+            patterns=(
+                EntityExtractor
+                .MODEL_PATTERNS
+            ),
+
+            stop_words=[
+                "trade mark",
+                "trademark",
+                "country of origin",
+                "product name",
+                "page",
+                "back"
+            ],
+
+            max_length=50
+        )
+
+    # ==========================================
+    # COUNTRY
+    # ==========================================
+
+    @staticmethod
+    def extract_country(text: str):
+
+        return EntityExtractor.extract_value(
+
+            text=text,
+
+            patterns=(
+                EntityExtractor
+                .COUNTRY_PATTERNS
+            ),
+
+            stop_words=[
+                "hs code",
+                "technical regulation",
+                "manufacturer"
+            ]
+        )
+
+    # ==========================================
+    # HS CODE
+    # ==========================================
+
+    @staticmethod
+    def extract_hs_code(text: str):
+
+        return EntityExtractor.extract_value(
+
+            text=text,
+
+            patterns=(
+                EntityExtractor
+                .HS_CODE_PATTERNS
+            ),
+
+            max_length=20
+        )
+
+
+# =========================================================
+# REGEX PATTERNS
+# =========================================================
+
+TECHNICAL_REGULATION_PATTERN = re.compile(
+    r"(technical regulation for [a-zA-Z0-9\s\-\(\)&]+)",
+    re.IGNORECASE
+)
+
+STANDARD_PATTERN = re.compile(
+    r"(iec\s*\d+(?:[-–]\d+)*)|"
+    r"(en\s*\d+(?:[-–]\d+)*)|"
+    r"(iso\s*\d+(?:[-–]\d+)*)|"
+    r"(saso\s*gso\s*\d+(?::\d+)?)",
+    re.IGNORECASE
+)
+
+
+# =========================================================
+# CONSTANTS
+# =========================================================
+
+STOP_WORDS = {
+    "manufacturer",
+    "product",
+    "report",
+    "country",
+    "address"
+}
+
+CERTIFICATION_KEYWORDS = (
+    "certificate of conformity",
+    "coc",
+    "pcoc"
+)
+
+TEST_REPORT_KEYWORDS = (
+    "test report",
+    "report number",
+    "cb report"
+)
+
+PRODUCT_IDENTIFICATION_KEYWORDS = (
+    "product name",
+    "model type",
+    "product description"
+)
+
+
+# =========================================================
+# HELPER
+# =========================================================
+
+def build_clause(
+    clause_type: str,
+    value: Any = None,
+    confidence: float = 0.90
+) -> Dict[str, Any]:
+
+    clause = {
+        "type": clause_type,
+        "confidence": confidence
+    }
+
+    if value is not None:
+        clause["value"] = value
+
+    return clause
+
+
+# =========================================================
+# MAIN EXTRACTION FUNCTION
+# =========================================================
+
+def extract_clauses(text: str) -> List[Dict[str, Any]]:
 
     if not text:
         return []
 
     text_lower = text.lower()
 
-    clauses = []
+    clauses: List[Dict[str, Any]] = []
 
     # =====================================================
     # TECHNICAL REGULATION
     # =====================================================
 
-    tr_matches = re.findall(
+    for match in TECHNICAL_REGULATION_PATTERN.findall(text_lower):
 
-        r"(technical regulation for [a-zA-Z0-9\s\-\(\)&]+)",
+        regulation = match.strip()
 
-        text_lower
-    )
+        for stop_word in STOP_WORDS:
 
-    for tr in tr_matches:
+            if stop_word in regulation:
 
-        tr = tr.strip()
+                regulation = (
+                    regulation
+                    .split(stop_word)[0]
+                    .strip()
+                )
 
-        # remove unwanted continuation
-        stop_words = [
-            "manufacturer",
-            "product",
-            "report",
-            "country",
-            "address"
-        ]
-
-        for stop in stop_words:
-
-            if stop in tr:
-
-                tr = tr.split(stop)[0].strip()
-
-        clauses.append({
-
-            "type": "Technical Regulation",
-
-            "value": tr.title(),
-
-            "confidence": 0.90
-        })
+        clauses.append(
+            build_clause(
+                clause_type="Technical Regulation",
+                value=regulation.title(),
+                confidence=0.90
+            )
+        )
 
     # =====================================================
-    # STANDARD
+    # STANDARDS
     # =====================================================
 
-    standards = re.findall(
+    standard_matches = STANDARD_PATTERN.findall(text_lower)
 
-        r"(iec\s*\d+(?:[-–]\d+)*)|"
-        r"(en\s*\d+(?:[-–]\d+)*)|"
-        r"(iso\s*\d+(?:[-–]\d+)*)|"
-        r"(saso\s*gso\s*\d+(?::\d+)?)",
+    for match_group in standard_matches:
 
-        text_lower
-    )
-
-    for std in standards:
-
-        std_value = next(
-            (s for s in std if s),
+        standard = next(
+            (item for item in match_group if item),
             None
         )
 
-        if std_value:
+        if standard:
 
-            clauses.append({
-
-                "type": "Standard",
-
-                "value": std_value.upper(),
-
-                "confidence": 0.95
-            })
+            clauses.append(
+                build_clause(
+                    clause_type="Standard",
+                    value=standard.upper(),
+                    confidence=0.95
+                )
+            )
 
     # =====================================================
     # CERTIFICATION
     # =====================================================
 
-    if (
-        "certificate of conformity" in text_lower
-        or "coc" in text_lower
-        or "pcoc" in text_lower
+    if any(
+        keyword in text_lower
+        for keyword in CERTIFICATION_KEYWORDS
     ):
 
-        clauses.append({
-
-            "type": "Certification",
-
-            "value": "COC",
-
-            "confidence": 0.90
-        })
+        clauses.append(
+            build_clause(
+                clause_type="Certification",
+                value="COC",
+                confidence=0.90
+            )
+        )
 
     # =====================================================
     # TEST REPORT
     # =====================================================
 
-    if (
-        "test report" in text_lower
-        or "report number" in text_lower
-        or "cb report" in text_lower
+    if any(
+        keyword in text_lower
+        for keyword in TEST_REPORT_KEYWORDS
     ):
 
-        clauses.append({
-
-            "type": "Test Report",
-
-            "value": True,
-
-            "confidence": 0.85
-        })
+        clauses.append(
+            build_clause(
+                clause_type="Test Report",
+                value=True,
+                confidence=0.85
+            )
+        )
 
     # =====================================================
     # PRODUCT IDENTIFICATION
     # =====================================================
 
-    if (
-        "product name" in text_lower
-        or "model type" in text_lower
-        or "product description" in text_lower
+    if any(
+        keyword in text_lower
+        for keyword in PRODUCT_IDENTIFICATION_KEYWORDS
     ):
 
-        clauses.append({
-
-            "type": "Product Identification",
-
-            "confidence": 0.90
-        })
+        clauses.append(
+            build_clause(
+                clause_type="Product Identification",
+                confidence=0.90
+            )
+        )
 
     # =====================================================
-    # HS CODE
+    # ENTITY EXTRACTION
     # =====================================================
 
-    hs_match = re.search(
-
-        r"hs\s*code\s*(\d{4,12})",
-
-        text_lower
+    manufacturer = (
+        EntityExtractor.extract_manufacturer(
+            text
+        )
     )
 
-    if hs_match:
+    if manufacturer:
 
-        clauses.append({
+        clauses.append(
+            build_clause(
+                clause_type="Manufacturer",
+                value=manufacturer,
+                confidence=0.95
+            )
+        )
 
-            "type": "HS Code",
-
-            "value": hs_match.group(1),
-
-            "confidence": 0.95
-        })
-
-    # =====================================================
-    # COUNTRY OF ORIGIN
-    # =====================================================
-
-    country_match = re.search(
-
-        r"country of origin\s*([a-zA-Z\s]+)",
-
-        text_lower
+    product_name = (
+        EntityExtractor.extract_product_name(
+            text
+        )
     )
 
-    if country_match:
+    if product_name:
 
-        country = country_match.group(1).strip()
+        clauses.append(
+            build_clause(
+                clause_type="Product Name",
+                value=product_name,
+                confidence=0.93
+            )
+        )
 
-        country = country.split("hs code")[0].strip()
+    model = (
+        EntityExtractor.extract_model(
+            text
+        )
+    )
 
-        clauses.append({
+    if model:
 
-            "type": "Country Of Origin",
+        clauses.append(
+            build_clause(
+                clause_type="Model",
+                value=model,
+                confidence=0.92
+            )
+        )
 
-            "value": country.title(),
+    country = (
+        EntityExtractor.extract_country(
+            text
+        )
+    )
 
-            "confidence": 0.88
-        })
+    if country:
+
+        clauses.append(
+            build_clause(
+                clause_type="Country Of Origin",
+                value=country,
+                confidence=0.88
+            )
+        )
+
+    hs_code = (
+        EntityExtractor.extract_hs_code(
+            text
+        )
+    )
+
+    if hs_code:
+
+        clauses.append(
+            build_clause(
+                clause_type="HS Code",
+                value=hs_code,
+                confidence=0.95
+            )
+        )
 
     # =====================================================
     # REMOVE DUPLICATES
     # =====================================================
 
-    unique = []
+    unique_clauses = []
 
     seen = set()
 
@@ -254,6 +553,6 @@ def extract_clauses(text):
 
             seen.add(key)
 
-            unique.append(clause)
+            unique_clauses.append(clause)
 
-    return unique
+    return unique_clauses

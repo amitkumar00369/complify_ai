@@ -1,13 +1,17 @@
 # =========================================================
 # FILE: app/services/query_service.py
 # =========================================================
+
 from numpy import ma
 
+from app.utils.HsCodeRegex import HSCodeService
+from app.utils.responseBuilder import ComplianceResponseBuilder
 from app.utils.response_formatter import ResponseFormatter
 import json
 import os
 
-from app.utils.query_parser import extract_query_entities
+from app.utils.query_parser import extract_query_entities, extract_query_entities_extended
+from app.utils.text_cleaner import TextCleaner
 
 
 class QueryService:
@@ -41,6 +45,94 @@ class QueryService:
     # =====================================================
     # PRODUCT MATCH
     # =====================================================
+    @staticmethod
+    def find_product_metadata(
+        products,
+        hs_code
+    ):
+
+        result = {
+            "country": None,
+            "certification": None,
+            "manufacturer": None,
+            "product_name": None,
+            "model": None,
+            "technical_regulation": None,
+            "hs_code": hs_code
+        }
+
+        for item in products:
+
+            # ======================================
+            # MATCH HS CODE
+            # ======================================
+
+            if item.get("hs_code") != hs_code:
+                continue
+
+            clauses = item.get("clause", [])
+
+            for clause in clauses:
+
+                clause_type = (
+                    clause.get("type", "")
+                    .strip()
+                    .lower()
+                )
+
+                value = clause.get("value")
+
+                # ======================================
+                # COUNTRY
+                # ======================================
+
+                if clause_type == "country of origin":
+
+                    result["country"] = value
+
+                # ======================================
+                # CERTIFICATION
+                # ======================================
+
+                elif clause_type == "certification":
+
+                    result["certification"] = value
+
+                # ======================================
+                # MANUFACTURER
+                # ======================================
+
+                elif clause_type == "manufacturer":
+
+                    result["manufacturer"] = value
+
+                # ======================================
+                # PRODUCT NAME
+                # ======================================
+
+                elif clause_type == "product name":
+
+                    result["product_name"] = value
+
+                # ======================================
+                # MODEL
+                # ======================================
+
+                elif clause_type == "model":
+
+                    result["model"] = value
+
+                # ======================================
+                # TECHNICAL REGULATION
+                # ======================================
+
+                elif clause_type == "technical regulation":
+
+                    result["technical_regulation"] = value
+
+            return result
+
+    
     @staticmethod
     def normalize_text(text):
 
@@ -97,11 +189,16 @@ class QueryService:
         # =================================================
 
         entities = extract_query_entities(query)
+        extended_entities = extract_query_entities_extended(query)
         
         print(f"Extracted entities: {entities}")
+        print(f"Extracted extended entities: {extended_entities}")
         # if entities
+        hs_code = extended_entities.get("hs_code")
+        print(f"Extracted HS code: {hs_code}")
 
         product_name = entities.get("product_name")
+        print(f"Extracted product name: {product_name}")
 
         market = entities.get("market", "KSA")
 
@@ -132,7 +229,7 @@ class QueryService:
         # STEP 3: NO PRODUCT FOUND
         # =================================================
 
-        if not product_name:
+        if not product_name and not hs_code:
 
             compliance_result["message"] = "No product identified"
 
@@ -157,26 +254,54 @@ class QueryService:
         # =================================================
 
         matched_product = None
+        print(f"Looking for product match in database with name: {product_name} and HS code: {hs_code}")
+        if  hs_code:
+            print(f"Trying to match product using HS code: {hs_code}")
+            for item in products:
+                if item.get("hs_code") == str(hs_code):
+                    print(f"Extracted product name from HS code: {item.get('product_name')}")
+                    clause= QueryService.find_product_metadata(products,hs_code)
+                    print(f" clause {clause}")
+         
+                    matched_product = item
+                    break
 
-        for item in products:
+                    
+                   
+         
+        if product_name:
+            for item in products:
+                if QueryService.match_product(product_name, item["product_name"]):
+                    clause = QueryService.find_product_metadata(products,item["hs_code"])
+                    print(f" clause {clause}")
+                    matched_product = item
+                    break
+            # hs_code = matched_product.get("hs_code")
+            print(f"Extracted HS code from matched product: {hs_code}")
+        # if matched_product is None:
+        #     compliance_result["message"] = "Product name could not be extracted from query"
+        #     return compliance_result
+        # for item in products:
 
-            if QueryService.match_product(product_name, item):
+        #     if QueryService.match_product(product_name, item):
 
-                matched_product = item
+        #         matched_product = item
 
-                break
+        #         break
         # print(f"Matched product: {matched_product}")cls
         if matched_product is None:
 
             compliance_result["message"] = "No matching product found in database"
 
             return compliance_result
+        product_name = matched_product.get("product_name", product_name)
+        hs_code = matched_product.get("hs_code", hs_code)
         TR_NAME = matched_product.get("clause", {})
         for item in TR_NAME:
-             if item.get("type", "").lower() == "Technical Regulation".lower():
+             if item.get("type", "").lower() == "Regulation".lower():
                 TR_NAME = item.get("value")
                 break
-        print(f"Extracted TR_NAME from matched product: {TR_NAME}")
+        # print(f"Extracted TR_NAME from matched product: {TR_NAME}")
         if matched_product:
 
             compliance_result["product"] = matched_product
@@ -204,15 +329,30 @@ class QueryService:
         # =================================================
 
         matched_tr = []
+        
 
         for item in technical_regulations:
+            if hs_code:
+                if QueryService.match_product(hs_code[:4], item["metaText"]):
+                    val = HSCodeService.extract_hs_row(item["metaText"],hs_code[:4])
+                    # print("dhfhfhgfhfhfhffhffg",val)
+                    item["descriptions"]  = val["text"]
+                    item["metaText"] = TextCleaner.normalize_text(item["metaText"])
+                    item["hs_code"] = hs_code
+                    TR_NAME = item["title"]
+                    matched_tr.append(item)
+                    break
+            if hs_code and not matched_tr:
+                if QueryService.match_product(TR_NAME, item["file_name"]):
+                    TR_NAME = item["title"]
+                    matched_tr.append(item)
+                    break
 
-            if QueryService.match_product(product_name, item):
-
-                matched_tr.append(item)
+        
 
         # print(f"Matched technical regulations: {matched_tr}")   
         compliance_result["technical_regulations"] = matched_tr
+        matched_product['TR_NAME'] = TR_NAME
 
         # =================================================
         # STEP 8: FIND SABER REQUIREMENTS
@@ -319,5 +459,12 @@ class QueryService:
         # STEP 13: FINAL RESPONSE
         # =================================================
         # formatted_response = ResponseFormatter.format_response(compliance_result)
-
+        if extended_entities.get("intent") == "technical_regulation_lookup":
+            # return {
+            #     "query": query,
+            #     "product": compliance_result.get("product", {}),
+            #     "standards": compliance_result.get("standards", []),
+            #     "technical_regulations": compliance_result.get("technical_regulations", [])
+            # }
+            return ComplianceResponseBuilder.build_response(query,matched_product, matched_tr, matched_standards)
         return compliance_result
