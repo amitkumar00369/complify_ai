@@ -48,6 +48,8 @@ def process_tr(file_path):
     #         steps
     #     )
     # ]
+    cleanText = TextCleaner.normalize_text(text)
+    print("clean text", len(clean_text))
 
     # translatedText = " ".join(translated_parts)
     # print("adas adas translatedText", translatedText)
@@ -68,6 +70,7 @@ def process_tr(file_path):
         "tr_name": file_path.split("/")[-1],
         "file_name": os.path.basename(file_path),
         "title": os.path.splitext(os.path.basename(file_path))[0],
+        "titleInEng": SmartTranslator.smart_translate(os.path.splitext(os.path.basename(file_path))[0]),
         "metaText": clean_text,
         "metaJson": {
             "total_standards": hs_mapping.get("total_standards", 0),

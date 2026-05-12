@@ -1,0 +1,119 @@
+INTENT_QUERY_EXAMPLES = {
+
+    # =====================================================
+    # 1. MARKET ACCESS
+    # =====================================================
+
+    "market_access": [
+
+        "I want to sell electric cooking range in KSA",
+
+        "Can this commercial oven be sold in Saudi Arabia?",
+
+        "Is beverage cooling equipment allowed in Saudi market?"
+    ],
+
+    # =====================================================
+    # 2. EXPORT ELIGIBILITY
+    # =====================================================
+
+    "export_eligibility": [
+
+        "Can I export anti dust spray floor cleaner to Saudi Arabia?",
+
+        "Can I export beverage cooling machines to Saudi Arabia?",
+
+        "Is this product allowed for export to KSA?"
+    ],
+
+    # =====================================================
+    # 3. DOCUMENT REQUIREMENT
+    # =====================================================
+
+    "document_requirement": [
+
+        "What compliance documents are needed for electric kettle in KSA?",
+
+        "Show required documents for SABER approval",
+
+        "Which documents are mandatory for commercial oven?"
+    ],
+
+    # =====================================================
+    # 4. STANDARD LOOKUP
+    # =====================================================
+
+    "standard_lookup": [
+
+        "Find applicable standards for commercial oven",
+
+        "What IEC standards are required for beverage cooling machines?",
+
+        "Which SASO standard applies to electric fryer?"
+    ],
+
+    # =====================================================
+    # 5. TECHNICAL REGULATION LOOKUP
+    # =====================================================
+
+    "technical_regulation_lookup": [
+
+        "Show technical regulations for beverage cooling machines",
+
+        "Which technical regulation applies to electric kettle?",
+
+        "Find applicable TR for commercial cooking range"
+    ],
+
+    # =====================================================
+    # 6. SABER REQUIREMENT
+    # =====================================================
+
+    "saber_requirement": [
+
+        "Show SABER requirements for dust remover spray",
+
+        "Does beverage cooling machine require SABER?",
+
+        "Need SABER certification for kitchen cooker"
+    ],
+
+    # =====================================================
+    # 7. CERTIFICATE LOOKUP
+    # =====================================================
+
+    "certificate_lookup": [
+
+        "Show certificate details for this product",
+
+        "Is the PCoC certificate valid?",
+
+        "Find expired certificates for cooking equipment"
+    ],
+
+    # =====================================================
+    # 8. HS CODE LOOKUP
+    # =====================================================
+
+    "hs_code_lookup": [
+
+        "Show regulations for HS code 841981000002",
+
+        "Find products using HS code 8516600000",
+
+        "What TR applies to HS code 841510200001?"
+    ],
+
+    # =====================================================
+    # 9. AI ASSISTANT
+    # =====================================================
+
+    "ai_assistant": [
+
+        "Help me comply with Saudi regulations",
+
+        "What do I need to import this product into Saudi Arabia?",
+
+        "Explain the compliance process for electric appliances"
+    ]
+}

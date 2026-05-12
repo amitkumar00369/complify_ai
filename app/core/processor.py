@@ -61,7 +61,7 @@ def process_documents(files,file_name=None):
     matched_rows = df[df['match']]
 
     print("Matched TRs for HS code", hsCode_4, ":\n", matched_rows['file_name'])
-    TR_name =  matched_rows['file_name'].to_list()    # if None go for llm model to find the best match
+    TR_name =  matched_rows['titleInEng'].to_list()    # if None go for llm model to find the best match
 
     
     # print("Extracted HS codes from Excel files1:", hscode.iloc[0]['HS Code'] if not hscode.empty else "No HS codes found")

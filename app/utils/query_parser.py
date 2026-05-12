@@ -1,6 +1,8 @@
 
 
 import re
+
+from app.utils.intent_lookup import detect_intents
 INTENT_KEYWORDS = {
 
     # =====================================================
@@ -597,14 +599,15 @@ def extract_query_entities_extended(text: str):
     # INTENT
     # ============================================
 
-    for intent, keywords in INTENT_KEYWORDS.items():
+    # for intent, keywords in INTENT_KEYWORDS.items():
 
-        for keyword in keywords:
+    #     for keyword in keywords:
 
-            if keyword in query:
+    #         if keyword in query:
 
-                result["intent"] = intent
-                break
+    #             result["intent"] = intent
+    #             break
+    result["intent"] = detect_intents(text)
 
     # ============================================
     # PRODUCT
