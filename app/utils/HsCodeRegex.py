@@ -1,84 +1,91 @@
+# import re
+
+
+# class HSCodeService:
+
+#     @staticmethod
+#     def extract_hs_row(text, hs_code):
+
+#         text = re.sub(r'\s+', ' ', str(text))
+
+#         target_hs = str(hs_code).strip()
+
+#         print("TARGET:", repr(target_hs))
+
+#         match = re.search(
+#             rf'\b{re.escape(target_hs)}\b',
+#             text
+#         )
+
+#         print("MATCH:", match)
+
+#         if not match:
+#             return None
+
+#         start = max(0, match.start() - 80)
+
+#         return text[start:match.start()+28]
+
 import re
 
 
 class HSCodeService:
 
-    HS_PATTERN = re.compile(
-        r'^\d{4}$'
-    )
-
     @staticmethod
-    def extract_hs_row(
-        text: str,
-        hs_code: str
-    ):
+    def extract_hs_row(text, hs_code):
 
-        if not text or not hs_code:
+        target_hs = str(hs_code).strip()
+
+        # normalize spaces
+        text = re.sub(r'\s+', ' ', text)
+
+        # locate hs code
+        match = re.search(
+            rf'\b{re.escape(target_hs)}\b',
+            text
+        )
+
+        if not match:
             return None
 
-        target_hs = str(hs_code)[:4]
+        # take nearby chunk
+        start = max(0, match.start() - 80)
+        end = min(len(text), match.end() + 28)
+        chunk=text[start:match.start()+28]
 
-        lines = [
-            re.sub(r'\s+', ' ', line).strip()
-            for line in text.splitlines()
-            if line.strip()
-        ]
+        # chunk = text[start:end]
 
-        blocks = []
+        # stop at next hs code
+        next_hs = re.search(
+            r'\b\d{4}\b',
+            chunk[chunk.find(target_hs) + 4:]
+        )
 
-        current_lines = []
-        current_hs = None
+        if next_hs:
+            chunk = chunk[:chunk.find(target_hs) + 4 + next_hs.start()]
 
-        for line in lines:
+        # remove previous row garbage
+        lines = re.split(
+            r'(?=Water|Gas|Lighting|Containers|Heaters|Cooking)',
+            chunk,
+            flags=re.IGNORECASE
+        )
 
-            # ======================================
-            # HS CODE FOUND
-            # ======================================
+        # take best meaningful line
+        best = max(lines, key=len)
 
-            if HSCodeService.HS_PATTERN.match(
-                line
-            ):
+        # remove hs code
+        best = re.sub(
+            rf'\b{target_hs}\b',
+            '',
+            best
+        )
 
-                # save previous block
-                if current_hs:
+        # cleanup symbols
+        best = re.sub(r'[-]+', ' ', best)
+        best = re.sub(r'\s+', ' ', best)
 
-                    blocks.append({
-                        "hs_code": current_hs,
-                        "text": " ".join(
-                            current_lines
-                        ).strip()
-                    })
-
-                # start new block
-                current_hs = line
-
-                current_lines = []
-
-            else:
-
-                current_lines.append(line)
-
-        # ======================================
-        # LAST BLOCK
-        # ======================================
-
-        if current_hs:
-
-            blocks.append({
-                "hs_code": current_hs,
-                "text": " ".join(
-                    current_lines
-                ).strip()
-            })
-
-        # ======================================
-        # FIND TARGET
-        # ======================================
-
-        for block in blocks:
-
-            if block["hs_code"] == target_hs:
-
-                return block
-
-        return None
+        return {
+            "hs_code": target_hs,
+            "text": best.strip()
+        }

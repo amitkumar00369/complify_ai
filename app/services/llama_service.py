@@ -144,4 +144,39 @@ Rules:
 
         return {}
 
+def answerWithQuery(query, ragData):
+    prompt = f"""
+User Query:
+{query}
+
+Compliance Data:
+{json.dumps(ragData)}
+
+You are a Saudi compliance expert.
+
+Answer the user professionally.
+
+Explain:
+- whether product can be sold in KSA
+- applicable regulations
+- standards
+- required certifications
+- compliance status
+- next steps
+"""
+    output = generate_response(prompt)
+
+    try:
+
+        # extract JSON
+       
+
+        return output
+
+    except Exception as e:
+
+        print("JSON Parse Error:", e)
+        print(output)
+
+        return {}
 

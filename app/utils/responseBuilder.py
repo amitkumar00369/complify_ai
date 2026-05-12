@@ -11,6 +11,7 @@ class ComplianceResponseBuilder:
         matched_trs,
         matched_standards
     ):
+        print("welcome")
 
         return {
 
@@ -37,7 +38,9 @@ class ComplianceResponseBuilder:
     # ==========================================
 
     @staticmethod
-    def build_product(product):
+    def build_product(products):
+        product = products.get("pcocData")
+        print("dhfhfhfhhf g ghfghghfg  ghghg",product)
 
         if not product:
             return {}
@@ -51,7 +54,11 @@ class ComplianceResponseBuilder:
 
             "model":
                 product.get(
-                    "modelName"
+                    "model"
+                ),
+            "brand":
+                product.get(
+                    "brand"
                 ),
 
             "hs_code":
@@ -60,13 +67,13 @@ class ComplianceResponseBuilder:
                 ),
 
             "standard_name":
-                product.get(
+                products.get(
                     "standard_name"
                 ),
 
             "country":
                 product.get(
-                    "country"
+                    "country_of_origin"
                 ),
 
             "manufacturer":
@@ -76,11 +83,11 @@ class ComplianceResponseBuilder:
 
             "certificate_type":
                 product.get(
-                    "certificateName"
+                    "certificate_type"
                 ),
 
             "technical_regulation":
-                product.get(
+                products.get(
                     "TR_NAME"
                 )
         }
@@ -110,10 +117,11 @@ class ComplianceResponseBuilder:
                         "hs_code"
                     ),
 
-                "matched_text":
+                "product_category":
                     tr.get(
                         "descriptions"
-                    )
+                    ),
+                # "discription": tr.get
 
               
             })
