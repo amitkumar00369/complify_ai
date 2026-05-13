@@ -1,60 +1,64 @@
-from .intententResponse.detailsResponse import build_compliance_response
-from .intententResponse.product_search import product_search
-def handle_query(intent_result,data):
 
-    primary_intent = intent_result["primary_intent"]
-    print("innnntess",primary_intent)
+from .intententResponse.compliance_response import ComplianceService
+INTENT_METHOD_MAP = {
+    "market_access": ComplianceService.product_search,
 
-    if primary_intent == "market_access":
+    "export_eligibility": (
+        ComplianceService.export_eligibility
+    ),
 
-        return product_search(
-            data
+    "document_requirement": (
+        ComplianceService.document_requirement
+    ),
+
+    "standard_lookup": (
+        ComplianceService.standard_query
+    ),
+
+    "technical_regulation_lookup": (
+        ComplianceService.technical_regulation_query
+    ),
+
+    "saber_requirement": (
+        ComplianceService.saber_query
+    ),
+
+    "certificate_lookup": (
+        ComplianceService.certification_query
+    ),
+
+    "hs_code_lookup": (
+        ComplianceService.hs_code_query
+    ),
+
+    "iec_standard_lookup": (
+        ComplianceService.iec_standard_query
+    )
+}
+
+
+async def handle_query(intent_result, data):
+
+    try:
+
+        primary_intent = (
+            intent_result.get("primary_intent")
         )
 
-    elif primary_intent == "export_eligibility":
+        print("PRIMARY INTENT =>", primary_intent)
 
-        return handle_export_eligibility(
-            intent_result
+        method = INTENT_METHOD_MAP.get(
+            primary_intent,
+            ComplianceService.build_compliance_response
         )
 
-    elif primary_intent == "document_requirement":
+        response = await method(data)
 
-        return handle_document_requirement(
-            intent_result
-        )
+        return response
 
-    elif primary_intent == "standard_lookup":
+    except Exception as e:
 
-        return handle_standard_lookup(
-            intent_result
-        )
-
-    elif primary_intent == "technical_regulation_lookup":
-
-        return handle_tr_lookup(
-            intent_result
-        )
-
-    elif primary_intent == "saber_requirement":
-
-        return handle_saber_requirement(
-            intent_result
-        )
-
-    elif primary_intent == "certificate_lookup":
-
-        return handle_certificate_lookup(
-            intent_result
-        )
-
-    elif primary_intent == "hs_code_lookup":
-
-        return handle_hs_code_lookup(
-            intent_result
-        )
-
-    else:
-
-        return build_compliance_response(
-            data
-        )
+        return {
+            "success": False,
+            "message": str(e)
+        }

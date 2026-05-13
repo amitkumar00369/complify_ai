@@ -6,6 +6,9 @@ from fastapi.responses import JSONResponse
 import os
 import zipfile
 import uuid
+import os
+import zipfile
+import shutil
 
 
 
@@ -72,3 +75,15 @@ def save_file(path: str, content: bytes):
     with open(path, "wb") as file:
 
         file.write(content)
+        
+def cleanup_file(path):
+
+    if path and os.path.exists(path):
+
+        os.remove(path)
+        
+def cleanup_folder(folder_path):
+
+    if folder_path and os.path.exists(folder_path):
+
+        shutil.rmtree(folder_path)

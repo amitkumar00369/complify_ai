@@ -1,12 +1,23 @@
-# {
-#   "intent": "iec_standard_query",
-#   "product_name": "Beverage Cooling Machine",
-#   "iec_standards": [
-#     "IEC 60335-2-89",
-#     "IEC 60335-1"
-#   ],
-#   "summary": "These IEC standards are commonly required for beverage cooling equipment compliance."
-# }
 
 def iec_standard_query(data):
-    pass
+    try:
+        product_name = data.get("product_name")
+        iec_standards = data.get("iec_standards", [])
+        summary = data.get("summary", "")
+
+        response = {
+            "success": True,
+            "intent": data.get("intent"),
+            "product_name": product_name,
+            "iec_standards": iec_standards,
+            "summary": summary,
+            "message": f"IEC standards fetched successfully for {product_name}"
+        }
+
+        return response
+
+    except Exception as e:
+        return {
+            "success": False,
+            "message": str(e)
+        }
