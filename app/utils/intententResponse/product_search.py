@@ -1,32 +1,4 @@
-# {
-#   "intent": "product_search",
-#   "query": "I want to sell electric cooking range in KSA",
-#   "product_name": "Commercial Cooking Range",
-#   "hs_code": "841981000002",
-#   "compliance_status": "Regulated Product",
-#   "data": {
-#     "technical_regulations": [
-#       "Technical Regulation for Machinery Safety"
-#     ],
-#     "required_certifications": [
-#       "PCoC",
-#       "SCoC"
-#     ],
-#     "standards": [
-#       "IEC 60335-2-36"
-#     ]
-#   },
-#   "recommendations": [
-#     "Register product on SABER platform",
-#     "Prepare technical documents",
-#     "Verify Arabic labeling"
-#   ],
-#   "next_steps": [
-#     "Apply for Product Certificate",
-#     "Upload Technical Report"
-#   ],
-#   "summary": "The electric cooking range can be sold in Saudi Arabia after fulfilling SABER compliance requirements."
-# }
+
 
 
 import re

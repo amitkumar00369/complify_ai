@@ -6,6 +6,7 @@ from fastapi.responses import JSONResponse
 from fastapi.concurrency import run_in_threadpool
 
 from app.services.query_service import QueryService
+from app.utils.arbicChar import SmartTranslator
 
 
 async def process_query(data: dict):
@@ -14,6 +15,7 @@ async def process_query(data: dict):
 
         user_query = data.get("query")
         print(f"Received query: {user_query}")
+        
 
         if not user_query:
 
@@ -24,11 +26,11 @@ async def process_query(data: dict):
                 },
                 status_code=400
             )
+        queryInEng = SmartTranslator.smart_translate(user_query)
+        print("english query",queryInEng)
 
-        result = await run_in_threadpool(
-            QueryService.process_query,
-            user_query
-        )
+        result = await QueryService.process_query(user_query)
+        
 
         return JSONResponse(
             content={

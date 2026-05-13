@@ -121,6 +121,7 @@ async def process_item_documents(files, file_name=None):
     clause = None
     for file in files:
         if file.lower().endswith((".pdf")):
+            print("file",file)
             if "pcoc" in os.path.basename(file).lower():
                 text, structured, method, conf  = extract_text(file)
                 clean_text = TextCleaner.normalize_text(text)
