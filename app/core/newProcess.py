@@ -96,7 +96,7 @@ async def process_single_file(
         "hsCode_4": hsCode_4,
         "hash": file_hash,
         "hs_code": hscode.iloc[0]['HS Code'],
-        "method": method,
+        "method": os.path.splitext(file)[1].replace(".", "").lower(),
         "confidence": round(conf, 3),
         "valid": is_valid,
         "text_length": len(clean_text),
@@ -205,5 +205,6 @@ async def process_item_documents(files, file_name=None):
     results = await asyncio.gather(*tasks)
 
     docs = [doc for doc in results if doc]
+    
 
     return docs
