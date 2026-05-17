@@ -1,0 +1,65 @@
+version: "3.9"
+
+services:
+
+  api_service:
+    restart: always
+
+    build:
+      context: ./CMP_Api_Service
+
+    container_name: api_service
+
+    ports:
+      - "4000:4000"
+
+    env_file:
+      - ./CMP_Api_Service/.env
+
+    depends_on:
+      - postgres
+
+    volumes:
+      - ./CMP_Api_Service:/app
+
+  data_service:
+    restart: always
+
+    build:
+      context: ./CMP_Data_Service
+
+    container_name: data_service
+
+    ports:
+      - "4001:4001"
+
+    env_file:
+      - ./CMP_Data_Service/.env
+
+    depends_on:
+      - postgres
+
+    volumes:
+      - ./CMP_Data_Service:/app
+
+  postgres:
+
+    image: postgres:16
+
+    container_name: postgres_db
+
+    restart: always
+
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: complify
+
+    ports:
+      - "5432:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual Env
+fastenv/
+venv/
+env/
+
+# Environment variables
+.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# VS Code
+.vscode/
+
+# Database (if local)
+*.sqlite3
+
+# Alembic cache
+alembic/__pycache__/
+
+# Temp files
+*.tmp
+*.swp
+
+
+
+# Project data
+products_data/
+ocr_debug/
+Saber Data/
+Standard Data/
+TR/
+KSA Data/
+ITEM/
+complify_data/
+uploads/
+
+# JSON outputs
+items.json
+ksa_saleem.json
+saber_results.json
+std_results.json
+tr_results.json
+
+# core/database.py/
+# core/database.py
