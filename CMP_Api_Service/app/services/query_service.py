@@ -19,6 +19,7 @@ from app.services.product_item_servce import ProductService
 from app.services.saber_service  import SaberService
 from app.services.technical_regulation_service import TechnicalRegulationService
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.utils.saber_workflow import build_compliance_response
 class QueryService:
     def __init__(self, db: AsyncSession):
 
@@ -286,6 +287,7 @@ class QueryService:
             for item in products:
 
                 if item.get("hs_code") == str(hs_code):
+                    print("item_id", item["id"])
 
                     matched_product = item
                     break
@@ -303,9 +305,12 @@ class QueryService:
                 )
 
                 if matched:
+                    print("item_id", item["id"])
+                    
 
                     matched_product = item
                     break
+        
 
         if matched_product is None:
 
@@ -368,6 +373,8 @@ class QueryService:
             if matched:
                 print("std_name",item["std_name"])
                 print("file_name",item["file_name"])
+                print("std_id", item["id"])
+                
                 
                 matched_standards.append(item)
                 break
@@ -395,6 +402,8 @@ class QueryService:
                 )
 
                 if matched:
+                    print("std_id", item["id"])
+                    
 
                     item["metaText"] = (
                         TextCleaner.normalize_text(
@@ -430,7 +439,10 @@ class QueryService:
             )
 
             if matched:
+                print("saber_id", item["id"])
+                
                 matched_saber.append(item)
+                break
 
         compliance_result[
             "saber_requirements"
@@ -452,7 +464,10 @@ class QueryService:
             )
 
             if matched:
+                print("ksa_id", item["id"])
+                
                 matched_ksa.append(item)
+                break
 
         compliance_result[
             "technical_regulations"
@@ -546,6 +561,8 @@ class QueryService:
         # =================================================
         # STEP 13: HANDLE INTENT
         # =================================================
+        return build_compliance_response(compliance_result["product"])
+       
 
         return await handle_query(
             intent,
