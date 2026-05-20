@@ -3,7 +3,10 @@
 import uuid
 import os
 import asyncio
+import json
 
+from app.utils.tr_requirement import GenericTechnicalRequirementExtractor,extract_toc
+from app.utils.tr_clauses import LegalStructureParser
 from app.utils.text_cleaner import TextCleaner
 from app.services.image_service import extract_image
 from app.services.pdf_service import extract_pdf, extract_excel
@@ -12,6 +15,7 @@ from app.services.std_clause import build_knowledge_objects
 from app.core_complaince.common import normalize
 from app.utils.arbic_char import SmartTranslator
 from app.utils.extract_word import extract_word_file
+from app.utils.extract_pdf_by_pages import extract_text_by_pages
 
 
 # =========================================
@@ -327,3 +331,135 @@ async def process_ksa_saleem(file_path):
     }
 
     return result
+
+async def process_tr_req(file, start_page, end_page):
+    try:
+
+        ext = file.lower()
+    
+
+        text = ""
+        structured = {}
+        method = "unknown"
+        conf = 0.0
+
+        if ext.endswith(".pdf"):
+
+            text = await asyncio.to_thread(
+                extract_text_by_pages,
+                file, start_page,end_page
+            )
+
+        # elif ext.endswith((".png", ".jpg", ".jpeg")):
+
+        #     text, structured, method, conf = await asyncio.to_thread(
+        #         extract_image,
+        #         file
+        #     )
+
+        # elif ext.endswith((".doc", ".docx")):
+
+        #     text, structured, method, conf = await asyncio.to_thread(
+        #         extract_word_file,
+        #         file
+        #     )
+
+        # elif ext.endswith(".txt"):
+
+        #     text = file.decode("utf-8")
+
+        clean_text = TextCleaner.normalize_text(text)
+        # extractor_req = GenericTechnicalRequirementExtractor(clean_text)
+        # # extractor = LegalStructureParser()
+        # # clauses = extractor.parse(clean_text)
+
+        # tr_requirement = extractor_req.extract()
+
+    #     print(
+    #         json.dumps(
+    #             result,
+    #             indent=2,
+    #             ensure_ascii=False
+    #         )
+    # )
+        
+    # for key, value in result.items():
+
+    #     if isinstance(value, list):
+
+    #         print(f"{key}: {len(value)} extracted")
+
+    #     elif isinstance(value, dict):
+
+    #         print(f"{key}: {len(value.keys())} fields")
+
+    #     else:
+
+    #         print(f"{key}: extracted")
+
+        result = {
+            "req_id": "TR_Req" + str(uuid.uuid4())[:6],
+      
+            "text": clean_text,
+         
+
+        }
+
+        return result
+
+    except Exception as e:
+        print(str(e))
+        return None
+    
+
+async def process_tr_toc(filename,file):
+    try:
+
+        ext = file.lower()
+    
+
+        text = ""
+        structured = {}
+        method = "unknown"
+        conf = 0.0
+
+        if ext.endswith(".pdf"):
+
+            text, structured, method, conf = await asyncio.to_thread(
+                extract_pdf,
+                file
+            )
+
+        elif ext.endswith((".png", ".jpg", ".jpeg")):
+
+            text, structured, method, conf = await asyncio.to_thread(
+                extract_image,
+                file
+            )
+
+        elif ext.endswith((".doc", ".docx")):
+
+            text, structured, method, conf = await asyncio.to_thread(
+                extract_word_file,
+                file
+            )
+
+        elif ext.endswith(".txt"):
+
+            text = file.decode("utf-8")
+
+        clean_text = TextCleaner.normalize_text(text)
+       
+
+        result = {
+            "toc_id": "TR_TOC" + str(uuid.uuid4())[:6],
+            # "text": clean_text,
+            "toc_index_data": extract_toc(clean_text)
+
+        }
+
+        return result
+
+    except Exception as e:
+        print(str(e))
+        return None

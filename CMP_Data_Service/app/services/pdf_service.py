@@ -57,7 +57,7 @@ def process_page(page):
 
         if scanned:
             text = paddle_text(img)
-            print("texttttttttttttttttttttttttttttttttttttttttttttttttttttt", len(text))
+            # print("texttttttttttttttttttttttttttttttttttttttttttttttttttttt", len(text))
             # text = SmartTranslator.smart_translate(text)
         else:
             ocr_text = paddle_text(img)

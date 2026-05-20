@@ -2,11 +2,31 @@ import cv2
 import pytesseract
 from paddleocr import PaddleOCR
 from ..config.settings import TESSERACT_PATH
+# from langdetect import detect
+
+# text = extracted_text
+
+# language = detect(text)
+
+# print(language)
+
 
 pytesseract.pytesseract.tesseract_cmd = TESSERACT_PATH
 
 #  initialize once
-paddle_ocr = PaddleOCR(use_angle_cls=True, lang='ar')
+paddle_ocr = PaddleOCR(use_angle_cls=True, lang='en') # arebic
+    
+# ocr_models = {
+#     "en": PaddleOCR(use_angle_cls=True, lang="en"),
+#     "ar": PaddleOCR(use_angle_cls=True, lang="ar")
+# }
+
+def get_ocr_model(language):
+
+    if language == "ar":
+        return ocr_models["ar"]
+
+    return ocr_models["en"]
 import re
 
 def clean_ocr_text(text):

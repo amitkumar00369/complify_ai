@@ -6,12 +6,14 @@ from fastapi import Depends
 from core.database import get_db
 from app.utils.pagination import PaginationRsponse
 from app.models.technical_regulations import Technical_regulation
+from app.models.Technical_regulations_requirements_model import TR_REQUIREMENTS
+
 
 
 # =====================================
 # TECHNICAL REGULATION SERVICE
 # =====================================
-class TechnicalRegulationService:
+class TR_REQUIREMENTS_Service:
 
     def __init__(self, db: AsyncSession):
         self.db = db
@@ -19,14 +21,14 @@ class TechnicalRegulationService:
     # =====================================
     # CREATE
     # =====================================
-    async def create_technical_regulation(
+    async def create_tr_requirements(
         self,
         data: dict
     ):
 
         try:
 
-            new_record = Technical_regulation(**data)
+            new_record = TR_REQUIREMENTS(**data)
 
             self.db.add(new_record)
 
@@ -50,9 +52,9 @@ class TechnicalRegulationService:
         tr_id: int
     ):
 
-        stmt = select(Technical_regulation).where(
-            Technical_regulation.id == tr_id,
-            Technical_regulation.is_deleted == False
+        stmt = select(TR_REQUIREMENTS).where(
+            TR_REQUIREMENTS.id == tr_id,
+            TR_REQUIREMENTS.is_deleted == False
         )
 
         result = await self.db.execute(stmt)
@@ -64,30 +66,14 @@ class TechnicalRegulationService:
     # =====================================
     # GET BY TECHNICAL REGULATION ID
     # =====================================
-    async def get_by_tr_id(
+    async def get_by_tr_req_id(
         self,
         technical_regulation_id: str
     ):
 
-        stmt = select(Technical_regulation).where(
-            Technical_regulation.tr_id == technical_regulation_id,
-            Technical_regulation.is_deleted == False
-        )
-
-        result = await self.db.execute(stmt)
-
-        technical_regulation = result.scalar_one_or_none()
-
-        return jsonable_encoder(technical_regulation)
-    
-    async def find_by_name(
-        self,
-        name: str
-    ):
-
-        stmt = select(Technical_regulation).where(
-            Technical_regulation.tr_name == name,
-            Technical_regulation.is_deleted == False
+        stmt = select(TR_REQUIREMENTS).where(
+            TR_REQUIREMENTS.tr_id == technical_regulation_id,
+            TR_REQUIREMENTS.is_deleted == False
         )
 
         result = await self.db.execute(stmt)
@@ -102,7 +88,7 @@ class TechnicalRegulationService:
     
     # ====================================
     
-    async def create_tr_in_bulk(
+    async def create_tr_req_in_bulk(
     self,
     records: list
      ):
@@ -122,10 +108,10 @@ class TechnicalRegulationService:
             # CHECK ALREADY EXISTING RECORDS
             # ==============================
             stmt = select(
-                Technical_regulation.tr_name
+                TR_REQUIREMENTS.tr_name
             ).where(
-                Technical_regulation.tr_name.in_(tr_names),
-                Technical_regulation.is_deleted == False
+                TR_REQUIREMENTS.tr_name.in_(tr_names),
+                TR_REQUIREMENTS.is_deleted == False
             )
 
             result = await self.db.execute(stmt)
@@ -158,7 +144,7 @@ class TechnicalRegulationService:
             # CREATE MODEL OBJECTS
             # ==============================
             new_records = [
-                Technical_regulation(**record)
+                TR_REQUIREMENTS(**record)
                 for record in new_records_data
             ]
 
@@ -193,14 +179,14 @@ class TechnicalRegulationService:
     # =====================================
     # GET BY NAME
     # =====================================
-    async def get_by_tr_name(
+    async def get_by_tr_req_name(
         self,
         tr_name: str
     ):
 
-        stmt = select(Technical_regulation).where(
-            Technical_regulation.tr_name == tr_name,
-            Technical_regulation.is_deleted == False
+        stmt = select(TR_REQUIREMENTS).where(
+            TR_REQUIREMENTS.tr_name == tr_name,
+            TR_REQUIREMENTS.is_deleted == False
         )
 
         result = await self.db.execute(stmt)
@@ -218,9 +204,9 @@ class TechnicalRegulationService:
         payload: dict
     ):
 
-        stmt = select(Technical_regulation).where(
-            Technical_regulation.id == tr_id,
-            Technical_regulation.is_deleted == False
+        stmt = select(TR_REQUIREMENTS).where(
+            TR_REQUIREMENTS.id == tr_id,
+            TR_REQUIREMENTS.is_deleted == False
         )
 
         result = await self.db.execute(stmt)
@@ -243,14 +229,14 @@ class TechnicalRegulationService:
     # =====================================
     # DELETE (SOFT DELETE)
     # =====================================
-    async def delete_technical_regulation(
+    async def delete_technical_regulation_req(
         self,
         tr_id: int
     ):
 
-        stmt = select(Technical_regulation).where(
-            Technical_regulation.id == tr_id,
-            Technical_regulation.is_deleted == False
+        stmt = select(TR_REQUIREMENTS).where(
+            TR_REQUIREMENTS.id == tr_id,
+            TR_REQUIREMENTS.is_deleted == False
         )
 
         result = await self.db.execute(stmt)
@@ -278,12 +264,12 @@ class TechnicalRegulationService:
     ):
 
         stmt = (
-            select(Technical_regulation)
+            select(TR_REQUIREMENTS)
             .where(
-                Technical_regulation.is_deleted == False
+                TR_REQUIREMENTS.is_deleted == False
             )
             .order_by(
-                desc(Technical_regulation.created_at)
+                desc(TR_REQUIREMENTS.created_at)
             )
         )
 
@@ -303,12 +289,12 @@ class TechnicalRegulationService:
             
 
             stmt = (
-                select(Technical_regulation)
+                select(TR_REQUIREMENTS)
                 .where(
-                    Technical_regulation.is_deleted == False
+                    TR_REQUIREMENTS.is_deleted == False
                 )
                 .order_by(
-                    desc(Technical_regulation.created_at)
+                    desc(TR_REQUIREMENTS.created_at)
                 )
             )
 
@@ -329,8 +315,8 @@ class TechnicalRegulationService:
 # =====================================
 # DEPENDENCY INJECTION
 # =====================================
-def get_technical_regulation_service(
+def get_tr_requirements_service(
     db: AsyncSession = Depends(get_db)
 ):
 
-    return TechnicalRegulationService(db)
+    return TR_REQUIREMENTS_Service(db)
