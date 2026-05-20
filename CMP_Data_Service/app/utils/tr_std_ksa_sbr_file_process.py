@@ -44,6 +44,7 @@ async def process_tr(file_path):
         )
 
     cleanText = TextCleaner.normalize_text(text)
+    # text_en = SmartTranslator.translate_text_chunks(cleanText)
 
     hs_mapping = await asyncio.to_thread(
         extract_hs_mapping,
@@ -68,6 +69,7 @@ async def process_tr(file_path):
         ),
 
         "metaText": cleanText,
+        "text_en": text_en,
 
         "metaJson": {
             "total_standards": hs_mapping.get(

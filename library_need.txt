@@ -1,1 +1,7 @@
-pip install python-docx
+pip install python-doc
+pip uninstall paddleocr paddlepaddle -y
+paddleocr==2.7.3
+paddlepaddle==2.6.1
+pip uninstall opencv-python opencv-contrib-python -y
+pip uninstall numpy paddleocr paddlepaddle opencv-python opencv-contrib-python -y
+pip install numpy==1.26.4

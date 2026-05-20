@@ -43,7 +43,7 @@ async def process_single_file(
     # FILE VALIDATION
     # =========================
     is_file_valid = await asyncio.to_thread(valid_file, file)
-    print("yesss",is_file_valid)
+    # print("yesss",is_file_valid, file)
 
     if not is_file_valid:
         return None
@@ -86,10 +86,15 @@ async def process_single_file(
     # =========================
     # BUILD RESPONSE
     # =========================
+    if hscode is not None:
+        std_name = hscode.iloc[0]['Applicable Std.*']
+    else:
+        std_name = ""
+        
     doc = {
         "caseId": caseId,
         "pcocData": pcocClause,
-        "standard_name": hscode.iloc[0]['Applicable Std.*'],
+        "standard_name": std_name,
         "modelName": modelName,
         "product_info": os.path.basename(os.path.dirname(file)),
         "file_name": os.path.basename(file),
@@ -99,7 +104,7 @@ async def process_single_file(
         "file_path": file,
         "hsCode_4": hsCode_4,
         "hash": file_hash,
-        "hs_code": hscode.iloc[0]['HS Code'],
+        "hs_code": pcocClause.get("hs_code"),
         "method": os.path.splitext(file)[1].replace(".", "").lower(),
         "confidence": round(conf, 3),
         "valid": is_valid,
@@ -148,8 +153,15 @@ async def process_documents(files, file_name=None):
             modelName.append(
                 hscode.iloc[0]['Model number*']
             )
-
-    hsCode_4 = str(hscode.iloc[0]['HS Code'][:4])
+    print("hs codesss", hscode)
+    if hscode is not None:
+         hsCode_4 = str(hscode.iloc[0]['HS Code'][:4])
+    if hscode is None:
+        modelName.append(clause["model"])
+        hsCode_4 = clause["hs_code"]
+        # print("model", modelName, hsCode_4)
+        
+    
 
     # =========================
     # LOAD JSON
@@ -181,10 +193,10 @@ async def process_documents(files, file_name=None):
     ]
 
     results = await asyncio.gather(*tasks)
-    print("keys",len(results))
+    # print("keys",len(results))
 
     docs = [doc for doc in results if doc]
-    print("keys",len(docs))
+    # print("keys",len(docs))
 
     return docs
 

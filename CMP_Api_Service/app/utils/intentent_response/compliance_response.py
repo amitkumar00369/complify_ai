@@ -219,7 +219,8 @@ class ComplianceService:
         try:
 
             product = data.get("product", {})
-            pcoc = product.get("pcocData", {})
+            pcoc = product.get("pcoc_data", {})
+            # print("pcoc", product)
 
             standards_text = (
                 product.get("standard_name")
