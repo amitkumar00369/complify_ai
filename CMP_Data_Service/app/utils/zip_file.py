@@ -8,7 +8,6 @@ import zipfile
 import uuid
 
 import shutil
-import time
 
 
 
@@ -82,27 +81,8 @@ def cleanup_file(path):
 
         os.remove(path)
         
-def cleanup_folder(folder_path, retries=5, delay=1):
+def cleanup_folder(folder_path):
 
-    if not folder_path or not os.path.exists(folder_path):
-        return
+    if folder_path and os.path.exists(folder_path):
 
-    for attempt in range(retries):
-        try:
-            shutil.rmtree(folder_path)
-            print(f"Deleted folder: {folder_path}")
-            return
-
-        except PermissionError as e:
-            print(
-                f"[Retry {attempt + 1}/{retries}] "
-                f"Folder is busy: {e}"
-            )
-
-            time.sleep(delay)
-
-        except Exception as e:
-            print(f"Cleanup error: {e}")
-            return
-
-    print(f"Failed to delete folder after retries: {folder_path}")
+        shutil.rmtree(folder_path)

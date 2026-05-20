@@ -6,3 +6,5 @@ from .ksa_saleem import *
 from .saber_model import *
 from .standard import *
 from .hs_master import *
+from .Tr_toc import *
+from .Technical_regulations_requirements_model import *

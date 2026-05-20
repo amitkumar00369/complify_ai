@@ -1,7 +1,6 @@
 # from turtle import pd
 import re
 
-from app.utils.arbic_char import SmartTranslator
 import fitz
 import cv2
 import pandas as pd
@@ -56,9 +55,7 @@ def process_page(page):
         # =========================
 
         if scanned:
-            text = paddle_text(img)
-            # print("texttttttttttttttttttttttttttttttttttttttttttttttttttttt", len(text))
-            # text = SmartTranslator.smart_translate(text)
+            text = tesseract_text(img)
         else:
             ocr_text = paddle_text(img)
             text_layer = page.get_text()
@@ -105,8 +102,6 @@ def extract_pdf(file_path):
         results = list(executor.map(process_page, doc))
 
     for text, vis in results:
-        # print("lenght of text ", text)
-      
         texts.append(text)
 
         # merge visual results

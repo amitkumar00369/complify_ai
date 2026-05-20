@@ -43,6 +43,26 @@ class ProductService:
         except Exception as e:
             print(str(e))
             return {}
+    async def find_by_hs_code(self, hs_code):
+        try:
+
+            stmt = select(Product).where(
+                Product.hs_code == hs_code,
+                Product.is_deleted == False
+            )
+
+            result = await self.db.execute(stmt)
+
+            standard = result.scalar_one_or_none()
+
+            if not standard:
+                return None
+
+            return jsonable_encoder(standard)
+
+        except Exception as e:
+            print(str(e))
+            return None
 
 
 

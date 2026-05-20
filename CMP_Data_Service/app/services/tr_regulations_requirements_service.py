@@ -43,6 +43,21 @@ class TR_REQUIREMENTS_Service:
             await self.db.rollback()
 
             raise
+    async def find_by_name(
+        self,
+        tr_name: str
+    ):
+
+        stmt = select(TR_REQUIREMENTS).where(
+            TR_REQUIREMENTS.tr_name == tr_name,
+            TR_REQUIREMENTS.is_deleted == False
+        )
+
+        result = await self.db.execute(stmt)
+
+        technical_regulation = result.scalar_one_or_none()
+
+        return jsonable_encoder(technical_regulation)
 
     # =====================================
     # GET BY ID
@@ -191,9 +206,9 @@ class TR_REQUIREMENTS_Service:
 
         result = await self.db.execute(stmt)
 
-        technical_regulations = result.scalars().all()
+        technical_regulation = result.scalar_one_or_none()
 
-        return jsonable_encoder(technical_regulations)
+        return jsonable_encoder(technical_regulation)
 
     # =====================================
     # UPDATE

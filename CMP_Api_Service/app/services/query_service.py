@@ -19,7 +19,6 @@ from app.services.product_item_servce import ProductService
 from app.services.saber_service  import SaberService
 from app.services.technical_regulation_service import TechnicalRegulationService
 from sqlalchemy.ext.asyncio import AsyncSession
-from app.utils.saber_workflow import build_compliance_response
 class QueryService:
     def __init__(self, db: AsyncSession):
 
@@ -190,7 +189,7 @@ class QueryService:
             extract_query_entities_extended(query)
         )
 
-        print(f"Extracted entities: {entities}")
+        # print(f"Extracted entities: {entities}")
 
         print(
             f"Extracted extended entities: "
@@ -201,7 +200,7 @@ class QueryService:
 
         intent = extended_entities.get("intent")
 
-        print("intent", intent)
+        # print("intent", intent)
 
         product_name = entities.get("product_name")
 
@@ -252,13 +251,13 @@ class QueryService:
 
         products = await self.product_service.get_all()
 
-        standards = await (
-            self.standard_service.get_all()
-        )
+        # standards = await (
+        #     self.standard_service.get_all()
+        # )
 
-        technical_regulations = await (
-            self.tr_service.get_all()
-        )
+        # technical_regulations = await (
+        #     self.tr_service.get_all()
+        # )
 
         saber_rules = await (
             self.saber_service.get_all()
@@ -268,32 +267,36 @@ class QueryService:
             self.ksa_service.get_all()
         )
 
-        hs_codes = await (
-            self.hs_code_service.get_all()
-        )
+        # hs_codes = await (
+        #     self.hs_code_service.get_all()
+        # )
         # =================================================
         # STEP 5: FIND PRODUCT
         # =================================================
 
-        matched_product = None
+        # matched_product = None
+        metaData = None
 
         if hs_code:
+            metaData = await self.hs_code_service.find_by_hs_code(hs_code)
+            # print(f"debug {metaData["id"]}", metaData.keys())
+            
 
             print(
                 f"Trying to match product "
                 f"using HS code: {hs_code}"
             )
 
-            for item in products:
+            # for item in products:
 
-                if item.get("hs_code") == str(hs_code):
-                    print("item_id", item["id"])
+            #     if item.get("hs_code") == str(hs_code):
 
-                    matched_product = item
-                    break
+            #         matched_product = item
+            #         break
 
         if product_name:
             print("yess i debug it now")
+        
 
             for item in products:
 
@@ -305,14 +308,16 @@ class QueryService:
                 )
 
                 if matched:
-                    print("item_id", item["id"])
-                    
 
-                    matched_product = item
+                    # matched_product = item
+                    metaData = await self.hs_code_service.find_by_hs_code(item["hs_code"])
+                    print(f"debug {metaData["id"]}", metaData.keys())
+                   
+
                     break
-        
+             
 
-        if matched_product is None:
+        if metaData is None:
 
             compliance_result[
                 "message"
@@ -323,61 +328,70 @@ class QueryService:
 
             return compliance_result
 
-        product_name = matched_product.get(
-            "product_name",
-            product_name
+        # product_name = matched_product.get(
+        #     "product_name",
+        #     product_name
+        # )
+
+        # hs_code = matched_product.get(
+        #     "hs_code",
+        #     hs_code
+        # )
+
+        # TR_NAME = matched_product.get(
+        #     "clause",
+        #     {}
+        # )
+
+        # for item in TR_NAME:
+
+        #     if (
+        #         item.get("type", "").lower()
+        #         == "regulation"
+        #     ):
+
+        #         TR_NAME = item.get("value")
+        #         break
+
+        # matched_product["TR_NAME"] = TR_NAME
+        # print("dsaa", metaData)
+        matched_tr = []
+        matched_tr.append(
+            metaData.get("tr_data", {})
         )
-
-        hs_code = matched_product.get(
-            "hs_code",
-            hs_code
-        )
-
-        TR_NAME = matched_product.get(
-            "clause",
-            {}
-        )
-
-        for item in TR_NAME:
-
-            if (
-                item.get("type", "").lower()
-                == "regulation"
-            ):
-
-                TR_NAME = item.get("value")
-                break
-
-        matched_product["TR_NAME"] = TR_NAME
+        
 
         compliance_result[
             "product"
-        ] = matched_product
+        ] = metaData.get("product_data")
+        compliance_result[
+                    "technical_regulations"
+                    ] = matched_tr
 
         # =================================================
         # STEP 6: FIND STANDARDS
         # =================================================
 
         matched_standards = []
-        print("product name",product_name)
+        # print("product name",product_name)
 
-        for item in standards:
+        # for item in standards:
 
-            matched = (
-                await QueryService.match_product(
-                    product_name,
-                    item
-                )
-            )
+        #     matched = (
+        #         await QueryService.match_product(
+        #             product_name,
+        #             item
+        #         )
+        #     )
 
-            if matched:
-                print("std_name",item["std_name"])
-                print("file_name",item["file_name"])
-                print("std_id", item["id"])
+        #     if matched:
+        #         print("std_name",item["std_name"])
+        #         print("file_name",item["file_name"])
                 
-                
-                matched_standards.append(item)
-                break
+        #         matched_standards.append(item)
+        #    
+        # break
+        matched_standards.append(metaData.get("std_data"))
 
         compliance_result[
             "standards"
@@ -388,44 +402,48 @@ class QueryService:
         # STEP 7: FIND TECHNICAL REGULATIONS
         # =================================================
 
-        matched_tr = []
 
-        for item in technical_regulations:
+        # for item in technical_regulations:
 
-            if hs_code:
+        #     if hs_code:
 
-                matched = (
-                    await QueryService.match_product(
-                        hs_code[:4],
-                        item["text"]
-                    )
-                )
+        #         matched = (
+        #             await QueryService.match_product(
+        #                 hs_code[:4],
+        #                 item["text"]
+        #             )
+        #         )
 
-                if matched:
-                    print("std_id", item["id"])
-                    
+        #         if matched:
 
-                    item["metaText"] = (
-                        TextCleaner.normalize_text(
-                            item["text"]
-                        )
-                    )
+        #             item["metaText"] = (
+        #                 TextCleaner.normalize_text(
+        #                     item["text"]
+        #                 )
+        #             )
 
-                    item["hs_code"] = hs_code
+        #             item["hs_code"] = hs_code
 
-                    TR_NAME = item["tr_name"]
+        #             TR_NAME = item["tr_name"]
 
-                    matched_tr.append(item)
+        #             matched_tr.append(item)
 
-                    break
+        #             break
 
-        compliance_result[
-            "technical_regulations"
-        ] = matched_tr
+        # compliance_result[
+        #     "technical_regulations"
+        # ] = matched_tr
 
         # =================================================
         # STEP 8: FIND SABER REQUIREMENTS
         # =================================================
+        product_name = metaData["product_data"].get("product_name")
+        print("product_name", product_name)
+
+        # hs_code = matched_product.get(
+        #     "hs_code",
+        #     hs_code
+        # )
 
         matched_saber = []
 
@@ -439,10 +457,7 @@ class QueryService:
             )
 
             if matched:
-                print("saber_id", item["id"])
-                
                 matched_saber.append(item)
-                break
 
         compliance_result[
             "saber_requirements"
@@ -464,10 +479,8 @@ class QueryService:
             )
 
             if matched:
-                print("ksa_id", item["id"])
-                
                 matched_ksa.append(item)
-                break
+        # print(matched_ksa)
 
         compliance_result[
             "technical_regulations"
@@ -478,21 +491,25 @@ class QueryService:
         # =================================================
 
         certificates = []
+        # print("keys", metaData["product_data"].keys())
 
-        for item in matched_product.get(
-            "clause",
+        for data in metaData["product_data"].get(
+            "products_file_info",
             []
         ):
+            # print("keys", data.keys(),data)
+            for item in data.get("clause",[]):
+                
 
-            clause_type = (
-                await QueryService.safe_lower(
-                    item.get("type")
+                clause_type = (
+                    await QueryService.safe_lower(
+                        item.get("type")
+                    )
                 )
-            )
 
-            if "certificate" in clause_type:
+                if "certificate" in clause_type:
 
-                certificates.append(item)
+                    certificates.append(item)
 
         compliance_result[
             "certificates"
@@ -504,20 +521,23 @@ class QueryService:
 
         risks = []
 
-        for item in matched_product.get(
-            "clause",
+        for data in metaData["product_data"].get(
+            "products_file_info",
             []
         ):
+            # print("keys", data.keys())
+            for item in data.get("clause",[]):
+                
 
-            clause_type = (
-                await QueryService.safe_lower(
-                    item.get("type")
+                clause_type = (
+                    await QueryService.safe_lower(
+                        item.get("type")
+                    )
                 )
-            )
 
-            if "risk" in clause_type:
+                if "risk" in clause_type:
 
-                risks.append(item)
+                    risks.append(item)
 
         compliance_result[
             "risk_assessment"
@@ -529,10 +549,10 @@ class QueryService:
 
         missing = []
 
-        if not matched_standards:
+        if metaData["product_data"] is None:
             missing.append("standards")
 
-        if not matched_tr:
+        if metaData["tr_data"] is None:
             missing.append(
                 "technical regulations"
             )
@@ -561,8 +581,7 @@ class QueryService:
         # =================================================
         # STEP 13: HANDLE INTENT
         # =================================================
-        return build_compliance_response(compliance_result["product"])
-       
+        # return compliance_result
 
         return await handle_query(
             intent,

@@ -80,22 +80,6 @@ class TechnicalRegulationService:
 
         return jsonable_encoder(technical_regulation)
     
-    async def find_by_name(
-        self,
-        name: str
-    ):
-
-        stmt = select(Technical_regulation).where(
-            Technical_regulation.tr_name == name,
-            Technical_regulation.is_deleted == False
-        )
-
-        result = await self.db.execute(stmt)
-
-        technical_regulation = result.scalar_one_or_none()
-
-        return jsonable_encoder(technical_regulation)
-    
     
     #=====================================
     # create_ksa_saleem_in_bulk
@@ -208,6 +192,21 @@ class TechnicalRegulationService:
         technical_regulations = result.scalars().all()
 
         return jsonable_encoder(technical_regulations)
+    async def find_by_name(
+        self,
+        name: str
+    ):
+
+        stmt = select(Technical_regulation).where(
+            Technical_regulation.tr_name == name,
+            Technical_regulation.is_deleted == False
+        )
+
+        result = await self.db.execute(stmt)
+
+        technical_regulation = result.scalar_one_or_none()
+
+        return jsonable_encoder(technical_regulation)
 
     # =====================================
     # UPDATE

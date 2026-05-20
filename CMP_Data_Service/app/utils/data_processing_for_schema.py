@@ -1,4 +1,3 @@
-from typing import List, Dict
 class ResponseBuilder:
 
     @staticmethod
@@ -326,72 +325,3 @@ class ResponseBuilder:
             print("ERROR:", str(e))
 
             return []
-   
-    @staticmethod    
-    async def prepare_file_info_data(
-            product_id: int,
-            files_data: List[Dict]
-        ) -> List[Dict]:
-
-            prepared_files = []
-
-            for item in files_data:
-
-                file_info = {
-
-                    # =========================
-                    # RELATION
-                    # =========================
-
-                    "product_id": product_id,
-
-                    # =========================
-                    # FILE INFO
-                    # =========================
-
-                    "file_name": item.get("file_name"),
-
-                    "file_path": item.get("file_path"),
-
-                    "file_type": item.get("file_type"),
-
-                    "file_hash": item.get("hash"),
-
-                    # =========================
-                    # VALIDATION
-                    # =========================
-
-                    "confidence_score": item.get("confidence", 0),
-
-                    "is_valid": item.get("valid", False),
-
-                    # =========================
-                    # OCR / TEXT
-                    # =========================
-
-            
-
-                    "text": item.get("translated_text"),
-
-                    "text_length": item.get("text_length", 0),
-
-                    # =========================
-                    # EXTRACTION DATA
-                    # =========================
-
-                    "visual_data": item.get("visual", {}),
-
-                    "clause_data": item.get("clause", []),
-
-                    # =========================
-                    # META
-                    # =========================
-
-                    "sub_folder_name": item.get("sub_folder_name"),
-
-                    "product_info": item.get("product_info"),
-                }
-
-                prepared_files.append(file_info)
-
-            return prepared_files

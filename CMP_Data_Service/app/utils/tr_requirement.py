@@ -476,6 +476,7 @@ def clean_page_number(page_text):
 
 
 def extract_toc(text):
+    print(text[:2000])
 
     # ---------------------------------------------------
     # SPLIT USING ARTICLE / ANNEX BOUNDARIES
@@ -562,3 +563,376 @@ def extract_toc(text):
             toc[i]["end_page"] = None
 
     return toc
+
+import re
+
+
+def clean_text(text: str):
+    """
+    Normalize OCR/PDF extracted text
+    """
+
+    text = re.sub(r'\s+', ' ', text)
+
+    replacements = {
+        "sup pi ier": "supplier",
+        "product s": "product's",
+        "System ofUnits": "System of Units",
+        "fu lfil": "fulfil",
+        "ofthe": "of the",
+        "tfl": "",
+    }
+
+    for old, new in replacements.items():
+        text = text.replace(old, new)
+
+    return text.strip()
+
+
+def reconstruct_structure(text: str):
+    """
+    Rebuild structure from flattened OCR text
+    """
+
+    # ----------------------------------------
+    # Add newline before child clauses
+    #
+    # 4/111
+    # 4/112
+    # ----------------------------------------
+
+    text = re.sub(
+        r'(\s)(\d+/\d{3,})',
+        r'\n\2',
+        text
+    )
+
+    # ----------------------------------------
+    # Add newline before main sections
+    #
+    # 4/1 Technical Requirements
+    # 4/2 Essential Requirements
+    # ----------------------------------------
+
+    text = re.sub(
+        r'(\s)(\d+/\d)(\s+[A-Z])',
+        r'\n\2\3',
+        text
+    )
+
+    # ----------------------------------------
+    # Add newline before Article
+    # ----------------------------------------
+
+    text = re.sub(
+        r'(Article\s*\(\s*\d+\s*\))',
+        r'\n\1',
+        text
+    )
+
+    return text.strip()
+
+def extract_article_block(
+    text,
+    start_texts=None,
+    end_article="5"
+):
+    """
+    Extract article block using multiple possible titles
+    """
+
+    if start_texts is None:
+
+        start_texts = [
+            "Obligations of Supplier",
+            "Supplier's Obligations",
+            "Suppliers Obligations",
+            "Obligations of the Supplier"
+        ]
+
+    start_index = None
+
+    # ----------------------------------------
+    # FIND FIRST MATCH
+    # ----------------------------------------
+
+    for start_text in start_texts:
+
+        start_match = re.search(
+            re.escape(start_text),
+            text,
+            flags=re.I
+        )
+
+        if start_match:
+
+            start_index = start_match.start()
+
+            break
+
+    # ----------------------------------------
+    # NO MATCH
+    # ----------------------------------------
+
+    if start_index is None:
+        return ""
+
+    # ----------------------------------------
+    # FIND END ARTICLE
+    # ----------------------------------------
+
+    end_match = re.search(
+        rf'Article\s*\(\s*{end_article}\s*\)',
+        text,
+        flags=re.I
+    )
+
+    if end_match:
+
+        end_index = end_match.start()
+
+    else:
+
+        end_index = len(text)
+
+    return text[start_index:end_index]
+
+
+def extract_regulation_structure(text):
+
+    # ----------------------------------------
+    # CLEAN TEXT
+    # ----------------------------------------
+
+    text = clean_text(text)
+
+    # ----------------------------------------
+    # EXTRACT TARGET ARTICLE
+    # ----------------------------------------
+
+    text = extract_article_block(
+    text,
+    start_texts=[
+        "Obligations of Supplier",
+        "Supplier's Obligations",
+        "Suppliers Obligations",
+        "Obligations of the Supplier"
+    ],
+    end_article="5"
+)
+    print(text)
+    req_text = text
+
+    # ----------------------------------------
+    # REMOVE PAGE REFERENCES
+    # ----------------------------------------
+
+    text = re.sub(
+        r'Page\s+\d+\s+of\s+\d+',
+        '',
+        text,
+        flags=re.I
+    )
+
+    text = re.sub(
+        r'03-\d+-\d+',
+        '',
+        text
+    )
+
+    # ----------------------------------------
+    # REBUILD STRUCTURE
+    # ----------------------------------------
+
+    text = reconstruct_structure(text)
+
+    # ----------------------------------------
+    # MAIN SECTION REGEX
+    #
+    # 4/1 Technical Requirements
+    # ----------------------------------------
+
+    section_pattern = re.compile(
+        r'^(\d+/\d)\s+(.*)$',
+        re.MULTILINE
+    )
+
+    sections = list(
+        section_pattern.finditer(text)
+    )
+
+    result = {}
+
+    # ----------------------------------------
+    # LOOP MAIN SECTIONS
+    # ----------------------------------------
+
+    for idx, section in enumerate(sections):
+
+        section_key = section.group(1).strip()
+
+        full_section_text = section.group(2).strip()
+
+        # ----------------------------------------
+        # SPLIT TITLE + INTRO
+        # ----------------------------------------
+
+        title_match = re.match(
+            r'([A-Z][A-Za-z\s]+?Requirements)',
+            full_section_text
+        )
+
+        if title_match:
+
+            section_title = (
+                title_match.group(1).strip()
+            )
+
+            remaining_intro = (
+                full_section_text[
+                    title_match.end():
+                ].strip()
+            )
+
+        else:
+
+            section_title = full_section_text
+            remaining_intro = ""
+
+        start = section.end()
+
+        if idx + 1 < len(sections):
+            end = sections[idx + 1].start()
+        else:
+            end = len(text)
+
+        section_body = text[start:end].strip()
+
+        # ----------------------------------------
+        # INTRO
+        # ----------------------------------------
+
+        intro_lines = []
+
+        if remaining_intro:
+            intro_lines.append(remaining_intro)
+
+        # ----------------------------------------
+        # CHILD ITEM REGEX
+        #
+        # 4/111
+        # 4/112
+        # ----------------------------------------
+
+        child_pattern = re.compile(
+            r'^(\d+/\d{3,})\s+(.*)$'
+        )
+
+        lines = section_body.split("\n")
+
+        items = {}
+
+        current_child = None
+
+        current_content = []
+
+        before_child = True
+
+        # ----------------------------------------
+        # LOOP SECTION LINES
+        # ----------------------------------------
+
+        for line in lines:
+
+            line = line.strip()
+
+            if not line:
+                continue
+
+            child_match = child_pattern.match(line)
+
+            # ----------------------------------------
+            # NEW CHILD
+            # ----------------------------------------
+
+            if child_match:
+
+                before_child = False
+
+                # save previous child
+                if current_child:
+
+                    items[current_child] = (
+                        " ".join(current_content)
+                        .strip()
+                    )
+
+                original_key = (
+                    child_match.group(1)
+                )
+
+                content = (
+                    child_match.group(2)
+                )
+
+                # ----------------------------------------
+                # Convert:
+                #
+                # 4/111 -> 4/1/1
+                # 4/112 -> 4/1/2
+                # ----------------------------------------
+
+                main, digits = (
+                    original_key.split('/')
+                )
+
+                parent = digits[0]
+
+                child_no = digits[1:]
+
+                generated_key = (
+                    f"{main}/{parent}/{child_no}"
+                )
+
+                current_child = generated_key
+
+                current_content = [content]
+
+            else:
+
+                # ----------------------------------------
+                # BEFORE CHILD = INTRO
+                # ----------------------------------------
+
+                if before_child:
+
+                    intro_lines.append(line)
+
+                else:
+
+                    current_content.append(line)
+
+        # ----------------------------------------
+        # SAVE LAST CHILD
+        # ----------------------------------------
+
+        if current_child:
+
+            items[current_child] = (
+                " ".join(current_content)
+                .strip()
+            )
+
+        # ----------------------------------------
+        # STORE SECTION
+        # ----------------------------------------
+
+        result[section_key] = {
+            "title": section_title,
+            "intro": " ".join(
+                intro_lines
+            ).strip(),
+            "items": items
+        }
+
+    return result , req_text

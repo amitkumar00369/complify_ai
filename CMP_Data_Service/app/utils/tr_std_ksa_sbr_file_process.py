@@ -3,10 +3,7 @@
 import uuid
 import os
 import asyncio
-import json
 
-from app.utils.tr_requirement import GenericTechnicalRequirementExtractor,extract_toc
-from app.utils.tr_clauses import LegalStructureParser
 from app.utils.text_cleaner import TextCleaner
 from app.services.image_service import extract_image
 from app.services.pdf_service import extract_pdf, extract_excel
@@ -16,6 +13,8 @@ from app.core_complaince.common import normalize
 from app.utils.arbic_char import SmartTranslator
 from app.utils.extract_word import extract_word_file
 from app.utils.extract_pdf_by_pages import extract_text_by_pages
+from app.utils.tr_requirement import extract_toc,extract_regulation_structure
+from app.utils.tr_clause import transform_regulation_structure
 
 
 # =========================================
@@ -48,7 +47,6 @@ async def process_tr(file_path):
         )
 
     cleanText = TextCleaner.normalize_text(text)
-    # text_en = SmartTranslator.translate_text_chunks(cleanText)
 
     hs_mapping = await asyncio.to_thread(
         extract_hs_mapping,
@@ -73,7 +71,6 @@ async def process_tr(file_path):
         ),
 
         "metaText": cleanText,
-        "text_en": text_en,
 
         "metaJson": {
             "total_standards": hs_mapping.get(
@@ -332,6 +329,7 @@ async def process_ksa_saleem(file_path):
 
     return result
 
+
 async def process_tr_req(file, start_page, end_page):
     try:
 
@@ -339,9 +337,6 @@ async def process_tr_req(file, start_page, end_page):
     
 
         text = ""
-        structured = {}
-        method = "unknown"
-        conf = 0.0
 
         if ext.endswith(".pdf"):
 
@@ -350,57 +345,17 @@ async def process_tr_req(file, start_page, end_page):
                 file, start_page,end_page
             )
 
-        # elif ext.endswith((".png", ".jpg", ".jpeg")):
-
-        #     text, structured, method, conf = await asyncio.to_thread(
-        #         extract_image,
-        #         file
-        #     )
-
-        # elif ext.endswith((".doc", ".docx")):
-
-        #     text, structured, method, conf = await asyncio.to_thread(
-        #         extract_word_file,
-        #         file
-        #     )
-
-        # elif ext.endswith(".txt"):
-
-        #     text = file.decode("utf-8")
+      
 
         clean_text = TextCleaner.normalize_text(text)
-        # extractor_req = GenericTechnicalRequirementExtractor(clean_text)
-        # # extractor = LegalStructureParser()
-        # # clauses = extractor.parse(clean_text)
-
-        # tr_requirement = extractor_req.extract()
-
-    #     print(
-    #         json.dumps(
-    #             result,
-    #             indent=2,
-    #             ensure_ascii=False
-    #         )
-    # )
-        
-    # for key, value in result.items():
-
-    #     if isinstance(value, list):
-
-    #         print(f"{key}: {len(value)} extracted")
-
-    #     elif isinstance(value, dict):
-
-    #         print(f"{key}: {len(value.keys())} fields")
-
-    #     else:
-
-    #         print(f"{key}: extracted")
-
+        tr_req, req_text = extract_regulation_structure(clean_text)
+        cluases = transform_regulation_structure(tr_req)
+      
         result = {
             "req_id": "TR_Req" + str(uuid.uuid4())[:6],
-      
-            "text": clean_text,
+            "text": req_text,
+            "req": tr_req,
+            "cluases": cluases
          
 
         }

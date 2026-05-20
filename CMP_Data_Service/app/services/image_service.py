@@ -1,4 +1,3 @@
-from app.utils.arbic_char import SmartTranslator
 import cv2
 
 from ..services.ocr_service import tesseract_text
@@ -21,7 +20,6 @@ def extract_image(file_path: str):
         # OCR
         # =========================
         text = tesseract_text(image)
-        text = SmartTranslator.smart_translate(text)
 
         # =========================
         # VISUAL DETECTION

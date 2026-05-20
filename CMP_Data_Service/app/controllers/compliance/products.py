@@ -208,11 +208,7 @@ async def upload_case(
             files,
             file_name=zip_name
         )
-
         docs = await ResponseBuilder.buildResponseOfProduct(process_docs)
-        # return docs
-        # file_data = await ResponseBuilder.prepare_file_info_data(4, docs.get("productsFileInfo"))
-        # return file_data
         
 
         # =========================
@@ -291,10 +287,6 @@ async def upload_case(
         
         stddata = await std_data(docs.get("product_name"),allStdData)
         print("stddata",stddata)
-        if  not docs.get("standard_name"):
-            print("yesssss")
-            docs["standard_name"] = stddata["std_name"]
-            
 
         payload = {
             "case_id": docs.get("caseId"),

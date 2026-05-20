@@ -35,7 +35,7 @@ class ComplianceService:
         try:
 
             product = data.get("product", {})
-            pcoc = product.get("pcocData", {})
+            pcoc = product.get("pcoc_data", {})
 
             product_name = (
                 pcoc.get("product_name")
@@ -86,7 +86,7 @@ class ComplianceService:
         try:
 
             product = data.get("product", {})
-            pcoc = product.get("pcocData", {})
+            pcoc = product.get("pcoc_data", {})
 
             product_name = (
                 pcoc.get("product_name")
@@ -147,7 +147,7 @@ class ComplianceService:
         try:
 
             product = data.get("product", {})
-            pcoc = product.get("pcocData", {})
+            pcoc = product.get("pcoc_data", {})
 
             product_name = (
                 pcoc.get("product_name")
@@ -220,7 +220,6 @@ class ComplianceService:
 
             product = data.get("product", {})
             pcoc = product.get("pcoc_data", {})
-            # print("pcoc", product)
 
             standards_text = (
                 product.get("standard_name")
@@ -309,7 +308,7 @@ class ComplianceService:
         try:
 
             product = data.get("product", {})
-            pcoc = product.get("pcocData", {})
+            pcoc = product.get("pcoc_data", {})
 
             standards_text = (
                 product.get("standard_name")
@@ -370,7 +369,7 @@ class ComplianceService:
         try:
 
             product = data.get("product", {})
-            pcoc = product.get("pcocData", {})
+            pcoc = product.get("pcoc_data", {})
 
             product_name = (
                 pcoc.get("product_name")
@@ -510,7 +509,7 @@ class ComplianceService:
         try:
 
             product = data.get("product", {})
-            pcoc = product.get("pcocData", {})
+            pcoc = product.get("pcoc_data", {})
 
             standards_raw = (
                 product.get("standard_name")

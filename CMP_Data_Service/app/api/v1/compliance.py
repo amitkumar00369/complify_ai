@@ -1,9 +1,8 @@
 from app.controllers.compliance.products import upload_case,getList,getDetailsById
 from app.controllers.compliance.STD import upload_std
-from app.controllers.compliance.TR import upload_tr,get_tr, createToc
+from app.controllers.compliance.TR import upload_tr,get_tr,createToc,createRequirement
 from app.controllers.compliance.KSA import upload_ksa
 from app.controllers.compliance.saber import upload_saber
-from app.controllers.compliance.TR_Req import createRequirement
 
 from fastapi import APIRouter
 from app.controllers.compliance.hs_code_controller import (importHSMaster,getHSCodeDetail,searchHSCode,testAPI)
@@ -24,7 +23,6 @@ complianceRouter.get("/get-product-details/{product_id}")(getDetailsById)
 complianceRouter.get("/get-tr")(get_tr)
 complianceRouter.post("/create-tr-toc")(createToc)
 complianceRouter.post("/create-tr-req")(createRequirement)
-
 
 
 
