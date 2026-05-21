@@ -7,12 +7,19 @@ from core.config import settings
 from core.database import Base
 
 import app.models
+from urllib.parse import quote_plus
+
+password = quote_plus(settings.DB_PASSWORD)
+
 
 
 # ===================================
 # ALEMBIC CONFIG
 # ===================================
 config = context.config
+
+
+
 
 
 # ===================================
@@ -28,7 +35,7 @@ if config.config_file_name is not None:
 DATABASE_URL = (
     f"postgresql+psycopg2://"
     f"{settings.DB_USER}:"
-    f"{settings.DB_PASSWORD}@"
+    f"{password}@"
     f"{settings.DB_HOST1}:"
     f"{settings.DB_PORT}/"
     f"{settings.DB_NAME}"
@@ -36,11 +43,14 @@ DATABASE_URL = (
 
 print("Alembic DB URL:", DATABASE_URL)
 
+# config.set_main_option(
+#     "sqlalchemy.url",
+#     DATABASE_URL
+# )
 config.set_main_option(
     "sqlalchemy.url",
-    DATABASE_URL
+    DATABASE_URL.replace("%", "%%")
 )
-
 
 # ===================================
 # METADATA

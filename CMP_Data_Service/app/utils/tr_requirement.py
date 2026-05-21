@@ -564,13 +564,11 @@ def extract_toc(text):
 
     return toc
 
+
 import re
 
 
 def clean_text(text: str):
-    """
-    Normalize OCR/PDF extracted text
-    """
 
     text = re.sub(r'\s+', ' ', text)
 
@@ -589,41 +587,53 @@ def clean_text(text: str):
     return text.strip()
 
 
-def reconstruct_structure(text: str):
-    """
-    Rebuild structure from flattened OCR text
-    """
+# ---------------------------------------------------
+# NORMALIZE CLAUSE NUMBERING
+# ---------------------------------------------------
 
-    # ----------------------------------------
-    # Add newline before child clauses
-    #
+def normalize_clause_number(clause):
+
+    # 4.1.1 -> 4/1/1
+    clause = clause.replace(".", "/")
+
+    # 4-1-1 -> 4/1/1
+    clause = clause.replace("-", "/")
+
+    # ---------------------------------------
+    # HANDLE:
+    # 4/111 -> 4/1/1
+    # ---------------------------------------
+
+    if re.match(r'^\d+/\d{3}$', clause):
+
+        main, digits = clause.split('/')
+
+        clause = (
+            f"{main}/{digits[0]}/{digits[1:]}"
+        )
+
+    return clause
+
+
+# ---------------------------------------------------
+# RECONSTRUCT OCR STRUCTURE
+# ---------------------------------------------------
+
+def reconstruct_structure(text):
+
+    # newline before:
     # 4/111
-    # 4/112
-    # ----------------------------------------
+    # 4/1/1
+    # 4.1.1
+    # 4-1-1
 
     text = re.sub(
-        r'(\s)(\d+/\d{3,})',
+        r'(\s)(\d+(?:[\/\.\-]\d+)+)',
         r'\n\2',
         text
     )
 
-    # ----------------------------------------
-    # Add newline before main sections
-    #
-    # 4/1 Technical Requirements
-    # 4/2 Essential Requirements
-    # ----------------------------------------
-
-    text = re.sub(
-        r'(\s)(\d+/\d)(\s+[A-Z])',
-        r'\n\2\3',
-        text
-    )
-
-    # ----------------------------------------
-    # Add newline before Article
-    # ----------------------------------------
-
+    # newline before Article
     text = re.sub(
         r'(Article\s*\(\s*\d+\s*\))',
         r'\n\1',
@@ -632,14 +642,26 @@ def reconstruct_structure(text: str):
 
     return text.strip()
 
+def extract_tr_code(text):
+
+    match = re.search(
+        r'\b\d{2}-\d{2}-\d{2}-\d+\b',
+        text
+    )
+
+    if match:
+        return match.group(0)
+
+    return None
+# ---------------------------------------------------
+# ARTICLE EXTRACTION
+# ---------------------------------------------------
+
 def extract_article_block(
     text,
     start_texts=None,
     end_article="5"
 ):
-    """
-    Extract article block using multiple possible titles
-    """
 
     if start_texts is None:
 
@@ -647,14 +669,11 @@ def extract_article_block(
             "Obligations of Supplier",
             "Supplier's Obligations",
             "Suppliers Obligations",
-            "Obligations of the Supplier"
+            "Obligations of the Supplier",
+            "Article (4)"
         ]
 
     start_index = None
-
-    # ----------------------------------------
-    # FIND FIRST MATCH
-    # ----------------------------------------
 
     for start_text in start_texts:
 
@@ -670,16 +689,8 @@ def extract_article_block(
 
             break
 
-    # ----------------------------------------
-    # NO MATCH
-    # ----------------------------------------
-
     if start_index is None:
         return ""
-
-    # ----------------------------------------
-    # FIND END ARTICLE
-    # ----------------------------------------
 
     end_match = re.search(
         rf'Article\s*\(\s*{end_article}\s*\)',
@@ -688,44 +699,35 @@ def extract_article_block(
     )
 
     if end_match:
-
         end_index = end_match.start()
-
     else:
-
         end_index = len(text)
 
     return text[start_index:end_index]
 
+# ---------------------------------------------------
+# MAIN PARSER
+# ---------------------------------------------------
 
 def extract_regulation_structure(text):
 
-    # ----------------------------------------
-    # CLEAN TEXT
-    # ----------------------------------------
-
+    # ---------------------------------------
+    # CLEAN
+    # ---------------------------------------
+    tr_code = extract_tr_code(text)
+    print(tr_code)
     text = clean_text(text)
 
-    # ----------------------------------------
-    # EXTRACT TARGET ARTICLE
-    # ----------------------------------------
+    # ---------------------------------------
+    # ARTICLE BLOCK
+    # ---------------------------------------
 
-    text = extract_article_block(
-    text,
-    start_texts=[
-        "Obligations of Supplier",
-        "Supplier's Obligations",
-        "Suppliers Obligations",
-        "Obligations of the Supplier"
-    ],
-    end_article="5"
-)
-    print(text)
-    req_text = text
+    text = extract_article_block(text)
+    tr_rq = text
 
-    # ----------------------------------------
-    # REMOVE PAGE REFERENCES
-    # ----------------------------------------
+    # ---------------------------------------
+    # REMOVE PAGE GARBAGE
+    # ---------------------------------------
 
     text = re.sub(
         r'Page\s+\d+\s+of\s+\d+',
@@ -735,27 +737,30 @@ def extract_regulation_structure(text):
     )
 
     text = re.sub(
-        r'03-\d+-\d+',
+        r'\b\d{2}-\d{2}-\d{2}-\d+\b',
         '',
         text
     )
 
-    # ----------------------------------------
-    # REBUILD STRUCTURE
-    # ----------------------------------------
+    # ---------------------------------------
+    # REBUILD OCR STRUCTURE
+    # ---------------------------------------
 
     text = reconstruct_structure(text)
+    
 
-    # ----------------------------------------
+    # ---------------------------------------
     # MAIN SECTION REGEX
     #
-    # 4/1 Technical Requirements
-    # ----------------------------------------
+    # 4/1
+    # 4.1
+    # 4-1
+    # ---------------------------------------
 
     section_pattern = re.compile(
-        r'^(\d+/\d)\s+(.*)$',
-        re.MULTILINE
-    )
+    r'^(\d+[\/\.\-]\d+)\s+([^\n]+)',
+    re.MULTILINE
+)
 
     sections = list(
         section_pattern.finditer(text)
@@ -763,24 +768,33 @@ def extract_regulation_structure(text):
 
     result = {}
 
-    # ----------------------------------------
-    # LOOP MAIN SECTIONS
-    # ----------------------------------------
+    # ---------------------------------------
+    # LOOP SECTIONS
+    # ---------------------------------------
 
     for idx, section in enumerate(sections):
 
-        section_key = section.group(1).strip()
+        raw_section_key = (
+            section.group(1).strip()
+        )
 
-        full_section_text = section.group(2).strip()
+        section_key = normalize_clause_number(
+            raw_section_key
+        )
 
-        # ----------------------------------------
-        # SPLIT TITLE + INTRO
-        # ----------------------------------------
+        full_section_text = (
+            section.group(2).strip()
+        )
+
+        # -----------------------------------
+        # TITLE EXTRACTION
+        # -----------------------------------
 
         title_match = re.match(
-            r'([A-Z][A-Za-z\s]+?Requirements)',
-            full_section_text
-        )
+        r'^([A-Za-z\s]+?requirements)\b',
+        full_section_text,
+        flags=re.I
+    )
 
         if title_match:
 
@@ -808,27 +822,27 @@ def extract_regulation_structure(text):
 
         section_body = text[start:end].strip()
 
-        # ----------------------------------------
-        # INTRO
-        # ----------------------------------------
+        lines = section_body.split("\n")
 
         intro_lines = []
 
         if remaining_intro:
-            intro_lines.append(remaining_intro)
+            intro_lines.append(
+                remaining_intro
+            )
 
-        # ----------------------------------------
-        # CHILD ITEM REGEX
+        # -----------------------------------
+        # GENERIC CHILD REGEX
         #
         # 4/111
-        # 4/112
-        # ----------------------------------------
+        # 4/1/1
+        # 4.1.1
+        # 4-1-1
+        # -----------------------------------
 
         child_pattern = re.compile(
-            r'^(\d+/\d{3,})\s+(.*)$'
+            r'^(\d+(?:[\/\.\-]\d+)+)\s+(.*)$'
         )
-
-        lines = section_body.split("\n")
 
         items = {}
 
@@ -838,10 +852,6 @@ def extract_regulation_structure(text):
 
         before_child = True
 
-        # ----------------------------------------
-        # LOOP SECTION LINES
-        # ----------------------------------------
-
         for line in lines:
 
             line = line.strip()
@@ -849,11 +859,9 @@ def extract_regulation_structure(text):
             if not line:
                 continue
 
-            child_match = child_pattern.match(line)
-
-            # ----------------------------------------
-            # NEW CHILD
-            # ----------------------------------------
+            child_match = child_pattern.match(
+                line
+            )
 
             if child_match:
 
@@ -867,42 +875,23 @@ def extract_regulation_structure(text):
                         .strip()
                     )
 
-                original_key = (
+                raw_child_key = (
                     child_match.group(1)
                 )
 
-                content = (
+                normalized_child = (
+                    normalize_clause_number(
+                        raw_child_key
+                    )
+                )
+
+                current_child = normalized_child
+
+                current_content = [
                     child_match.group(2)
-                )
-
-                # ----------------------------------------
-                # Convert:
-                #
-                # 4/111 -> 4/1/1
-                # 4/112 -> 4/1/2
-                # ----------------------------------------
-
-                main, digits = (
-                    original_key.split('/')
-                )
-
-                parent = digits[0]
-
-                child_no = digits[1:]
-
-                generated_key = (
-                    f"{main}/{parent}/{child_no}"
-                )
-
-                current_child = generated_key
-
-                current_content = [content]
+                ]
 
             else:
-
-                # ----------------------------------------
-                # BEFORE CHILD = INTRO
-                # ----------------------------------------
 
                 if before_child:
 
@@ -912,20 +901,13 @@ def extract_regulation_structure(text):
 
                     current_content.append(line)
 
-        # ----------------------------------------
-        # SAVE LAST CHILD
-        # ----------------------------------------
-
+        # save last child
         if current_child:
 
             items[current_child] = (
                 " ".join(current_content)
                 .strip()
             )
-
-        # ----------------------------------------
-        # STORE SECTION
-        # ----------------------------------------
 
         result[section_key] = {
             "title": section_title,
@@ -935,4 +917,4 @@ def extract_regulation_structure(text):
             "items": items
         }
 
-    return result , req_text
+    return result,tr_rq,tr_code

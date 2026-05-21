@@ -1,6 +1,6 @@
 from app.controllers.compliance.products import upload_case,getList,getDetailsById
 from app.controllers.compliance.STD import upload_std
-from app.controllers.compliance.TR import upload_tr,get_tr,createToc,createRequirement
+from app.controllers.compliance.TR import upload_tr,get_tr,findTrToc,FindTrRequirement, findTrHSCode, FindTrStd
 from app.controllers.compliance.KSA import upload_ksa
 from app.controllers.compliance.saber import upload_saber
 
@@ -21,8 +21,12 @@ complianceRouter.get("/get-products")(getList)
 complianceRouter.get("/get-product-details/{product_id}")(getDetailsById)
 
 complianceRouter.get("/get-tr")(get_tr)
-complianceRouter.post("/create-tr-toc")(createToc)
-complianceRouter.post("/create-tr-req")(createRequirement)
+complianceRouter.post("/create-tr-toc")(findTrToc)
+complianceRouter.post("/create-tr-req")(FindTrRequirement)
+complianceRouter.post("/create-tr-hs")(findTrHSCode)
+complianceRouter.post("/create-tr-std")(FindTrStd)
+
+
 
 
 

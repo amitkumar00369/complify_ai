@@ -5,6 +5,7 @@ import json
 import uuid
 import asyncio
 import aiofiles
+from app.utils.arbic_char import SmartTranslator
 from fastapi import UploadFile, File,Depends
 from fastapi.responses import JSONResponse
 import zipfile
@@ -41,6 +42,11 @@ async def upload_ksa(
     try:
         path = None
         folder = None
+        filename = file.filename
+            # print("file_name", filename)
+        saber_name = SmartTranslator.smart_translate(
+              os.path.splitext(filename)[0])
+        
         
         
 
@@ -160,7 +166,7 @@ async def upload_ksa(
         # PROCESS FILES CONCURRENTLY
         # ==========================================
         tasks = [
-            process_ksa_saleem(f_path)
+            process_ksa_saleem(f_path,saber_name)
             for f_path in files
         ]
         
@@ -171,6 +177,7 @@ async def upload_ksa(
         )
    
         print("processed result",len(processed_results))
+        return processed_results
         docs = await ResponseBuilder.buildResponseOfKsaSaleem(processed_results)
         
         ksa_data =await ksa_service.create_ksa_saleem_in_bulk(docs)

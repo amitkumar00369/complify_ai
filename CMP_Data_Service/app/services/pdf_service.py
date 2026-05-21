@@ -189,6 +189,7 @@ def extract_excel(file_path):
     # =========================
     # df.columns = [str(col).strip() for col in df.columns]
     # print("Excel columns 0:", df.columns)
+    print(df.columns)
     
     df = update_column_names(df)
 
@@ -270,3 +271,109 @@ def extract_excel(file_path):
     # print(records[:1])
 
     return records, {}, "excel", 0.9
+
+
+
+def extract_saber_excel(file_path):
+
+    df = None
+
+    # =========================
+    # READ FILE
+    # =========================
+    if file_path.lower().endswith(".csv"):
+        df = pd.read_csv(file_path, header=4)
+
+    elif file_path.lower().endswith((".xlsx", ".xls", ".excel")):
+        df = pd.read_excel(file_path, header=4)
+
+    else:
+        return "Invalid file format", {}, "unknown", 0.0
+
+    # =========================
+    # CLEAN COLUMN NAMES
+    # =========================
+    # df.columns = [str(col).strip() for col in df.columns]
+    # print("Excel columns 0:", df.columns)
+    print(df.head(5))
+    
+    df = update_column_names(df)
+
+    # print("Excel columns:", df.columns)
+
+    # =========================
+    # REMOVE EMPTY ROWS
+    # =========================
+    df = df.dropna(how="all")
+    # print("Non-empty rows:", len(df))
+
+    # =========================
+    # FIND HS CODE COLUMN
+    # =========================
+    hs_col = None
+
+    # possible_hs_columns = [
+    #     "hs_code",
+    #     "hs_codes",
+    #     "hs_cods",
+    #     "hscode",
+    #     "hscodes",
+    #     "hscods"
+    # ]
+
+    # for col in df.columns:
+
+    #     clean_col = (
+    #         col.lower()
+    #         .replace(" ", "")
+    #         .replace("_", "")
+    #     )
+
+    #     normalized_possible = [
+    #         c.replace("_", "")
+    #         for c in possible_hs_columns
+    #     ]
+
+    #     if clean_col in normalized_possible:
+    #         hs_col = col
+    #         break
+
+    # # print("Detected HS column:", hs_col)
+
+    # =========================
+    # CONVERT EXCEL DATA
+    # ARRAY OF OBJECTS
+    # =========================
+    records = []
+
+    # for _, row in df.iterrows():
+
+    #     item = {}
+
+    #     for col in df.columns:
+
+    #         value = row[col]
+
+    #         if pd.isna(value):
+    #             value = ""
+
+    #         value = str(value).strip()
+
+    #         item[col] = value
+
+    #     # =========================
+    #     # HS CODE EXTRACTION
+    #     # =========================
+    #     if hs_col:
+
+    #         hs_value = item.get(hs_col, "")
+
+    #         item["fullHscode"] = hs_value
+    #         item["4DigitHscode"] = hs_value[:4]
+    #         item["6DigitHScode"] = hs_value.replace(".", "")
+
+    #     records.append(item)
+
+    # # print(records[:1])
+
+    return df, {}, "excel", 0.9

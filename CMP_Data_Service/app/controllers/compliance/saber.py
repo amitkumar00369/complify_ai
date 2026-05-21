@@ -1,4 +1,5 @@
 
+from app.utils.arbic_char import SmartTranslator
 from app.utils.data_processing_for_schema import ResponseBuilder
 import os
 import json
@@ -37,6 +38,10 @@ async def upload_saber(
     try:
         path = None
         folder = None
+        filename = file.filename
+            # print("file_name", filename)
+        saber_name = SmartTranslator.smart_translate(
+              os.path.splitext(filename)[0])
         
 
         if not file.filename.endswith(
@@ -155,7 +160,7 @@ async def upload_saber(
         # PROCESS FILES CONCURRENTLY
         # ==========================================
         tasks = [
-            process_saber(f_path)
+            process_saber(f_path,saber_name)
             for f_path in files
         ]
         
@@ -165,9 +170,9 @@ async def upload_saber(
             return_exceptions=True
         )
         print("processed result",len(processed_results))
-        docs = await ResponseBuilder.buildResponseOfSaber(processed_results)
+        # docs = await ResponseBuilder.buildResponseOfSaber(processed_results)
         
-        saber_data =await saber_service.create_saber_in_bulk(docs)
+        # saber_data =await saber_service.create_saber_in_bulk(docs)
         
 
         # ==========================================
@@ -179,7 +184,8 @@ async def upload_saber(
                 status_code=status.HTTP_201_CREATED,
                 content={
                     "message": "Saber created successfully",
-                    "data": saber_data
+                    "data": processed_results,
+                    # "docs": docs
                 }
             )
 

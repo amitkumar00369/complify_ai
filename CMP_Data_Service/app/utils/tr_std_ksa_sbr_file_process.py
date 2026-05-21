@@ -4,9 +4,11 @@ import uuid
 import os
 import asyncio
 
+from app.utils.cmt_extract import extract_ksa_compliance_data
+from app.utils.tr_hs_code import extract_standards
 from app.utils.text_cleaner import TextCleaner
 from app.services.image_service import extract_image
-from app.services.pdf_service import extract_pdf, extract_excel
+from app.services.pdf_service import extract_pdf, extract_excel, extract_saber_excel
 from app.services.hs_mapper import extract_hs_mapping
 from app.services.std_clause import build_knowledge_objects
 from app.core_complaince.common import normalize
@@ -14,6 +16,8 @@ from app.utils.arbic_char import SmartTranslator
 from app.utils.extract_word import extract_word_file
 from app.utils.extract_pdf_by_pages import extract_text_by_pages
 from app.utils.tr_requirement import extract_toc,extract_regulation_structure
+from app.utils.tr_requirements_new import extract_regulation_structures
+
 from app.utils.tr_clause import transform_regulation_structure
 
 
@@ -174,7 +178,7 @@ async def process_std(file_path):
 # =========================================
 # SABER
 # =========================================
-async def process_saber(file_path):
+async def process_saber(file_path,saber_name):
 
     ext = file_path.lower()
 
@@ -206,15 +210,23 @@ async def process_saber(file_path):
             extract_image,
             file_path
         )
+    print("type of", type(text))
+    clean_text = "Empty",
+    cleanText = " Empty"
+    clause = {}
+    if not isinstance(text,list):
+        clean_text = normalize(text)
 
-    clean_text = normalize(text)
+        cleanText = TextCleaner.normalize_text(clean_text)
 
-    cleanText = TextCleaner.normalize_text(clean_text)
-
-    clause = await asyncio.to_thread(
-        build_knowledge_objects,
-        cleanText
-    )
+        clause = await asyncio.to_thread(
+            build_knowledge_objects,
+            cleanText
+        )
+    if isinstance(text,list):
+        clause = text
+        # print("clssss", clause)
+            
 
     result = {
         "saber_id": "SABER" + str(uuid.uuid4())[:6],
@@ -224,6 +236,8 @@ async def process_saber(file_path):
                 os.path.basename(file_path)
             )[0]
         ),
+        "saber_name1": saber_name,
+        "type": "saber",
 
         "folder_name": os.path.basename(
             os.path.dirname(
@@ -254,7 +268,7 @@ async def process_saber(file_path):
 # =========================================
 # KSA SALEEM
 # =========================================
-async def process_ksa_saleem(file_path):
+async def process_ksa_saleem(file_path,saber_name):
 
     ext = file_path.lower()
 
@@ -281,14 +295,23 @@ async def process_ksa_saleem(file_path):
             file_path
         )
 
-    clean_text = normalize(text)
+    print("type of", type(text))
+    clean_text = "Empty",
+    cleanText = " Empty"
+    clause = {}
+    if not isinstance(text,list):
+        clean_text = normalize(text)
 
-    cleanText = TextCleaner.normalize_text(clean_text)
+        cleanText = TextCleaner.normalize_text(clean_text)
 
-    clause = await asyncio.to_thread(
-        build_knowledge_objects,
-        cleanText
-    )
+        clause = await asyncio.to_thread(
+            build_knowledge_objects,
+            cleanText
+        )
+    if isinstance(text,list):
+        clause = text
+    if  saber_name.lower()=="cst":
+        clause = extract_ksa_compliance_data(cleanText)
     # print("breaked -scuccc",SmartTranslator.smart_translate(
     #         os.path.splitext(
     #             os.path.basename(file_path)
@@ -297,12 +320,14 @@ async def process_ksa_saleem(file_path):
 
     result = {
         "ksa_id": "KSA" + str(uuid.uuid4())[:6],
+        "type": "KSA_SALEEM",
 
         "ksa_name": SmartTranslator.smart_translate(
             os.path.splitext(
                 os.path.basename(file_path)
             )[0]
         ),
+        "ksa_name1": saber_name,
 
         "folder_name": os.path.basename(
             os.path.dirname(
@@ -326,12 +351,14 @@ async def process_ksa_saleem(file_path):
 
         "clause": clause
     }
+    # print("ress", result)
 
     return result
 
 
 async def process_tr_req(file, start_page, end_page):
     try:
+        print("pagessss", start_page, end_page)
 
         ext = file.lower()
     
@@ -344,17 +371,24 @@ async def process_tr_req(file, start_page, end_page):
                 extract_text_by_pages,
                 file, start_page,end_page
             )
+        # print(text)
+        
 
       
 
         clean_text = TextCleaner.normalize_text(text)
-        tr_req, req_text = extract_regulation_structure(clean_text)
-        cluases = transform_regulation_structure(tr_req)
+        
+        # tr_req, req_text,tr_code = extract_regulation_structure(clean_text)
+        data = extract_regulation_structures(clean_text)
+        print(data)
+        cluases = transform_regulation_structure(data.get("tr_requirement"))
       
         result = {
             "req_id": "TR_Req" + str(uuid.uuid4())[:6],
-            "text": req_text,
-            "req": tr_req,
+            "tr_code": data.get("tr_code"),
+            "clean_text": clean_text,
+            "text": data.get("req_raw_data"),
+            "req": data.get("tr_requirement"),
             "cluases": cluases
          
 
@@ -365,6 +399,91 @@ async def process_tr_req(file, start_page, end_page):
     except Exception as e:
         print(str(e))
         return None
+    
+
+async def process_tr_hs(file, start_page, end_page,text_scope):
+    try:
+        print("pagessss", start_page, end_page)
+
+        ext = file.lower()
+    
+
+        text = ""
+
+        if ext.endswith(".pdf"):
+
+            text = await asyncio.to_thread(
+                extract_text_by_pages,
+                file, start_page,end_page
+            )
+        # print(text)
+        
+
+      
+
+        clean_text = TextCleaner.normalize_text(text)
+        # print(clean_text)
+        data = extract_product_hs_codes(clean_text,text_scope)
+        
+        # tr_req, req_text,tr_code = extract_regulation_structure(clean_text)
+
+      
+        result = {
+            "req_id": "TR_Req" + str(uuid.uuid4())[:6],
+        
+            # "clean_text": clean_text,
+            "data": data
+          
+         
+
+        }
+
+        return result
+
+    except Exception as e:
+        print(str(e))
+        return None
+    
+
+async def process_tr_std(file, start_page, end_page,text_scope):
+    try:
+        print("pagessss", start_page, end_page)
+
+        ext = file.lower()
+    
+
+        text = ""
+
+        if ext.endswith(".pdf"):
+
+            text = await asyncio.to_thread(
+                extract_text_by_pages,
+                file, start_page,end_page
+            )
+        # print(text)
+        
+
+      
+
+        clean_text = TextCleaner.normalize_text(text)
+        data = extract_standards(text,text_scope)
+        # print(clean_text)
+        # data = extract_product_hs_codes(clean_text,text_scope)
+        
+        # tr_req, req_text,tr_code = extract_regulation_structure(clean_text)
+
+      
+        result = {
+            "req_id": "TR_Req" + str(uuid.uuid4())[:6],
+            "data": data
+        }
+
+        return result
+
+    except Exception as e:
+        print(str(e))
+        return None
+    
     
 
 async def process_tr_toc(filename,file):
