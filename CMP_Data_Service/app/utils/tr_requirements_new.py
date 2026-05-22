@@ -166,40 +166,28 @@ def extract_tr_code(text):
 
 def extract_article_block(
     text,
-    start_texts=None,
-    end_article="5"
+    text_scope
 ):
+    
 
-    if start_texts is None:
+    
 
-        start_texts = [
-            "Obligations of Supplier",
-            "Supplier's Obligations",
-            "Suppliers Obligations",
-            "Obligations of the Supplier",
-            "Article (4)"
-        ]
-
-    start_index = None
-
-    for start_text in start_texts:
-
-        start_match = re.search(
-            re.escape(start_text),
+    start_match = re.search(
+            re.escape(text_scope.get("start")),
             text,
             flags=re.I
         )
+    start_index = 0
 
-        if start_match:
+    if start_match:
 
-            start_index = start_match.start()
-            break
+        start_index = start_match.start()
+      
 
-    if start_index is None:
-        return ""
+
 
     end_match = re.search(
-        rf'Article\s*\(\s*{end_article}\s*\)',
+        rf'Article\s*\(\s*{text_scope.get("end")}\s*\)',
         text,
         flags=re.I
     )
@@ -216,7 +204,7 @@ def extract_article_block(
 # MAIN PARSER
 # ---------------------------------------------------
 
-def extract_regulation_structures(text):
+def extract_regulation_structures(text,text_scope):
 
     # ---------------------------------------
     # CLEAN
@@ -230,7 +218,7 @@ def extract_regulation_structures(text):
     # ARTICLE BLOCK
     # ---------------------------------------
 
-    text = extract_article_block(text)
+    text = extract_article_block(text,text_scope)
 
     tr_rq = text
 

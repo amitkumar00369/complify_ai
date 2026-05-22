@@ -2,199 +2,206 @@ import re
 from typing import List, Dict
 
 
-def extract_product_hs_codes(
-    raw_text: str,
-    scope: dict
-) -> List[Dict]:
+def extract_standards(raw_text: str, scope: dict) -> List[Dict]:
 
-    """
-    Extract product + hs codes between start_text and stop_text
-    """
+    # ---------------------------------------------------------
+    # SCOPE EXTRACTION
+    # ---------------------------------------------------------
+    start_pattern = re.escape(scope["start"])
 
-    # -----------------------------
-    # CLEAN TEXT
-    # -----------------------------
-    text = raw_text.replace("\n", " ")
+    # more stable than exact OCR string matching
+    end_pattern = r'Conformity\s+Assessment\s+Form'
 
-    # remove page numbers
-    text = re.sub(
-        r"Page\s+\d+\s+of\s+\d+",
-        " ",
-        text,
-        flags=re.I
+    match = re.search(
+        rf'{start_pattern}(.*?){end_pattern}',
+        raw_text,
+        flags=re.DOTALL | re.IGNORECASE
     )
 
-    # remove repeated document ids
-    text = re.sub(
-        r"\b\d{2}-\d{2}-\d{2}-\d{3}\b",
-        " ",
-        text
-    )
-
-    # normalize spaces
-    text = re.sub(r"\s+", " ", text).strip()
-
-    # -----------------------------
-    # SLICE REQUIRED PART
-    # -----------------------------
-    start_match = re.search(
-        re.escape(scope.get("start")),
-        text,
-        re.I
-    )
-
-    if not start_match:
+    if not match:
         return []
 
-    start_index = start_match.end()
+    text = match.group(1)
 
-    stop_match = re.search(
-        re.escape(scope.get("end")),
-        text[start_index:],
-        re.I
-    )
+    # ---------------------------------------------------------
+    # CLEAN TEXT
+    # ---------------------------------------------------------
+    text = re.sub(r'Page\s+\d+\s+of\s+\d+', '', text, flags=re.I)
 
-    if stop_match:
-        end_index = start_index + stop_match.start()
-        text = text[start_index:end_index]
-    else:
-        text = text[start_index:]
+    text = re.sub(r'03-03-16-156', '', text)
 
-    # -----------------------------
-    # REMOVE TABLE HEADER
-    # -----------------------------
-    text = re.sub(
-        r"No\.\s*Product\s*HS\s*Code",
-        " ",
-        text,
-        flags=re.I
-    )
+    text = re.sub(r'Annex No\.\s*\(\d+\)', '', text)
 
-    # -----------------------------
-    # FIND ROWS
-    # -----------------------------
-    rows = re.findall(
-        r'(\d{1,2}\s+.*?)(?=\s+\d{1,2}\s+[A-Za-z]|$)',
-        text
+    text = text.replace("List of Standards", "")
+
+    text = text.replace("Standard", "")
+    text = text.replace("Title", "")
+
+    # ---------------------------------------------------------
+    # OCR FIXES
+    # ---------------------------------------------------------
+    fixes = {
+        "CENffR": "CEN/TR",
+        "0 6954": "D6954",
+        "06988": "D6988",
+        "05208": "D5208",
+        "03826": "D3826",
+        "0400 I": "D4001",
+        "04001": "D4001",
+        "02765": "D2765",
+        "05988": "D5988",
+        "1485 1": "14851",
+        "20 13": "2013",
+        "1 2": "12",
+        "ASTMD": "ASTM D",
+        "Detennination": "Determination",
+        "Determ ination": "Determination",
+        "ofthe": "of the",
+        "II ": "11 ",
+        "I ": "1 ",
+        "r!r;": "",
+        "p age": "",
+    }
+
+    for old, new in fixes.items():
+        text = text.replace(old, new)
+
+    # ---------------------------------------------------------
+    # SPLIT LINES
+    # ---------------------------------------------------------
+    lines = [
+        line.strip()
+        for line in text.split("\n")
+        if line.strip()
+    ]
+
+    # ---------------------------------------------------------
+    # PATTERNS
+    # ---------------------------------------------------------
+    serial_only_pattern = re.compile(r'^\d{1,3}$')
+
+    serial_standard_pattern = re.compile(
+        r'^(\d{1,3})\s+(.+)$'
     )
 
     results = []
 
-    for row in rows:
+    i = 0
 
-        row = row.strip()
+    while i < len(lines):
 
-        if not row:
+        line = lines[i]
+
+        no = None
+        standard = None
+
+        # -----------------------------------------------------
+        # CASE:
+        # 10 SASO GSO 1863
+        # -----------------------------------------------------
+        m = serial_standard_pattern.match(line)
+
+        if m and (
+            "SASO" in line or
+            "ASTM" in line or
+            "ISO" in line or
+            "CEN" in line
+        ):
+
+            no = int(m.group(1))
+
+            standard = m.group(2).strip()
+
+            j = i + 1
+
+        # -----------------------------------------------------
+        # CASE:
+        # 10
+        # SASO GSO 1863
+        # -----------------------------------------------------
+        elif serial_only_pattern.match(line):
+
+            no = int(line)
+
+            if i + 1 >= len(lines):
+                break
+
+            standard = lines[i + 1].strip()
+
+            j = i + 2
+
+        else:
+            i += 1
             continue
 
-        # -----------------------------
-        # SERIAL NUMBER
-        # -----------------------------
-        no_match = re.match(
-            r"^(\d{1,2})\s+",
-            row
-        )
+        # -----------------------------------------------------
+        # CLEAN STANDARD
+        # -----------------------------------------------------
+        standard = re.sub(r'\s*:\s*', ':', standard)
 
-        if not no_match:
-            continue
+        standard = re.sub(r'\s+', ' ', standard)
 
-        no = int(no_match.group(1))
+        # -----------------------------------------------------
+        # TITLE EXTRACTION
+        # -----------------------------------------------------
+        title_lines = []
 
-        row = row[no_match.end():].strip()
+        while j < len(lines):
 
-        # -----------------------------
-        # REMOVE OCR GARBAGE
-        # -----------------------------
-        row = re.sub(
-            r'Annex\s+No\.\s*\(\d+\).*',
-            ' ',
-            row,
-            flags=re.I
-        )
+            next_line = lines[j]
 
-        row = re.sub(
-            r'\s+\b\d\b\s+',
-            ' ',
-            row
-        )
+            # stop at next serial only
+            if serial_only_pattern.match(next_line):
+                break
 
-        # remove random OCR tokens
-        row = re.sub(
-            r'\.tf',
-            ' ',
-            row
-        )
+            # stop at:
+            # 10 SASO GSO 1863
+            m2 = serial_standard_pattern.match(next_line)
 
-        # -----------------------------
-        # EXTRACT HS CODES
-        # -----------------------------
+            if m2 and (
+                "SASO" in next_line or
+                "ASTM" in next_line or
+                "ISO" in next_line or
+                "CEN" in next_line
+            ):
+                break
 
-        # normal hs codes
-        normal_codes = re.findall(
-            r"\b\d{8}\b",
-            row
-        )
+            title_lines.append(next_line)
 
-        # spaced hs codes
-        spaced_codes = re.findall(
-            r"(?<!\d)(\d{4}\s\d{4})(?!\d)",
-            row
-        )
+            j += 1
 
-        valid_codes = []
+        title = " ".join(title_lines)
 
-        # validate normal codes
-        for code in normal_codes:
+        title = re.sub(r'\s+', ' ', title)
 
-            if code.startswith(("39", "63")):
-                valid_codes.append(code)
+        title = title.replace("r!r;", "")
+        title = title.replace("p age", "")
 
-        # validate spaced codes
-        for code in spaced_codes:
+        title = title.strip()
 
-            code = code.replace(" ", "")
+        # -----------------------------------------------------
+        # SAVE
+        # -----------------------------------------------------
+        results.append({
+            "no": no,
+            "standard": standard,
+            "title": title
+        })
 
-            if code.startswith(("39", "63")):
-                valid_codes.append(code)
-
-        # unique hs codes
-        hs_codes = list(dict.fromkeys(valid_codes))
-
-        if not hs_codes:
-            continue
-
-        # -----------------------------
-        # REMOVE HS CODES FROM PRODUCT
-        # -----------------------------
-        product = row
-
-        # remove normal codes
-        product = re.sub(
-            r"\b\d{8}\b",
-            " ",
-            product
-        )
-
-        # remove spaced codes
-        product = re.sub(
-            r"\b\d{4}\s\d{4}\b",
-            " ",
-            product
-        )
-
-        # cleanup spaces
-        product = re.sub(r"\s+", " ", product)
-
-        product = product.strip(" .,-")
-
-        # -----------------------------
-        # APPEND
-        # -----------------------------
-        if product:
-            results.append({
-                "no": no,
-                "product": product,
-                "hs_code": hs_codes
-            })
+        i = j
 
     return results
+
+
+# ---------------------------------------------------------
+# EXAMPLE
+# ---------------------------------------------------------
+
+# scope = {
+#     "start": "List of Standards",
+#     "end": "Conformity Assessment Form"
+# }
+
+# standards = extract_standards(raw_text, scope)
+
+# print(standards)

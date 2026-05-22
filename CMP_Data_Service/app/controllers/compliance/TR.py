@@ -1,3 +1,4 @@
+from app.utils.constants import Technical_Key_Title
 from app.utils.data_processing_for_schema import ResponseBuilder
 
 import os
@@ -174,9 +175,9 @@ async def upload_tr(
             return_exceptions=True
         )
         print("processed result",len(processed_results))
-        # return {
-        #     "data": processed_results
-        # }
+        return {
+            "data": processed_results
+        }
         docs = await ResponseBuilder.buildResponseOfTechnicalRegulation(processed_results)
         
         tr_data =await tr_service.create_tr_in_bulk(docs)
@@ -230,54 +231,25 @@ async def upload_tr(
 # ==========================================
 # GET TR
 # ==========================================
-async def get_tr():
+async def get_tr_toc(TR_Toc_service: TR_TOC_Service=Depends(get_tr_toc_service)):
 
-    json_path = "tr_results.json"
+   try:
+       data = await TR_Toc_service.get_all()
+       
 
-    if os.path.exists(json_path):
-
-        print(
-            f"Loading TR results "
-            f"from {json_path}..."
-        )
-
-        with open(
-            json_path,
-            "r",
-            encoding="utf-8"
-        ) as f:
-
-            print(
-                f"size of TR results file: "
-                f"{os.path.getsize(json_path)} bytes"
-            )
-
-            try:
-
-                data = json.load(f)
-
-            except Exception as e:
-
-                print(
-                    "JSON ERROR:",
-                    str(e)
-                )
-
-                # DEBUG CORRUPTED JSON
-                f.seek(0)
-
-                print(f.read()[:500])
-
-                data = []
-
-    else:
-
-        data = []
-
-    return {
-        "total_items": len(data),
-        "data": data
-    }
+       return {
+            "total_items": len(data),
+            "data": data
+        }
+   except Exception as e:
+       return JSONResponse(
+           status_code = 500,
+             content={
+                                "message": "Server error",
+                                "status": 500
+            }
+       )
+       
     
 async def get_tr():
 
@@ -352,19 +324,17 @@ async def findTrToc(file: UploadFile = File(...), TR_Toc_service: TR_TOC_Service
                                 "status": 400
                             }
                 )
-            tr_toc_data = await TR_Toc_service.find_by_name(tr_name)
-            if tr_toc_data is not None:
-                 return JSONResponse(
-                        status_code=status.HTTP_400_BAD_REQUEST,
-                        content={
-                                "message": f"Toc already exist for this file {tr_name} ",
-                                "status": 400
-                            }
-                )
+            # tr_toc_data = await TR_Toc_service.find_by_name(tr_name)
+            # if tr_toc_data is not None:
+            #      return JSONResponse(
+            #             status_code=status.HTTP_400_BAD_REQUEST,
+            #             content={
+            #                     "message": f"Toc already exist for this file {tr_name} ",
+            #                     "status": 400
+            #                 }
+            #     )
                 
-            
-          
-            
+        
 
             if not file.filename.endswith(
                         (".zip", ".pdf",".docx",".txt")
@@ -492,6 +462,7 @@ async def findTrToc(file: UploadFile = File(...), TR_Toc_service: TR_TOC_Service
                 return_exceptions=True
             )
             print("processed result",len(processed_results))
+            return processed_results
             if not processed_results:
                 return JSONResponse(
                     status_code=400,
@@ -608,11 +579,19 @@ async def FindTrRequirement(file: UploadFile = File(...), TR_Req_service: TR_REQ
                 )
             start_page = None
             end_page = None
-            for item in tr_toc_data.get("toc_index_data",[]):
-                if item.get("section").lower()=="Obligations of Supplier".lower() or item.get("section").lower()=="Supplier s Obligations".lower() or  item.get("section").lower()=="Obligations of the Supplier".lower():
+            matched_idx = None
+            for idx, item in enumerate(tr_toc_data.get("toc_index_data",[])):
+                if item.get("section") in Technical_Key_Title.get("requirements",[]):
                     start_page = item.get("start_page")
                     end_page = item.get("end_page")
+                    matched_idx = idx
             print("start_page", start_page, end_page)
+            text_scope = {
+                "start" : tr_toc_data.get("toc_index_data")[matched_idx]["section"],
+                "end" : tr_toc_data.get("toc_index_data")[matched_idx+1]["section"]
+                
+            }
+            print("text_scope", text_scope)
                     
                 
             
@@ -736,7 +715,7 @@ async def FindTrRequirement(file: UploadFile = File(...), TR_Req_service: TR_REQ
             # PROCESS FILES CONCURRENTLY
             # ==========================================
             tasks = [
-                process_tr_req(f_path, start_page, end_page)
+                process_tr_req(f_path, start_page, end_page,text_scope)
                 for f_path in files
             ]
             
@@ -862,11 +841,20 @@ async def findTrHSCode(file: UploadFile = File(...), TR_Req_service: TR_REQUIREM
             end_page = None
             matched_idx = None
             for idx, item in enumerate(tr_toc_data.get("toc_index_data",[])):
-                if item.get("section").lower()=="A List of Polyethylene and Polypropylene Products Subject to this Regulation".lower() or item.get("section").lower()=="Supplier s Obligations".lower() or  item.get("section").lower()=="Obligations of the Supplier".lower():
+                if item.get("section") in Technical_Key_Title.get("hs_code",[]):
                     start_page = item.get("start_page")
                     end_page = item.get("end_page")
                     matched_idx = idx
             print("start_page", start_page, end_page)
+            if matched_idx is None:
+                 return JSONResponse(
+                        status_code=404,
+                        content={
+                                "message": f"HS Code not exist for this file {tr_name} ",
+                                "status": 404
+                            }
+                )
+                
             
             text_scope = {
                 "start" : tr_toc_data.get("toc_index_data")[matched_idx]["section"],
@@ -1125,7 +1113,7 @@ async def FindTrStd(file: UploadFile = File(...), TR_Req_service: TR_REQUIREMENT
             end_page = None
             matched_idx = None
             for idx, item in enumerate(tr_toc_data.get("toc_index_data",[])):
-                if item.get("section").lower()=="List of Standards".lower() or item.get("section").lower()=="Supplier s Obligations".lower() or  item.get("section").lower()=="Obligations of the Supplier".lower():
+                if item.get("section") in Technical_Key_Title.get("standard",[]):
                     start_page = item.get("start_page")
                     end_page = item.get("end_page")
                     matched_idx = idx

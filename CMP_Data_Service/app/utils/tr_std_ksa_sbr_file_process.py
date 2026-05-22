@@ -4,8 +4,10 @@ import uuid
 import os
 import asyncio
 
+from app.utils.tr_hs_code import extract_product_hs_codes
+from app.utils.tr_header_data import extract_tr_cover_metadata
 from app.utils.cmt_extract import extract_ksa_compliance_data
-from app.utils.tr_hs_code import extract_standards
+from app.utils.tr_std_codes import extract_standards
 from app.utils.text_cleaner import TextCleaner
 from app.services.image_service import extract_image
 from app.services.pdf_service import extract_pdf, extract_excel, extract_saber_excel
@@ -15,7 +17,7 @@ from app.core_complaince.common import normalize
 from app.utils.arbic_char import SmartTranslator
 from app.utils.extract_word import extract_word_file
 from app.utils.extract_pdf_by_pages import extract_text_by_pages
-from app.utils.tr_requirement import extract_toc,extract_regulation_structure
+from app.utils.tr_toc_extracted import extract_toc
 from app.utils.tr_requirements_new import extract_regulation_structures
 
 from app.utils.tr_clause import transform_regulation_structure
@@ -29,6 +31,7 @@ async def process_tr(file_path):
     ext = file_path.lower()
 
     text, structured, method, conf = "", {}, "unknown", 0.0
+    text1 = ""
 
     if ext.endswith(".pdf"):
 
@@ -36,6 +39,11 @@ async def process_tr(file_path):
             extract_pdf,
             file_path
         )
+        text1 = await asyncio.to_thread(
+            extract_text_by_pages,
+            file_path,1,1
+        )
+        print("teeeext111", text1)
 
     elif ext.endswith((".png", ".jpg", ".jpeg")):
 
@@ -52,10 +60,10 @@ async def process_tr(file_path):
 
     cleanText = TextCleaner.normalize_text(text)
 
-    hs_mapping = await asyncio.to_thread(
-        extract_hs_mapping,
-        cleanText
-    )
+    # hs_mapping = await asyncio.to_thread(
+    #     extract_hs_mapping,
+    #     cleanText
+    # )
 
     result = {
         "tr_id": "TR" + str(uuid.uuid4())[:6],
@@ -76,27 +84,7 @@ async def process_tr(file_path):
 
         "metaText": cleanText,
 
-        "metaJson": {
-            "total_standards": hs_mapping.get(
-                "total_standards",
-                0
-            ),
-
-            "total_hs_codes": hs_mapping.get(
-                "total_hs_codes",
-                0
-            ),
-
-            "standards": hs_mapping.get(
-                "standards",
-                []
-            ),
-
-            "hs_codes": hs_mapping.get(
-                "hs_codes",
-                []
-            )
-        }
+        "metaJson":extract_tr_cover_metadata(text1)
     }
 
     return result
@@ -356,7 +344,7 @@ async def process_ksa_saleem(file_path,saber_name):
     return result
 
 
-async def process_tr_req(file, start_page, end_page):
+async def process_tr_req(file, start_page, end_page,text_scope):
     try:
         print("pagessss", start_page, end_page)
 
@@ -377,10 +365,11 @@ async def process_tr_req(file, start_page, end_page):
       
 
         clean_text = TextCleaner.normalize_text(text)
+        # print(clean_text)
         
         # tr_req, req_text,tr_code = extract_regulation_structure(clean_text)
-        data = extract_regulation_structures(clean_text)
-        print(data)
+        data = extract_regulation_structures(clean_text,text_scope)
+        # print(data)
         cluases = transform_regulation_structure(data.get("tr_requirement"))
       
         result = {
@@ -403,7 +392,10 @@ async def process_tr_req(file, start_page, end_page):
 
 async def process_tr_hs(file, start_page, end_page,text_scope):
     try:
+        if start_page>end_page:
+            end_page= start_page+3
         print("pagessss", start_page, end_page)
+         
 
         ext = file.lower()
     
@@ -417,6 +409,7 @@ async def process_tr_hs(file, start_page, end_page,text_scope):
                 file, start_page,end_page
             )
         # print(text)
+      
         
 
       
@@ -499,9 +492,9 @@ async def process_tr_toc(filename,file):
 
         if ext.endswith(".pdf"):
 
-            text, structured, method, conf = await asyncio.to_thread(
-                extract_pdf,
-                file
+            text = await asyncio.to_thread(
+                extract_text_by_pages,
+                file,2,3
             )
 
         elif ext.endswith((".png", ".jpg", ".jpeg")):
@@ -523,6 +516,7 @@ async def process_tr_toc(filename,file):
             text = file.decode("utf-8")
 
         clean_text = TextCleaner.normalize_text(text)
+        # print(clean_text)
        
 
         result = {
