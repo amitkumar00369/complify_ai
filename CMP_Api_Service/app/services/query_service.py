@@ -19,6 +19,7 @@ from app.services.product_item_servce import ProductService
 from app.services.saber_service  import SaberService
 from app.services.technical_regulation_service import TechnicalRegulationService
 from sqlalchemy.ext.asyncio import AsyncSession
+from app.utils.saber_workflow import build_compliance_response
 class QueryService:
     def __init__(self, db: AsyncSession):
 
@@ -289,7 +290,12 @@ class QueryService:
 
             # for item in products:
 
+<<<<<<< HEAD
             #     if item.get("hs_code") == str(hs_code):
+=======
+                if item.get("hs_code") == str(hs_code):
+                    print("item_id", item["id"])
+>>>>>>> microservice
 
             #         matched_product = item
             #         break
@@ -308,11 +314,19 @@ class QueryService:
                 )
 
                 if matched:
+                    print("item_id", item["id"])
+                    
 
+<<<<<<< HEAD
                     # matched_product = item
                     metaData = await self.hs_code_service.find_by_hs_code(item["hs_code"])
                     print(f"debug {metaData["id"]}", metaData.keys())
                    
+=======
+                    matched_product = item
+                    break
+        
+>>>>>>> microservice
 
                     break
              
@@ -384,9 +398,17 @@ class QueryService:
         #         )
         #     )
 
+<<<<<<< HEAD
         #     if matched:
         #         print("std_name",item["std_name"])
         #         print("file_name",item["file_name"])
+=======
+            if matched:
+                print("std_name",item["std_name"])
+                print("file_name",item["file_name"])
+                print("std_id", item["id"])
+                
+>>>>>>> microservice
                 
         #         matched_standards.append(item)
         #    
@@ -414,7 +436,13 @@ class QueryService:
         #             )
         #         )
 
+<<<<<<< HEAD
         #         if matched:
+=======
+                if matched:
+                    print("std_id", item["id"])
+                    
+>>>>>>> microservice
 
         #             item["metaText"] = (
         #                 TextCleaner.normalize_text(
@@ -457,7 +485,10 @@ class QueryService:
             )
 
             if matched:
+                print("saber_id", item["id"])
+                
                 matched_saber.append(item)
+                break
 
         compliance_result[
             "saber_requirements"
@@ -479,8 +510,14 @@ class QueryService:
             )
 
             if matched:
+                print("ksa_id", item["id"])
+                
                 matched_ksa.append(item)
+<<<<<<< HEAD
         # print(matched_ksa)
+=======
+                break
+>>>>>>> microservice
 
         compliance_result[
             "technical_regulations"
@@ -581,7 +618,12 @@ class QueryService:
         # =================================================
         # STEP 13: HANDLE INTENT
         # =================================================
+<<<<<<< HEAD
         # return compliance_result
+=======
+        return build_compliance_response(compliance_result["product"])
+       
+>>>>>>> microservice
 
         return await handle_query(
             intent,

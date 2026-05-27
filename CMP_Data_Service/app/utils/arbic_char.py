@@ -160,3 +160,76 @@ class SmartTranslator:
             )
 
             return text
+    @staticmethod
+    def split_text_into_chunks(text, max_chars=2000):
+
+        paragraphs = text.split("\n")
+
+        chunks = []
+
+        current_chunk = ""
+
+        for para in paragraphs:
+
+            para = para.strip()
+
+            if not para:
+                continue
+
+            if len(current_chunk) + len(para) < max_chars:
+
+                current_chunk += "\n" + para
+
+            else:
+
+                chunks.append(current_chunk.strip())
+
+                current_chunk = para
+
+        if current_chunk:
+            chunks.append(current_chunk.strip())
+
+        return chunks
+    
+    @staticmethod
+    def translate_text_chunks(text):
+
+        try:
+
+            if not text:
+                return []
+
+            chunks = SmartTranslator.split_text_into_chunks(text)
+
+            translated_chunks = []
+
+            for chunk in chunks:
+
+                try:
+
+                    translated = GoogleTranslator(
+                        source='auto',
+                        target='en'
+                    ).translate(chunk)
+
+                    translated_chunks.append({
+                        "arabic": chunk,
+                        "english": translated
+                    })
+
+                except Exception as e:
+
+                    print("TRANSLATION ERROR:", e)
+
+                    translated_chunks.append({
+                        "arabic": chunk,
+                        "english": chunk
+                    })
+
+            return translated_chunks
+
+        except Exception as e:
+
+            print("MAIN TRANSLATION ERROR:", e)
+
+            return []

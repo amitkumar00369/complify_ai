@@ -220,6 +220,10 @@ class ComplianceService:
 
             product = data.get("product", {})
             pcoc = product.get("pcoc_data", {})
+<<<<<<< HEAD
+=======
+            # print("pcoc", product)
+>>>>>>> microservice
 
             standards_text = (
                 product.get("standard_name")

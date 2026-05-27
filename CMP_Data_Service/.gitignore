@@ -53,3 +53,5 @@ tr_results.json
 
 # core/database.py/
 # core/database.py
+storage/
+CMP_Data_Service\storage

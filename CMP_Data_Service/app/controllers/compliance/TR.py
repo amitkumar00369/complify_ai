@@ -175,10 +175,10 @@ async def upload_tr(
             return_exceptions=True
         )
         print("processed result",len(processed_results))
-        return {
-            "data": processed_results
-        }
+
+
         docs = await ResponseBuilder.buildResponseOfTechnicalRegulation(processed_results)
+       
         
         tr_data =await tr_service.create_tr_in_bulk(docs)
         
