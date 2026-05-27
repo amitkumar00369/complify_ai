@@ -14,6 +14,13 @@ class cmsType(str,Enum):
     privacyPolicy = "privacyPolicy"
     termsAndConditions = "termsAndConditions"
     contactUse = "contactUs"
+
+class moduleType(str,Enum):
+    saber = "saber"
+    saleem = "saleem"
+    standards = "standards"
+    technicalRegulation = "technical-regulation"
+    item = "item"
     
 
 
