@@ -52,7 +52,7 @@ class ComplifyDataService:
     # ==========================================
     @staticmethod
     async def import_hs_master_service(
-        file
+        file,source_name
     ):
 
         async with AsyncSessionLocal() as db:
@@ -60,7 +60,7 @@ class ComplifyDataService:
             return await (
                 HSCodeService.import_hs_master_into_table(
                     db,
-                    file
+                    file,source_name
                 )
             )
 

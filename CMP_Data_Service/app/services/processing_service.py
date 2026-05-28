@@ -35,16 +35,16 @@ class ProcessingService:
                 file_path,saber_name
             )
         elif module == "hs-code":
-            saber_name = SmartTranslator.smart_translate(
+            source_name = SmartTranslator.smart_translate(
             os.path.splitext(
                 os.path.basename(file_path)
             )[0]
         )
-            print("Processing saber file:", file_path, "with name:", saber_name)
+            print("Processing hs-code file:", file_path, "with name:", source_name)
      
 
             return await ComplifyDataService.import_hs_master_service(
-                file_path
+                file_path,source_name
             )
         elif module == "saber-cases":
             saber_name = SmartTranslator.smart_translate(

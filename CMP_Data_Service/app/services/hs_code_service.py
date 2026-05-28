@@ -48,7 +48,7 @@ class HSCodeService:
             "total": len(records)
         }
     @staticmethod
-    async def import_hs_master_into_table(db: AsyncSession, file):
+    async def import_hs_master_into_table(db: AsyncSession, file, source_name):
         records = await read_hs_excel_from_path(file)
         print("Checks in record entry ",len(records))
         # return records[:10]
@@ -57,7 +57,8 @@ class HSCodeService:
         updated = 0
 
         for record in records:
-            record["source_file"] = file.filename
+            record["source_file"] = source_name
+
 
             stmt = select(HSMaster).where(
                 HSMaster.full_hs_code == record["full_hs_code"]
