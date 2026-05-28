@@ -92,6 +92,9 @@ class TechnicalRegulationService:
      ):
 
         try:
+            print(
+                f"Attempting to insert {len(records)} TR records in bulk"
+            )
 
             # ==============================
             # GET ALL TR NAMES FROM INPUT

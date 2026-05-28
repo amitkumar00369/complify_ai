@@ -70,6 +70,7 @@ async def upload_document(
             "saleem",
 
             "saber",
+            "saber-cases",
 
             "standards",
 
@@ -216,33 +217,33 @@ async def upload_document(
             )
         )
 
-        # ==========================================
-        # CHECK DUPLICATE FILE
-        # ==========================================
-        existing_job = await (
-            DocumentJobService.get_by_hash(
-                db,
-                file_hash
-            )
-        )
+        # # ==========================================
+        # # CHECK DUPLICATE FILE
+        # # ==========================================
+        # existing_job = await (
+        #     DocumentJobService.get_by_hash(
+        #         db,
+        #         file_hash
+        #     )
+        # )
 
-        if existing_job:
+        # if existing_job:
 
-            return JSONResponse(
-                status_code=200,
-                content={
-                    "success": False,
-                    "message": (
-                        "File already uploaded"
-                    ),
-                    "job_id": str(
-                        existing_job.id
-                    ),
-                    "status": (
-                        existing_job.status
-                    )
-                }
-            )
+        #     return JSONResponse(
+        #         status_code=200,
+        #         content={
+        #             "success": False,
+        #             "message": (
+        #                 "File already uploaded"
+        #             ),
+        #             "job_id": str(
+        #                 existing_job.id
+        #             ),
+        #             "status": (
+        #                 existing_job.status
+        #             )
+        #         }
+        #     )
 
         # ==========================================
         # STORE RAW FILE

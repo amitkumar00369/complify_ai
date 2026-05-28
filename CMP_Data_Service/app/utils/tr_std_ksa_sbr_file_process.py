@@ -43,7 +43,7 @@ async def process_tr(file_path):
             extract_text_by_pages,
             file_path,1,1
         )
-        print("teeeext111", text1)
+        # print("teeeext111", text1)
 
     elif ext.endswith((".png", ".jpg", ".jpeg")):
 
@@ -84,7 +84,7 @@ async def process_tr(file_path):
         ),
 
         "metaText": cleanText,
-        "text_en": text_en,
+        # "text_en": text_en,
 
         "metaJson":extract_tr_cover_metadata(text1)
     }
@@ -169,6 +169,7 @@ async def process_std(file_path):
 # SABER
 # =========================================
 async def process_saber(file_path,saber_name):
+    print("Processing saber file:", file_path, "with name:", saber_name)
 
     ext = file_path.lower()
 

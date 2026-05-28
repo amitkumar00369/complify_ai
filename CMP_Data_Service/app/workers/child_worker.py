@@ -1,13 +1,21 @@
+
 import os
+import shutil
 import asyncio
+
+from datetime import datetime
+
+from core.database import (
+    engine,
+    AsyncSessionLocal
+)
 
 from app.workers.celery_app import celery
 
 from app.utils.storage_service import (
     storage_service
 )
-from core.database import (
-    engine)
+
 from app.services.processing_service import (
     ProcessingService
 )
@@ -21,10 +29,64 @@ from app.services.document_job_service import (
 )
 
 
+# ==========================================
+# TRANSIENT ERRORS
+# ==========================================
+TRANSIENT_ERRORS = [
+    "connection",
+    "timeout",
+    "temporarily",
+    "deadlock",
+    "event loop",
+    "closed",
+    "send",
+    "connection reset"
+]
 
-from core.database import (
-    AsyncSessionLocal
-)
+
+# ==========================================
+# MOVE FILE TO FAILED
+# ==========================================
+def move_to_failed_sync(
+    processing_path,
+    module
+):
+
+    if (
+        not processing_path
+        or
+        not os.path.exists(processing_path)
+    ):
+
+        return None
+
+    failed_dir = os.path.join(
+        "storage",
+        module,
+        "failed"
+    )
+
+    os.makedirs(
+        failed_dir,
+        exist_ok=True
+    )
+
+    failed_path = os.path.join(
+        failed_dir,
+        os.path.basename(processing_path)
+    )
+
+    shutil.move(
+        processing_path,
+        failed_path
+    )
+
+    print(
+        f"Moved file to failed folder: "
+        f"{failed_path}"
+    )
+
+    return failed_path
 
 
 # ==========================================
@@ -55,27 +117,169 @@ async def process_child_file_async(
                 )
             )
 
-            # ==================================
-            # raw -> processing
-            # ==================================
-            processing_path = (
-                await storage_service.move_file(
-                    storage_path,
-                    module,
-                    "processing"
-                )
+            filename = os.path.basename(
+                storage_path
             )
+
+            raw_candidate = os.path.join(
+                "storage",
+                module,
+                "raw",
+                filename
+            )
+
+            processing_candidate = os.path.join(
+                "storage",
+                module,
+                "processing",
+                filename
+            )
+
+            processed_candidate = os.path.join(
+                "storage",
+                module,
+                "processed",
+                filename
+            )
+
+            failed_candidate = os.path.join(
+                "storage",
+                module,
+                "failed",
+                filename
+            )
+
+            # ==================================
+            # RETRY CASE
+            # ==================================
+            if os.path.exists(
+                processing_candidate
+            ):
+
+                print(
+                    f"Retry detected: "
+                    f"{processing_candidate}"
+                )
+
+                processing_path = (
+                    processing_candidate
+                )
+
+            # ==================================
+            # DUPLICATE FILE CASE
+            # ==================================
+            elif os.path.exists(
+                processed_candidate
+            ):
+
+                print(
+                    f"Processed file exists. "
+                    f"Archiving old file."
+                )
+
+                timestamp = (
+                    datetime.now().strftime(
+                        "%Y%m%d_%H%M%S"
+                    )
+                )
+
+                archived_name = (
+                    f"{os.path.splitext(filename)[0]}"
+                    f"_{timestamp}"
+                    f"{os.path.splitext(filename)[1]}"
+                )
+
+                archived_destination = os.path.join(
+                    "storage",
+                    module,
+                    "archived",
+                    archived_name
+                )
+
+                os.makedirs(
+                    os.path.dirname(
+                        archived_destination
+                    ),
+                    exist_ok=True
+                )
+
+                await storage_service.move_existing_file(
+                    processed_candidate,
+                    archived_destination
+                )
+
+                if os.path.exists(
+                    raw_candidate
+                ):
+
+                    processing_path = (
+                        await storage_service.move_file(
+                            raw_candidate,
+                            module,
+                            "processing"
+                        )
+                    )
+
+                else:
+
+                    raise FileNotFoundError(
+                        f"Raw file missing: {filename}"
+                    )
+
+            # ==================================
+            # NORMAL FLOW
+            # ==================================
+            elif os.path.exists(
+                raw_candidate
+            ):
+
+                processing_path = (
+                    await storage_service.move_file(
+                        raw_candidate,
+                        module,
+                        "processing"
+                    )
+                )
+
+            # ==================================
+            # FAILED RETRY
+            # ==================================
+            elif os.path.exists(
+                failed_candidate
+            ):
+
+                processing_path = (
+                    failed_candidate
+                )
+
+            # ==================================
+            # FILE NOT FOUND
+            # ==================================
+            else:
+
+                raise FileNotFoundError(
+                    f"File missing: {filename}"
+                )
 
             # ==================================
             # UPDATE STORAGE PATH
             # ==================================
-            await (
-                DocumentJobItemService.update_storage_path(
-                    db,
-                    job_item_id,
-                    processing_path
+            try:
+
+                await (
+                    DocumentJobItemService.update_storage_path(
+                        db,
+                        job_item_id,
+                        processing_path
+                    )
                 )
-            )
+
+            except Exception as db_error:
+
+                print(
+                    "Failed updating storage path:",
+                    str(db_error)
+                )
 
             # ==================================
             # PROCESS DOCUMENT
@@ -87,22 +291,13 @@ async def process_child_file_async(
                 )
             )
 
-            print("Processed Result:", result)
+            print(
+                "Processed Result:",
+                result
+            )
 
             # ==================================
-            # SAVE BUSINESS DATA
-            # ==================================
-            # if module == "saleem":
-
-            #     await (
-            #         KSASaleemService.create_ksa(
-            #             db,
-            #             result
-            #         )
-            #     )
-
-            # ==================================
-            # processing -> processed
+            # MOVE TO PROCESSED
             # ==================================
             processed_path = (
                 await storage_service.move_file(
@@ -115,34 +310,37 @@ async def process_child_file_async(
             # ==================================
             # UPDATE STATUS -> completed
             # ==================================
-            await (
-                DocumentJobItemService.update_status(
-                    db,
-                    job_item_id,
-                    "completed"
-                )
-            )
+            try:
 
-            # ==================================
-            # UPDATE STORAGE PATH
-            # ==================================
-            await (
-                DocumentJobItemService.update_storage_path(
-                    db,
-                    job_item_id,
-                    processed_path
+                await (
+                    DocumentJobItemService.update_status(
+                        db,
+                        job_item_id,
+                        "completed"
+                    )
                 )
-            )
 
-            # ==================================
-            # UPDATE PARENT COUNTS
-            # ==================================
-            await (
-                DocumentJobService.increment_processed_files(
-                    db,
-                    parent_job_id
+                await (
+                    DocumentJobItemService.update_storage_path(
+                        db,
+                        job_item_id,
+                        processed_path
+                    )
                 )
-            )
+
+                await (
+                    DocumentJobService.increment_processed_files(
+                        db,
+                        parent_job_id
+                    )
+                )
+
+            except Exception as db_error:
+
+                print(
+                    "DB update error after processing:",
+                    str(db_error)
+                )
 
             return {
                 "success": True
@@ -155,62 +353,69 @@ async def process_child_file_async(
                 str(e)
             )
 
-            # ==================================
-            # processing -> failed
-            # ==================================
-            if (
-                processing_path
-                and
-                os.path.exists(processing_path)
-            ):
+            failed_path = None
 
-                failed_path = (
-                    await storage_service.move_file(
-                        processing_path,
-                        module,
-                        "failed"
+            # ==================================
+            # MOVE TO FAILED
+            # ==================================
+            try:
+
+                failed_path = move_to_failed_sync(
+                    processing_path,
+                    module
+                )
+
+            except Exception as move_error:
+
+                print(
+                    "Failed moving file:",
+                    str(move_error)
+                )
+
+            # ==================================
+            # UPDATE FAILED STATUS
+            # ==================================
+            try:
+
+                await (
+                    DocumentJobItemService.update_status(
+                        db,
+                        job_item_id,
+                        "failed",
+                        str(e)
+                    )
+                )
+
+                if failed_path:
+
+                    await (
+                        DocumentJobItemService.update_storage_path(
+                            db,
+                            job_item_id,
+                            failed_path
+                        )
+                    )
+
+                await (
+                    DocumentJobItemService.increment_retry_count(
+                        db,
+                        job_item_id
                     )
                 )
 
                 await (
-                    DocumentJobItemService.update_storage_path(
+                    DocumentJobService.increment_failed_files(
                         db,
-                        job_item_id,
-                        failed_path
+                        parent_job_id
                     )
                 )
 
-            # ==================================
-            # UPDATE STATUS -> failed
-            # ==================================
-            await (
-                DocumentJobItemService.update_status(
-                    db,
-                    job_item_id,
-                    "failed",
-                    str(e)
-                )
-            )
+            except Exception as db_error:
 
-            # ==================================
-            # RETRY COUNT
-            # ==================================
-            await (
-                DocumentJobItemService.increment_retry_count(
-                    db,
-                    job_item_id
+                print(
+                    "Failed updating DB after error:",
+                    str(db_error)
                 )
-            )
-
-            # ==================================
-            # UPDATE PARENT FAILED COUNT
-            # ==================================
-            await (
-                DocumentJobService.increment_failed_files(
-                    db,
-                    parent_job_id
-                )
-            )
 
             raise e
 
@@ -237,7 +442,7 @@ def process_child_file(
 
     try:
 
-        result = loop.run_until_complete(
+        return loop.run_until_complete(
             process_child_file_async(
                 job_item_id,
                 parent_job_id,
@@ -247,25 +452,60 @@ def process_child_file(
             )
         )
 
-        return result
+    except FileNotFoundError as e:
+
+        print(
+            "Permanent file error:",
+            str(e)
+        )
+
+        raise e
 
     except Exception as e:
 
-        raise self.retry(
-            exc=e,
-            countdown=10
+        error_message = str(e).lower()
+
+        print(
+            "Task Exception:",
+            error_message
         )
+
+        should_retry = any(
+            transient_error in error_message
+            for transient_error in TRANSIENT_ERRORS
+        )
+
+        if should_retry:
+
+            print(
+                "Retrying transient failure..."
+            )
+
+            raise self.retry(
+                exc=e,
+                countdown=10
+            )
+
+        print(
+            "Permanent failure. No retry."
+        )
+
+        raise e
 
     finally:
 
-        # ==================================
-        # CLOSE ALL DB CONNECTIONS
-        # ==================================
-        loop.run_until_complete(
-            engine.dispose()
-        )
+        try:
 
-        # ==================================
-        # CLOSE LOOP
-        # ==================================
+            loop.run_until_complete(
+                engine.dispose()
+            )
+
+        except Exception as dispose_error:
+
+            print(
+                "Engine dispose error:",
+                str(dispose_error)
+            )
+
         loop.close()
+

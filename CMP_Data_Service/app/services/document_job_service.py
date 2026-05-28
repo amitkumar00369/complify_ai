@@ -22,25 +22,7 @@ class DocumentJobService:
         payload: dict
     ):
 
-        job = DocumentJob(
-
-            module=payload["module"],
-
-            file_name=payload["file_name"],
-
-            s3_key=payload["s3_key"],
-
-            status="queued",
-
-            total_files=payload.get(
-                "total_files",
-                0
-            ),
-
-            processed_files=0,
-
-            failed_files=0
-        )
+        job = DocumentJob( id=payload.get("id"), module=payload["module"], file_name=payload["file_name"], s3_key=payload["s3_key"], file_hash=payload.get( "file_hash" ), status="queued", total_files=payload.get( "total_files", 0 ), processed_files=0, failed_files=0 )
 
         db.add(job)
 

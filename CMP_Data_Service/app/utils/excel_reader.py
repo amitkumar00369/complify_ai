@@ -81,3 +81,84 @@ async def read_hs_excel_from_upload(file: UploadFile):
     # print("Record",records)
 
     return records
+
+async def read_hs_excel_from_path(
+    file_path: str
+):
+
+    # ==============================================
+    # READ EXCEL DIRECTLY FROM FILE PATH
+    # ==============================================
+    df = pd.read_excel(
+        file_path,
+        sheet_name="Grid"
+    )
+
+    print(
+        "columns:",
+        df.columns
+    )
+
+    records = []
+
+    for index, row in df.iterrows():
+
+        hs_code = clean_hs_code(
+            row.get(
+                "رمز النظام المنسق \n Harmonized Code"
+            )
+        )
+
+        if (
+            not hs_code
+            or
+            len(hs_code) < 6
+        ):
+            continue
+
+        records.append({
+
+            **split_hs_code(hs_code),
+
+            "item_name_ar": clean_value(
+                row.get(
+                    "الصنف باللغة العربية \n Item Arabic Name"
+                )
+            ),
+
+            "item_name_en": clean_value(
+                row.get(
+                    "الصنف باللغة الانجليزية \n Item English Name"
+                )
+            ),
+
+            "duty_rate_ar": clean_value(
+                row.get(
+                    "فئة الرسم باللغة العربية \n Arabic Duty Rate"
+                )
+            ),
+
+            "duty_rate_en": clean_value(
+                row.get(
+                    "فئة الرسم باللغة الانجليزية \n English Duty Rate"
+                )
+            ),
+
+            "procedure_codes": clean_value(
+                row.get(
+                    "الاجراءات '\n Procedures"
+                )
+            ),
+
+            "effective_date": parse_date(
+                row.get(
+                    "التاريخ \n Date"
+                )
+            ),
+
+            "source_sheet": "Grid",
+
+            "source_row": index + 2,
+        })
+
+    return records

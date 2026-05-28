@@ -5,6 +5,7 @@ from app.utils.tr_std_ksa_sbr_file_process import (
     process_std,
     process_tr
 )
+from .comlplify_file_data_processing import ComplifyDataService
 import asyncio,os
 
 class ProcessingService:
@@ -17,7 +18,7 @@ class ProcessingService:
 
         if module == "saleem":
 
-            return await process_ksa_saleem(
+            return await ComplifyDataService.upload_ksa_saleem(
                 file_path
             )
 
@@ -28,32 +29,45 @@ class ProcessingService:
             )[0]
         )
             print("Processing saber file:", file_path, "with name:", saber_name)
-        #     tasks = [
-        #     await process_saber(f_path,saber_name)
-        #     for f_path in file_path
-        # ]
-        
+     
 
-        #     processed_results = await asyncio.gather(
-        #         *tasks,
-        #         return_exceptions=True
-        #     )
-        #     print("processed result",len(processed_results))
-        #     return processed_results
+            return await ComplifyDataService.upload_saber_service(
+                file_path,saber_name
+            )
+        elif module == "hs-code":
+            saber_name = SmartTranslator.smart_translate(
+            os.path.splitext(
+                os.path.basename(file_path)
+            )[0]
+        )
+            print("Processing saber file:", file_path, "with name:", saber_name)
+     
 
-            return await process_saber(
+            return await ComplifyDataService.import_hs_master_service(
+                file_path
+            )
+        elif module == "saber-cases":
+            saber_name = SmartTranslator.smart_translate(
+            os.path.splitext(
+                os.path.basename(file_path)
+            )[0]
+        )
+            print("Processing saber file:", file_path, "with name:", saber_name)
+     
+
+            return await ComplifyDataService.upload_saber_cases_service(
                 file_path,saber_name
             )
 
         elif module == "standards":
 
-            return await process_std(
+            return await ComplifyDataService.upload_standard_service(
                 file_path
             )
 
         elif module == "technical-regulation":
 
-            return await process_tr(
+            return await ComplifyDataService.upload_technical_regulations_service       (
                 file_path
             )
 

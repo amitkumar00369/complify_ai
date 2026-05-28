@@ -26,19 +26,32 @@ class StorageService:
         )
 
         self.use_s3 = all([
+
             self.aws_access_key,
+
             self.aws_secret_key,
+
             self.bucket
         ])
 
+        # ==================================
+        # INIT S3
+        # ==================================
         if self.use_s3:
 
             self.s3 = boto3.client(
                 "s3",
-                aws_access_key_id=self.aws_access_key,
-                aws_secret_access_key=self.aws_secret_key
+                aws_access_key_id=(
+                    self.aws_access_key
+                ),
+                aws_secret_access_key=(
+                    self.aws_secret_key
+                )
             )
 
+    # ======================================
+    # UPLOAD FILE
+    # ======================================
     async def upload_file(
         self,
         local_path,
@@ -51,9 +64,9 @@ class StorageService:
             f"{module}/{folder}/{file_name}"
         )
 
-        # =========================
+        # ==================================
         # S3 STORAGE
-        # =========================
+        # ==================================
         if self.use_s3:
 
             try:
@@ -70,13 +83,15 @@ class StorageService:
 
                 pass
 
-        # =========================
+        # ==================================
         # LOCAL STORAGE
-        # =========================
-        local_storage_path = os.path.join(
-            BASE_STORAGE,
-            module,
-            folder
+        # ==================================
+        local_storage_path = (
+            os.path.join(
+                BASE_STORAGE,
+                module,
+                folder
+            )
         )
 
         os.makedirs(
@@ -96,6 +111,9 @@ class StorageService:
 
         return destination
 
+    # ======================================
+    # MOVE FILE
+    # ======================================
     async def move_file(
         self,
         old_path,
@@ -107,10 +125,45 @@ class StorageService:
             old_path
         )
 
-        destination_dir = os.path.join(
-            BASE_STORAGE,
-            module,
-            new_folder
+        # ==================================
+        # S3 MOVE
+        # ==================================
+        if self.use_s3:
+
+            new_key = (
+                f"{module}/{new_folder}/{file_name}"
+            )
+
+            self.s3.copy_object(
+
+                Bucket=self.bucket,
+
+                CopySource={
+                    "Bucket": self.bucket,
+                    "Key": old_path
+                },
+
+                Key=new_key
+            )
+
+            self.s3.delete_object(
+
+                Bucket=self.bucket,
+
+                Key=old_path
+            )
+
+            return new_key
+
+        # ==================================
+        # LOCAL MOVE
+        # ==================================
+        destination_dir = (
+            os.path.join(
+                BASE_STORAGE,
+                module,
+                new_folder
+            )
         )
 
         os.makedirs(
@@ -129,6 +182,59 @@ class StorageService:
         )
 
         return destination
+
+    # ======================================
+    # MOVE EXISTING FILE
+    # processed -> archived
+    # ======================================
+    async def move_existing_file(
+        self,
+        source_path,
+        destination_path
+    ):
+
+        # ==================================
+        # S3 MOVE
+        # ==================================
+        if self.use_s3:
+
+            self.s3.copy_object(
+
+                Bucket=self.bucket,
+
+                CopySource={
+                    "Bucket": self.bucket,
+                    "Key": source_path
+                },
+
+                Key=destination_path
+            )
+
+            self.s3.delete_object(
+
+                Bucket=self.bucket,
+
+                Key=source_path
+            )
+
+            return destination_path
+
+        # ==================================
+        # LOCAL MOVE
+        # ==================================
+        os.makedirs(
+            os.path.dirname(
+                destination_path
+            ),
+            exist_ok=True
+        )
+
+        shutil.move(
+            source_path,
+            destination_path
+        )
+
+        return destination_path
 
 
 storage_service = StorageService()

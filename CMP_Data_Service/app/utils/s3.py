@@ -1,4 +1,12 @@
-import boto3
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import boto3  # for type checkers / linters
+else:
+    try:
+        import boto3
+    except ImportError:
+        boto3 = None  # type: ignore
 import uuid
 from core.config import settings
 
@@ -6,6 +14,9 @@ from core.config import settings
 class S3Service:
 
     def __init__(self):
+        if boto3 is None:
+            raise RuntimeError("boto3 is required for S3Service but is not installed")
+
         self.s3 = boto3.client(
             "s3",
             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,

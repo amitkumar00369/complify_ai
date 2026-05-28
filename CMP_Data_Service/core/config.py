@@ -6,6 +6,7 @@ class Settings(BaseSettings):
     DB_PASSWORD: str
     DB_HOST: str
     DB_HOST1: str
+    SQS_QUEUE_URL: str
     
     DB_PORT: int
     DATABASE_URL: str
