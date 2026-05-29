@@ -153,7 +153,7 @@ async def process_documents(files, file_name=None):
             modelName.append(
                 hscode.iloc[0]['Model number*']
             )
-    print("hs codesss", hscode)
+    print("hs codesss", hscode,clause)
     if hscode is not None:
          hsCode_4 = str(hscode.iloc[0]['HS Code'][:4])
     if hscode is None:

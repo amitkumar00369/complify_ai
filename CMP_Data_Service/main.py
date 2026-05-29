@@ -1,132 +1,280 @@
-from fastapi import FastAPI, Depends
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPBearer
-from fastapi.staticfiles import StaticFiles
 from contextlib import asynccontextmanager
 import os
-# from app.controllers.image import router as uploadRouter
 
+from fastapi import (
+    FastAPI,
+    Depends
+)
 
-#  Core
-from core.database import Base, engine
+from fastapi.middleware.cors import (
+    CORSMiddleware
+)
+
+from fastapi.security import (
+    HTTPBearer
+)
+
 from sqlalchemy import text
-from core.config import settings
 
-#  Middleware
-from app.middleware.logging import LoggingMiddleware
-from app.middleware.ratelimit import RateLimitMiddleware
-from app.middleware.request_id import RequestIDMiddleware
-from app.middleware.response_time import ResponseTimeMiddleware
-from app.middleware.security import SecurityHeadersMiddleware
-from app.middleware.exception import global_exception_handler
-from app.middleware.auth_middleware import jwt_auth,jwt_auth_admin
+# ==========================================
+# CORE
+# ==========================================
+from core.database import (
+    Base,
+    engine,
+    AsyncSessionLocal
+)
+
+from core.config import (
+    settings
+)
+
+# ==========================================
+# SCHEDULER
+# ==========================================
+from app.schedulers.scheduler import (
+    scheduler
+)
+
+from app.schedulers.job_scheduler import (
+    JobScheduler
+)
+
+# ==========================================
+# MIDDLEWARE
+# ==========================================
+from app.middleware.logging import (
+    LoggingMiddleware
+)
+
+from app.middleware.ratelimit import (
+    RateLimitMiddleware
+)
+
+from app.middleware.request_id import (
+    RequestIDMiddleware
+)
+
+from app.middleware.response_time import (
+    ResponseTimeMiddleware
+)
+
+from app.middleware.security import (
+    SecurityHeadersMiddleware
+)
+
+from app.middleware.exception import (
+    global_exception_handler
+)
+
+from app.middleware.auth_middleware import (
+    jwt_auth,
+    jwt_auth_admin
+)
+
+# ==========================================
+# ROUTERS
+# ==========================================
+from app.api.v1.user.api_routes import (
+    userRouter
+)
+
+from app.api.v1.admin.api_routes import (
+    adminRouter
+)
+
+from app.api.v1.compliance import (
+    complianceRouter
+)
 
 
 
-#  Routers
-from app.api.v1.user.api_routes import userRouter
-
-from app.api.v1.admin.api_routes import adminRouter
-from app.api.v1.compliance import complianceRouter
-from app.api.v1.upload import uploadFileRouter
-# from app.api.v1.routes_whatsapp import whatsappRouter
-# from app.api.v1.stripe_routes import stripeRouter
-
-
-# Security
+# ==========================================
+# SECURITY
+# ==========================================
 security = HTTPBearer()
 
-# File Upload Config
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-# UPLOADS_DIR = os.path.join(BASE_DIR, "uploads")
+BASE_DIR = os.path.dirname(
+    os.path.abspath(__file__)
+)
 
 
-# Lifespan (startup/shutdown)
+# ==========================================
+# SCHEDULER RUNNER
+# ==========================================
+async def run_pending_jobs():
+
+    async with AsyncSessionLocal() as db:
+
+        await JobScheduler.process_pending_jobs(
+            db
+        )
+
+
+# ==========================================
+# APP LIFESPAN
+# ==========================================
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+
     print("App starting...")
 
-    if settings.ENV == "dev":
-        async with engine.begin() as conn:
-            await conn.run_sync(Base.metadata.create_all)
+    try:
 
-    yield
+        if settings.ENV == "dev":
 
-    print(" App shutting down...")
+            async with engine.begin() as conn:
+
+                await conn.run_sync(
+                    Base.metadata.create_all
+                )
+
+        scheduler.add_job(
+            run_pending_jobs,
+            trigger="interval",
+            seconds=10,
+            max_instances=1,
+            coalesce=True,
+            id="process_pending_jobs",
+            replace_existing=True
+        )
+
+        scheduler.start()
+
+        yield
+
+    finally:
+
+        if scheduler.running:
+
+            scheduler.shutdown()
+
+        print("App shutting down...")
 
 
-# App Init
-app = FastAPI(lifespan=lifespan)
+# ==========================================
+# APP INIT
+# ==========================================
+app = FastAPI(
+    lifespan=lifespan
+)
 
-
-#  Static Files
-# app.mount("/uploads", StaticFiles(directory=UPLOADS_DIR), name="uploads")
-
-
-#  CORS
+# ==========================================
+# CORS
+# ==========================================
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # restrict in production
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# ==========================================
+# MIDDLEWARE
+# ==========================================
+app.add_middleware(
+    RequestIDMiddleware
+)
 
-#  Middleware Order (VERY IMPORTANT)
-app.add_middleware(RequestIDMiddleware)                       # 1. Request ID
-app.add_middleware(LoggingMiddleware)                         # 2. Logging
-app.add_middleware(ResponseTimeMiddleware)                    # 3. Response time
-app.add_middleware(SecurityHeadersMiddleware)                 # 4. Security headers
-app.add_middleware(RateLimitMiddleware, max_requests=10, window=60)  # 5. Rate limiting
+app.add_middleware(
+    LoggingMiddleware
+)
 
+app.add_middleware(
+    ResponseTimeMiddleware
+)
 
-# Global Exception Handler
-app.add_exception_handler(Exception, global_exception_handler)
+app.add_middleware(
+    SecurityHeadersMiddleware
+)
 
+app.add_middleware(
+    RateLimitMiddleware,
+    max_requests=10,
+    window=60
+)
 
-# ===========================
+# ==========================================
+# EXCEPTION HANDLER
+# ==========================================
+app.add_exception_handler(
+    Exception,
+    global_exception_handler
+)
+
+# ==========================================
 # PUBLIC ROUTES
-# ===========================
-app.include_router(userRouter, prefix="/api/v1/user", tags=["User-API"])
-app.include_router(adminRouter, prefix="/api/v1/admin", tags=["Admin-API"])
-app.include_router(complianceRouter, prefix="/api/v1/compliance", tags=["Compliance-API"])
-app.include_router(uploadFileRouter, prefix="/api/v1/upload", tags=["Upload-API"])
-# app.include_router(whatsappRouter, prefix="/api/v1/whatsapp", tags=["WhatsApp-API"])
-# app.include_router(stripeRouter, prefix="/api/v1/stripe", tags=["Stripe-API"])
-# app.include_router(uploadRouter)
+# ==========================================
+app.include_router(
+    userRouter,
+    prefix="/api/v1/user",
+    tags=["User-API"]
+)
+
+app.include_router(
+    adminRouter,
+    prefix="/api/v1/admin",
+    tags=["Admin-API"]
+)
+
+app.include_router(
+    complianceRouter,
+    prefix="/api/v1/compliance",
+    tags=["Compliance-API"]
+)
 
 
-# ===========================
+
+# ==========================================
 # PRIVATE ROUTES
-# ===========================
+# ==========================================
 app.include_router(
     userRouter,
     prefix="/api/v1/user/private",
     tags=["User-Private-API"],
-    dependencies=[Depends(security), Depends(jwt_auth)]
+    dependencies=[
+        Depends(security),
+        Depends(jwt_auth)
+    ]
 )
 
 app.include_router(
     adminRouter,
     prefix="/api/v1/admin/private",
     tags=["Admin-Private-API"],
-    dependencies=[Depends(security), Depends(jwt_auth_admin)]
+    dependencies=[
+        Depends(security),
+        Depends(jwt_auth_admin)
+    ]
 )
 
-
-# ===========================
+# ==========================================
 # HEALTH CHECK
-# ===========================
+# ==========================================
 @app.get("/health")
 async def health_check():
+
     try:
+
         async with engine.connect() as conn:
-            await conn.execute(text("SELECT 1"))
-        return {"status": "healthy"}
+
+            await conn.execute(
+                text("SELECT 1")
+            )
+
+        return {
+            "status": "healthy"
+        }
+
     except Exception:
-        return {"status": "unhealthy"}
+
+        return {
+            "status": "unhealthy"
+        }
 
 
-#  Console log
-print(f"Server running on: http://localhost:{settings.APP_PORT}/docs")
+print(
+    f"Server running on: "
+    f"http://localhost:{settings.APP_PORT}/docs"
+)

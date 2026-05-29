@@ -9,6 +9,9 @@ from core.database import (
     engine,
     AsyncSessionLocal
 )
+from app.utils.enum import (
+    subFolderModule
+)
 
 from app.workers.celery_app import celery
 
@@ -63,7 +66,7 @@ def move_to_failed_sync(
     failed_dir = os.path.join(
         "storage",
         module,
-        "failed"
+        subFolderModule.failed
     )
 
     os.makedirs(
@@ -145,7 +148,7 @@ async def process_child_file_async(
             failed_candidate = os.path.join(
                 "storage",
                 module,
-                "failed",
+                subFolderModule.failed,
                 filename
             )
 
@@ -192,7 +195,7 @@ async def process_child_file_async(
                 archived_destination = os.path.join(
                     "storage",
                     module,
-                    "archived",
+                    subFolderModule.archived,
                     archived_name
                 )
 
@@ -216,7 +219,7 @@ async def process_child_file_async(
                         await storage_service.move_file(
                             raw_candidate,
                             module,
-                            "processing"
+                            subFolderModule.processing
                         )
                     )
 
@@ -237,7 +240,7 @@ async def process_child_file_async(
                     await storage_service.move_file(
                         raw_candidate,
                         module,
-                        "processing"
+                        subFolderModule.processing
                     )
                 )
 
@@ -303,7 +306,7 @@ async def process_child_file_async(
                 await storage_service.move_file(
                     processing_path,
                     module,
-                    "processed"
+                    subFolderModule.processed
                 )
             )
 

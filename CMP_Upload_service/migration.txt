@@ -1,0 +1,173 @@
+
+
+## 1️⃣ Install Alembic
+
+```bash
+pip install alembic
+```
+
+---
+
+## 2️⃣ Initialize
+
+```bash
+alembic init alembic
+```
+
+👉 This creates:
+
+```bash
+alembic/
+alembic.ini
+```
+
+---
+
+## 3️⃣ Configure DB URL
+
+Open `alembic.ini`
+
+```ini
+sqlalchemy.url = postgresql://postgres:postgres@localhost:5432/postgres
+```
+
+👉 OR better (dynamic):
+
+---
+
+## 4️⃣ Connect Alembic with your config
+
+Edit:
+
+```bash
+alembic/env.py
+```
+
+Replace DB URL section:
+
+```python
+from core.config import settings
+
+config.set_main_option(
+    "sqlalchemy.url",
+    f"postgresql://{settings.DB_USER}:{settings.DB_PASSWORD}@{settings.DB_HOST}:{settings.DB_PORT}/{settings.DB_NAME}"
+)
+```
+
+---
+
+## 5️⃣ Link your models
+
+In `env.py`:
+
+```python
+from core.database import Base
+import models  # important
+
+target_metadata = Base.metadata
+```
+
+---
+
+## 6️⃣ Create Migration
+
+Whenever you change model:
+
+```bash
+alembic revision --autogenerate -m "add new field"
+```
+
+---
+
+## 7️⃣ Apply Migration
+
+```bash
+alembic upgrade head
+```
+
+---
+
+# 🔥 Example Flow
+
+### Step 1: Update model
+
+```python
+age = Column(Integer)
+```
+
+---
+
+### Step 2: Generate migration
+
+```bash
+alembic revision --autogenerate -m "add age column"
+```
+
+---
+
+### Step 3: Apply
+
+```bash
+alembic upgrade head
+```
+
+👉 ✅ Column added safely
+
+---
+
+# ⚠️ Important Rules
+
+### ❌ Never use this in production:
+
+```python
+Base.metadata.create_all()
+```
+
+---
+
+### ✅ Use:
+
+* Alembic migrations
+
+---
+
+# 💡 Pro Tips
+
+### ✔ Always review migration file before running
+
+Sometimes Alembic misses changes
+
+---
+
+### ✔ For breaking changes:
+
+* Write manual migration
+
+---
+
+### ✔ Backup DB before major changes
+
+---
+
+# 🎯 Summary
+
+| Task           | Method     |
+| -------------- | ---------- |
+| Create table   | Alembic    |
+| Add column     | Alembic    |
+| Modify schema  | Alembic    |
+| Quick dev only | create_all |
+
+
+alembic revision --autogenerate -m "init"
+alembic upgrade head
+uvicorn main:app --host 0.0.0.0 --port 4000
+ uvicorn main:app --reload --port 4000 
+ DELETE FROM alembic_version;
+
+
+activate rabbitmq
+cd "C:\Program Files\RabbitMQ Server\rabbitmq_server-4.2.5\sbin"
+.\rabbitmq-plugins enable rabbitmq_management
+h p://localhost:15672   guest/guest
+ celery -A app.workers.celery_app worker --pool=solo --concurrency=1 --loglevel=info 

@@ -42,25 +42,32 @@ class periodType(str,Enum):
     quaterly = "2"      # for three month
     yearly = "3"   # for one year
     
-class planStatus(str,Enum):
-    active = "0"
-    expired = "1"
+
     
-class planType(str,Enum):
-    free = "0"
-    paid = "1"
-    
-class bussinesType(str,Enum):
-    it_services = "0"
-    healthcare = "1"
-    education = "2"
-    finance = "3"
-    retail = "4"
-    real_estate = "5"
-    hospitality = "6"
-    manufacturing = "7"
-    transportation = "8"
-    entertainment = "9"
-    restaurants = "10"
-    salon="11"
-    
+
+class allowedModules(str,Enum):
+    saber = "saber"
+    saleem = "saleem"
+    standards = "standards"
+    technical_regulation = "technical-regulation"
+    saber_cases = "saber-cases"
+    hs_code = "hs-code"
+class allowedExtensions(str,Enum):
+    zip = ".zip"
+    pdf = ".pdf"
+    doc = ".doc"
+    docx = ".docx"
+    xlsx = ".xlsx"
+    xls = ".xls"
+    csv = ".csv"
+    png = ".png"
+    jpg = ".jpg"
+    jpeg = ".jpeg"
+
+
+class subFolderModule(str,Enum):
+    raw = "raw"
+    processing = "processing"
+    processed = "processed"
+    archived = "archived"
+    failed = "failed"

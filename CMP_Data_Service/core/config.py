@@ -30,6 +30,9 @@ class Settings(BaseSettings):
     AWS_BUCKET_NAME: str
     
     LLM_MODEL: str
+    PROCESSING_MODE: str  # add this
+    CELERY_BROKER_URL: str
+    CELERY_RESULT_BACKEND: str
         
 
     class Config:

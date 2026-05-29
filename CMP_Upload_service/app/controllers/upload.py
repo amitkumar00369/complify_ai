@@ -3,6 +3,7 @@ import tempfile
 import os
 import aiofiles
 
+from app.utils.file_counter import FileCounter
 from fastapi import (
     UploadFile,
     File,
@@ -29,9 +30,9 @@ from app.utils.storage_service import (
     storage_service
 )
 
-from app.workers.parent_worker import (
-    process_parent_zip
-)
+# from app.workers.parent_worker import (
+#     process_parent_zip
+# )
 
 from app.utils.hash_util import (
     HashUtil
@@ -44,7 +45,10 @@ from app.services.document_job_service import (
 from app.utils.arbic_char import (
     SmartTranslator
 )
-
+from app.utils.enum import (
+    allowedModules,allowedExtensions,subFolderModule
+)
+from core.config import settings
 
 # ==========================================
 # UPLOAD DOCUMENT
@@ -64,19 +68,12 @@ async def upload_document(
         # MODULE VALIDATION
         # ==========================================
         allowed_modules = [
-
-            "items",
-
-            "saleem",
-
-            "saber",
-            "saber-cases",
-
-            "standards",
-
-            "technical-regulation",
-
-            "hs-code"
+            allowedModules.saleem,
+            allowedModules.saber,
+            allowedModules.saber_cases,
+            allowedModules.standards,
+            allowedModules.technical_regulation,
+            allowedModules.hs_code
         ]
 
         if module not in allowed_modules:
@@ -94,25 +91,25 @@ async def upload_document(
         # ==========================================
         allowed_extensions = (
 
-            ".zip",
+            allowedExtensions.zip,
 
-            ".pdf",
+            allowedExtensions.pdf ,
 
-            ".doc",
+            allowedExtensions.doc,
 
-            ".docx",
+            allowedExtensions.docx ,
 
-            ".xlsx",
+            allowedExtensions.xlsx ,
 
-            ".xls",
+            allowedExtensions.xls ,
 
-            ".csv",
+            allowedExtensions.csv,
 
-            ".png",
+            allowedExtensions.png,
 
-            ".jpg",
+            allowedExtensions.jpg,
 
-            ".jpeg"
+            allowedExtensions.jpeg
         )
 
         if not file.filename.lower().endswith(
@@ -155,12 +152,10 @@ async def upload_document(
         # ==========================================
         # FILE SIZE CONFIG
         # ==========================================
-        MAX_FILE_SIZE = (
-            1000 * 1024 * 1024
-        )  # 1000 MB
+        MAX_FILE_SIZE = settings.FILE_SIZE_LIMIT
 
         CHUNK_SIZE = (
-            1024 * 1024
+            settings.CHUNK_SIZE
         )  # 1 MB
 
         current_size = 0
@@ -216,6 +211,12 @@ async def upload_document(
                 temp_file
             )
         )
+        if file.filename.lower().endswith(allowedExtensions.zip):
+            total_files = FileCounter.count_valid_files(
+                temp_file
+            )
+        else:
+            total_files = 1
 
         # # ==========================================
         # # CHECK DUPLICATE FILE
@@ -252,81 +253,33 @@ async def upload_document(
             await storage_service.upload_file(
                 temp_file,
                 module,
-                "raw",
+                subFolderModule.raw,
                 translated_name
             )
         )
+        
 
         # ==========================================
-        # CREATE PARENT JOB
-        # ==========================================
-        parent_job = DocumentJob(
-
-            id=parent_job_id,
-
-            module=module,
-
-            file_name=translated_name,
-
-            storage_path=raw_path,
-
-            file_hash=file_hash,
-
-            status="queued"
+        # CREATE JOB
+        parent_job = await DocumentJobService.create_job(
+            db,
+            {
+                "id": parent_job_id,
+                "module": module,
+                "file_name": translated_name,
+                "s3_key": raw_path,
+                "file_hash": file_hash,
+                "total_files": total_files
+            }
         )
+        print("Parent Job Created:", parent_job)
 
-        db.add(parent_job)
-
-        await db.commit()
-
-        await db.refresh(parent_job)
-
-        # ==========================================
-        # ZIP FILE -> PARENT WORKER
-        # ==========================================
-        if file.filename.lower().endswith(
-            ".zip"
-        ):
-
-            process_parent_zip.delay(
-
-                parent_job_id,
-
-                module,
-
-                raw_path
-            )
-
-        # ==========================================
-        # SINGLE FILE -> CHILD WORKER
-        # ==========================================
-        else:
-
-            from app.workers.child_worker import (
-                process_child_file
-            )
-
-            process_child_file.delay(
-
-                None,
-
-                parent_job_id,
-
-                module,
-
-                raw_path,
-
-                translated_name
-            )
-
-        # ==========================================
-        # RESPONSE
-        # ==========================================
         return JSONResponse(
             status_code=201,
             content={
                 "success": True,
                 "job_id": parent_job_id,
+                "data": parent_job,
                 "status": "queued",
                 "module": module
             }

@@ -21,7 +21,7 @@ from app.services.document_job_item_service import (
     DocumentJobItemService
 )
 
-from app.workers.child_worker import (
+from app.workers.child_worker_s3 import (
     process_child_file
 )
 
@@ -203,7 +203,7 @@ async def process_parent_zip_async(
                 DocumentJobService.update_status(
                     db,
                     parent_job_id,
-                    "queued"
+                    "completed"
                 )
             )
 

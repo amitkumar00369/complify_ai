@@ -240,3 +240,15 @@ class DocumentJobService:
         )
 
         return result.scalar_one_or_none()
+    @staticmethod
+    async def get_queued_jobs(db):
+
+        result = await db.execute(
+            select(DocumentJob)
+            .where(
+                DocumentJob.status == "queued"
+            )
+            .limit(50)
+        )
+
+        return result.scalars().all()

@@ -170,6 +170,13 @@ async def process_std(file_path):
 # =========================================
 async def process_saber(file_path,saber_name):
     print("Processing saber file:", file_path, "with name:", saber_name)
+    trace_id = str(uuid.uuid4())[:8]
+
+    print(
+        f"[{trace_id}] "
+        f"Processing saber file: "
+        f"{file_path}"
+    )
 
     ext = file_path.lower()
 

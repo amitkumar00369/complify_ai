@@ -5,6 +5,7 @@ from app.utils.tr_std_ksa_sbr_file_process import (
     process_std,
     process_tr
 )
+from app.utils.enum import allowedModules
 from .comlplify_file_data_processing import ComplifyDataService
 import asyncio,os
 
@@ -16,13 +17,13 @@ class ProcessingService:
         file_path
     ):
 
-        if module == "saleem":
+        if module == allowedModules.saleem.value:
 
             return await ComplifyDataService.upload_ksa_saleem(
                 file_path
             )
 
-        elif module == "saber":
+        elif module == allowedModules.saber.value:
             saber_name = SmartTranslator.smart_translate(
             os.path.splitext(
                 os.path.basename(file_path)
@@ -34,7 +35,7 @@ class ProcessingService:
             return await ComplifyDataService.upload_saber_service(
                 file_path,saber_name
             )
-        elif module == "hs-code":
+        elif module == allowedModules.hs_code.value:
             source_name = SmartTranslator.smart_translate(
             os.path.splitext(
                 os.path.basename(file_path)
@@ -46,7 +47,7 @@ class ProcessingService:
             return await ComplifyDataService.import_hs_master_service(
                 file_path,source_name
             )
-        elif module == "saber-cases":
+        elif module == allowedModules.saber_cases.value:
             saber_name = SmartTranslator.smart_translate(
             os.path.splitext(
                 os.path.basename(file_path)
@@ -59,13 +60,13 @@ class ProcessingService:
                 file_path,saber_name
             )
 
-        elif module == "standards":
+        elif module == allowedModules.standards.value:
 
             return await ComplifyDataService.upload_standard_service(
                 file_path
             )
 
-        elif module == "technical-regulation":
+        elif module == allowedModules.technical_regulation.value:
 
             return await ComplifyDataService.upload_technical_regulations_service       (
                 file_path

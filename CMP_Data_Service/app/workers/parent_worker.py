@@ -32,17 +32,36 @@ from app.services.document_job_service import (
 from core.database import (
     AsyncSessionLocal
 )
+from app.utils.enum import (
+    subFolderModule, allowedExtensions
+)
 
 
 # ==========================================
 # ALLOWED FILES
 # ==========================================
 ALLOWED_EXTENSIONS = {
-    ".pdf",
-    ".docx",
-    ".doc",
-    ".xlsx",
-    ".xls"
+           allowedExtensions.zip,
+
+            allowedExtensions.pdf ,
+
+            allowedExtensions.doc,
+
+            allowedExtensions.docx ,
+
+            allowedExtensions.xlsx ,
+
+            allowedExtensions.xls ,
+
+            allowedExtensions.csv,
+
+            allowedExtensions.png,
+
+            allowedExtensions.jpg,
+
+            allowedExtensions.jpeg
+
+
 }
 
 
@@ -89,7 +108,7 @@ async def process_parent_zip_async(
                 DocumentJobService.update_status(
                     db,
                     parent_job_id,
-                    "processing"
+                    subFolderModule.processing
                 )
             )
 
@@ -228,7 +247,7 @@ async def process_parent_zip_async(
                         await storage_service.upload_file(
                             local_file,
                             module,
-                            "raw",
+                            subFolderModule.raw,
                             file
                         )
                     )
@@ -299,7 +318,7 @@ async def process_parent_zip_async(
                 DocumentJobService.update_status(
                     db,
                     parent_job_id,
-                    "queued"
+                    "completed"
                 )
             )
 
@@ -317,7 +336,7 @@ async def process_parent_zip_async(
                 DocumentJobService.update_status(
                     db,
                     parent_job_id,
-                    "failed",
+                    subFolderModule.failed,
                     str(e)
                 )
             )
