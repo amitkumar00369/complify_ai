@@ -1,9 +1,13 @@
 
 
+import json
+import json
 import uuid
 import os
 import asyncio
-
+# from app.services import clause
+# from app.services.llama_service import  extract_section_compliance_data, extract_clauses,extract_requirements
+from app.utils.tr_reuirements_file import extract_clauses,extract_requirements,classify_section,extract_article_content,normalize_requirements
 from app.utils.tr_hs_code import extract_product_hs_codes
 from app.utils.tr_header_data import extract_tr_cover_metadata
 from app.utils.cmt_extract import extract_ksa_compliance_data
@@ -526,13 +530,143 @@ async def process_tr_toc(filename,file):
             text = file.decode("utf-8")
 
         clean_text = TextCleaner.normalize_text(text)
+        table_of_contents = extract_toc(clean_text)
+        # print("extracted toc", table_of_contents)
+        toc_data = []
+        for idx, item in enumerate(table_of_contents):
+           
+            if item["end_page"] is None:
+                # print("end page is greater than 200 for section", item["section"], "adjusting end page to start page + 3")
+                item["start_page"]=table_of_contents[idx-1]["end_page"]
+                item["end_page"]= item["start_page"]
+                title_text = await asyncio.to_thread(
+                extract_text_by_pages,
+                file,item["start_page"],item["end_page"]
+                )
+                data = {
+                    "section": item["section"],
+                    "start_page": item["start_page"],
+                    "end_page": item["end_page"],
+                    "content": TextCleaner.normalize_text(title_text)
+                }
+                # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
+                toc_data.append(data)
+            if item["end_page"]>100:
+                # print("end page is greater than 200 for section", item["section"], "adjusting end page to start page + 3")/
+                item["end_page"]= item["start_page"]+1
+                # toc_data[idx+1]["start_page"]= item["end_page"]
+                # toc_data[idx+1]["end_page"]= item["end_page"]+3
+                title_text = await asyncio.to_thread(
+                extract_text_by_pages,
+                file,item["start_page"],item["end_page"]
+                )
+                data = {
+                    "section": item["section"],
+                    "start_page": item["start_page"],
+                    "end_page": item["end_page"],
+                    "content": TextCleaner.normalize_text(title_text)
+                }
+                # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
+                toc_data.append(data)
+            if item["start_page"] >item["end_page"]:
+                # print("start page is greater than end page for section", item["start_page"], item["end_page"], "adjusting end page to start page + 1")
+                item["end_page"]= item["start_page"]
+                title_text = await asyncio.to_thread(
+                extract_text_by_pages,
+                file,item["start_page"],item["end_page"]
+                )
+                data = {
+                    "section": item["section"],
+                    "start_page": item["start_page"],
+                    "end_page": item["end_page"],
+                    "content": TextCleaner.normalize_text(title_text)
+                }
+                # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
+                toc_data.append(data)
+                break
+            else:
+                title_text = await asyncio.to_thread(
+                    extract_text_by_pages,
+                    file,item["start_page"],item["end_page"]
+                )
+                data = {
+                    "section": item["section"],
+                    "start_page": item["start_page"],
+                    "end_page": item["end_page"],
+                    "content": TextCleaner.normalize_text(title_text)
+                }
+                print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
+                toc_data.append(data)
         # print(clean_text)
-       
+        all_section_results = []
+        all_title = []
+        # result = None
+        
+
+        for item in toc_data:
+            all_title.append( item["section"])
+            
+
+            try:
+                classification = classify_section(
+                    item["section"]
+                )
+
+                if not classification["should_process"]:
+                    continue
+                if classification["type"]=="conformity_assessment":
+                    article7 = extract_article_content(7,item["content"])
+                    print("777777777777777",article7)
+                    
+                    clauses = extract_clauses(article7)
+                    print("cvlvkvk",clauses)
+                    for clause in clauses:
+                        # print(clause["clause"])
+                        # print(clause["content"])
+                        requirements = extract_requirements(
+                        clause["clause"],
+                        clause["content"]
+                    )
+
+                        if requirements:
+                            all_section_results.extend(
+                                requirements
+                            )
+
+                        
+                   
+                    
+                
+
+                    # result = extract_section_compliance_data(
+                    #     classification["type"],
+                    #     item["section"],
+                    #     item["content"]
+                    # )
+               
+
+                # if isinstance(result, str):
+                #     result = json.loads(result)
+
+                # all_section_results.append(result)
+
+            except Exception as e:
+
+                print(
+                    f"Error processing section: {item['section']}",
+                    str(e)
+                )
+        print(all_title)
+
+        # final_json = merge_section_results(
+        #     all_section_results
+        # )
 
         result = {
             "toc_id": "TR_TOC" + str(uuid.uuid4())[:6],
             # "text": clean_text,
-            "toc_index_data": extract_toc(clean_text)
+            "toc_index_data": toc_data,
+            "compliance_data": normalize_requirements(all_section_results)
 
         }
 

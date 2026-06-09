@@ -204,7 +204,7 @@ def extract_article_block(
 # MAIN PARSER
 # ---------------------------------------------------
 
-def extract_regulation_structures(text,text_scope):
+def extract_regulation_structures(text,text_scope=None):
 
     # ---------------------------------------
     # CLEAN
@@ -217,8 +217,8 @@ def extract_regulation_structures(text,text_scope):
     # ---------------------------------------
     # ARTICLE BLOCK
     # ---------------------------------------
-
-    text = extract_article_block(text,text_scope)
+    if text_scope is not None:
+        text = extract_article_block(text,text_scope)
 
     tr_rq = text
 

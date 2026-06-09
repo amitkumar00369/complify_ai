@@ -237,9 +237,40 @@ def merge_wrapped_lines(lines):
 # ------------------------------------------------
 # MAIN TOC EXTRACTOR
 # ------------------------------------------------
+def clean_table_of_contents(table_of_contents):
+    # print("Cleaning TOC entries...",table_of_contents)
+    cleaned_toc = []
 
+    seen_annex = False
+
+    for item in table_of_contents:
+
+        section = item["section"].strip()
+
+        # Valid TOC entries
+        is_article = re.match(r"^Article\s*\(\d+\)", section, re.I)
+        is_annex = re.match(r"^Annex\s*\(", section, re.I)
+        is_preamble = section.lower() == "preamble"
+
+        if is_annex:
+            seen_annex = True
+            cleaned_toc.append(item)
+            continue
+
+        if is_article:
+
+            # After annexes, article entries are usually OCR/body-text noise
+            if seen_annex:
+                print(f"Stopping TOC at: {section}")
+                break
+
+            cleaned_toc.append(item)
+            continue
+
+        if is_preamble and not seen_annex:
+            cleaned_toc.append(item)
 def extract_toc(text):
-    print(text)
+    # print(text)
 
     # ------------------------------------------------
     # NORMALIZE
