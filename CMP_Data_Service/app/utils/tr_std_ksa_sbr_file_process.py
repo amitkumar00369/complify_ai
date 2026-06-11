@@ -7,7 +7,8 @@ import os
 import asyncio
 # from app.services import clause
 # from app.services.llama_service import  extract_section_compliance_data, extract_clauses,extract_requirements
-from app.utils.tr_reuirements_file import extract_clauses,extract_requirements,classify_section,extract_article_content,normalize_requirements
+from app.utils.constants import Technical_Key_Title
+from app.utils.tr_reuirements_file import extract_clauses,extract_requirements,classify_section,extract_article_content,normalize_requirements,find_article_number
 from app.utils.tr_hs_code import extract_product_hs_codes
 from app.utils.tr_header_data import extract_tr_cover_metadata
 from app.utils.cmt_extract import extract_ksa_compliance_data
@@ -600,26 +601,31 @@ async def process_tr_toc(filename,file):
         # print(clean_text)
         all_section_results = []
         all_title = []
+        hs_codes = []
         # result = None
         
 
         for item in toc_data:
             all_title.append( item["section"])
-            
-
+     
+            if  item["section"] in Technical_Key_Title.get("hs_code",[]):
+                print(item["content"])
+                hs_codes = extract_product_hs_codes(item["content"])
             try:
                 classification = classify_section(
                     item["section"]
                 )
+                
 
                 if not classification["should_process"]:
                     continue
-                if classification["type"]=="conformity_assessment":
-                    article7 = extract_article_content(7,item["content"])
-                    print("777777777777777",article7)
-                    
-                    clauses = extract_clauses(article7)
-                    print("cvlvkvk",clauses)
+                if classification["type"]=="conformity_assessment" and "article" in item["section"].lower():
+                    article_number = find_article_number( item["section"])
+                    # print("classification",classification,item["section"])
+                    article= extract_article_content(article_number,item["content"])
+                    # print(f"article_number {article_number}",article)
+                    clauses = extract_clauses(article)
+                    # print("cvlvkvk",clauses)
                     for clause in clauses:
                         # print(clause["clause"])
                         # print(clause["content"])
@@ -666,7 +672,8 @@ async def process_tr_toc(filename,file):
             "toc_id": "TR_TOC" + str(uuid.uuid4())[:6],
             # "text": clean_text,
             "toc_index_data": toc_data,
-            "compliance_data": normalize_requirements(all_section_results)
+            "compliance_data": normalize_requirements(all_section_results),
+            "hs_codes": hs_codes,
 
         }
 

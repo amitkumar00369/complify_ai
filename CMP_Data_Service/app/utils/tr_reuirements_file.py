@@ -1,4 +1,13 @@
 import re
+def find_article_number(text):
+    # text = "Article (6) Conformity Assessment Procedures"
+
+    match = re.search(r"Article\s*\(?(\d+)\)?", text, re.IGNORECASE)
+
+    if match:
+        article_no = int(match.group(1))
+        return article_no
+    return 7
 def extract_article_content(article_no, text):
 
     start_pattern = rf'Article\s*\(\s*{article_no}\s*\)'
@@ -170,38 +179,38 @@ def classify_section(title: str) -> dict:
         "should_process": False
     }
 
-import re
 
-def normalize_standard(std):
 
-    std = re.sub(
+def normalize_standard(text):
+
+    text = re.sub(
         r'ISOIIEC',
         'ISO/IEC',
-        std,
+        text,
         flags=re.I
     )
 
-    std = re.sub(
+    text = re.sub(
         r'ISO\s+IEC',
         'ISO/IEC',
-        std,
+        text,
         flags=re.I
     )
 
-    std = re.sub(
-        r'ISO/IEC\s*',
+    text = re.sub(
+        r'ISO\/IEC\s*',
         'ISO/IEC ',
-        std,
+        text,
         flags=re.I
     )
 
-    std = re.sub(
+    text = re.sub(
         r'\s+',
         ' ',
-        std
-    ).strip()
+        text
+    )
 
-    return std
+    return text.strip()
 
 
 def extract_requirements(clause_no, clause_text):
@@ -224,7 +233,7 @@ def extract_requirements(clause_no, clause_text):
 
         "certificate": [
             r'Certificates?\s+of\s+Conformity',
-            r'Certificates?'
+            r'certificate\s+of\s+conformity'
         ],
 
         "declaration": [
@@ -239,14 +248,25 @@ def extract_requirements(clause_no, clause_text):
             r'Risk\s+Assessment(?:\s+Document)?'
         ],
 
-        "manual": [
-            r'User\s+Manual',
-            r'Product\s+Manual'
+        "test_report": [
+            r'Test\s+Reports?',
+            r'Reports?\s+of\s+the\s+required\s+tests?',
+            r'Required\s+tests?'
         ],
 
-        "report": [
-            r'Test\s+Report',
-            r'Inspection\s+Report'
+        "standards_list": [
+            r'List\s+of\s+standards',
+            r'Standards?\s+applied\s+to\s+the\s+product'
+        ],
+
+        "country_of_origin": [
+            r'Country\s+of\s+origin'
+        ],
+
+        "product_booklet": [
+            r'Product\s+explanatory\s+booklet',
+            r'User\s+Manual',
+            r'Product\s+Manual'
         ],
 
         "quality_mark": [
@@ -298,14 +318,24 @@ def extract_requirements(clause_no, clause_text):
 
     STANDARD_PATTERNS = [
 
-    r'ISO/?IEC\s*\d+(?:[-:]\d+)*',
+    r'ISOIIEC\s*\d+(?:[-:]\d+)*',
+
+    r'ISO\/IEC\s*\d+(?:[-:]\d+)*',
+
     r'ISO\s*\d+(?:[-:]\d+)*',
+
     r'IEC\s*\d+(?:[-:]\d+)*',
+
+    r'SASO[- ]?[A-Z0-9\-]+',
+
+    r'GSO[- ]?[A-Z0-9\-]+',
+
+    r'ASTM[- ]?[A-Z0-9\-]+',
+
     r'EN\s*\d+(?:[-:]\d+)*',
-    r'ASTM\s*[A-Z]?\d+(?:[-:]\d+)*',
+
     r'NFPA\s*\d+(?:[-:]\d+)*',
-    r'SASO\s*[-A-Z0-9]+',
-    r'GSO\s*\d+(?:[-:]\d+)*',
+
     r'UL\s*\d+(?:[-:]\d+)*'
 ]
 
@@ -342,8 +372,7 @@ def extract_requirements(clause_no, clause_text):
             })
 
     return requirements
-# import re
-import re
+
 
 
 def extract_clauses(article_text):
@@ -379,7 +408,181 @@ def extract_clauses(article_text):
     return clauses
 
 
-import re
+
+# def normalize_requirements(requirements):
+
+#     normalized = []
+
+#     seen = set()
+
+#     GENERIC_NAMES = {
+#         "certificate",
+#         "certificates",
+#         "report",
+#         "reports",
+#         "manual",
+#         "manuals",
+#         "document",
+#         "documents"
+#     }
+
+#     for req in requirements:
+
+#         name = req.get(
+#             "requirement_name",
+#             ""
+#         ).strip()
+
+#         req_type = req.get(
+#             "requirement_type",
+#             ""
+#         )
+
+#         # -------------------------
+#         # Fix OCR issues
+#         # -------------------------
+
+#         name = re.sub(
+#             r'ISOIIEC',
+#             'ISO/IEC',
+#             name,
+#             flags=re.I
+#         )
+
+#         name = re.sub(
+#             r'\s+',
+#             ' ',
+#             name
+#         ).strip()
+
+#         # -------------------------
+#         # Remove generic names
+#         # -------------------------
+
+#         if name.lower() in GENERIC_NAMES:
+#             continue
+
+#         # -------------------------
+#         # Normalize plurals
+#         # -------------------------
+
+#         if name.lower() == "certificates of conformity":
+#             name = "Certificate of Conformity"
+
+#         if name.lower() == "declarations of conformity":
+#             name = "Declaration of Conformity"
+
+#         if name.lower() == "technical files":
+#             name = "Technical File"
+
+#         # -------------------------
+#         # Quality Mark is optional
+#         # -------------------------
+
+#         if (
+#             req_type == "quality_mark"
+#             and "saudi quality mark" in name.lower()
+#         ):
+#             req["mandatory"] = False
+
+#         # -------------------------
+#         # Update cleaned name
+#         # -------------------------
+
+#         req["requirement_name"] = name
+
+#         # -------------------------
+#         # Deduplicate
+#         # -------------------------
+
+#         key = (
+#             req.get("requirement_type"),
+#             name.lower()
+#         )
+
+#         if key in seen:
+#             continue
+
+#         seen.add(key)
+
+#         normalized.append(req)
+
+#     return normalized
+
+
+
+
+GENERIC_NAMES = {
+    "certificate",
+    "certificates",
+    "report",
+    "reports",
+    "manual",
+    "manuals",
+    "document",
+    "documents"
+}
+
+
+NORMALIZATION_MAP = {
+
+    "certificates of conformity":
+        "Certificate of Conformity",
+
+    "certificate of conformity":
+        "Certificate of Conformity",
+
+    "declarations of conformity":
+        "Declaration of Conformity",
+
+    "declaration of conformity":
+        "Declaration of Conformity",
+
+    "technical file":
+        "Technical File",
+
+    "technical files":
+        "Technical File",
+
+    "risk assessment":
+        "Risk Assessment Document",
+
+    "risk assessment document":
+        "Risk Assessment Document",
+
+    "country of origin":
+        "Country of Origin",
+
+    "reports of the required tests":
+        "Test Report",
+
+    "required tests":
+        "Test Report",
+
+    "test reports":
+        "Test Report",
+
+    "test report":
+        "Test Report",
+
+    "list of standards":
+        "Applied Standards List",
+
+    "standards applied to the product":
+        "Applied Standards List",
+
+    "product explanatory booklet":
+        "Product Explanatory Booklet",
+
+    "user manual":
+        "User Manual",
+
+    "product manual":
+        "Product Manual",
+
+    "saudi quality mark":
+        "Saudi Quality Mark"
+}
 
 
 def normalize_requirements(requirements):
@@ -387,17 +590,6 @@ def normalize_requirements(requirements):
     normalized = []
 
     seen = set()
-
-    GENERIC_NAMES = {
-        "certificate",
-        "certificates",
-        "report",
-        "reports",
-        "manual",
-        "manuals",
-        "document",
-        "documents"
-    }
 
     for req in requirements:
 
@@ -411,9 +603,9 @@ def normalize_requirements(requirements):
             ""
         )
 
-        # -------------------------
-        # Fix OCR issues
-        # -------------------------
+        # --------------------
+        # OCR cleanup
+        # --------------------
 
         name = re.sub(
             r'ISOIIEC',
@@ -428,49 +620,41 @@ def normalize_requirements(requirements):
             name
         ).strip()
 
-        # -------------------------
+        # --------------------
         # Remove generic names
-        # -------------------------
+        # --------------------
 
         if name.lower() in GENERIC_NAMES:
             continue
 
-        # -------------------------
-        # Normalize plurals
-        # -------------------------
+        # --------------------
+        # Normalize names
+        # --------------------
 
-        if name.lower() == "certificates of conformity":
-            name = "Certificate of Conformity"
+        normalized_name = NORMALIZATION_MAP.get(
+            name.lower(),
+            name
+        )
 
-        if name.lower() == "declarations of conformity":
-            name = "Declaration of Conformity"
+        req["requirement_name"] = normalized_name
 
-        if name.lower() == "technical files":
-            name = "Technical File"
-
-        # -------------------------
-        # Quality Mark is optional
-        # -------------------------
+        # --------------------
+        # Quality mark optional
+        # --------------------
 
         if (
             req_type == "quality_mark"
-            and "saudi quality mark" in name.lower()
+            and normalized_name.lower() == "saudi quality mark"
         ):
             req["mandatory"] = False
 
-        # -------------------------
-        # Update cleaned name
-        # -------------------------
-
-        req["requirement_name"] = name
-
-        # -------------------------
+        # --------------------
         # Deduplicate
-        # -------------------------
+        # --------------------
 
         key = (
-            req.get("requirement_type"),
-            name.lower()
+            req_type,
+            normalized_name.lower()
         )
 
         if key in seen:
