@@ -78,7 +78,8 @@ Technical_Key_Title = {
                 "Annex No. (1-A) List of Insulation and Cladding Materials Products for Buildings and the Relevant Standards",
                 "Annex No.(1-A) List of Metals and Metal Alloys Products for Constructions and Buildings and Relevant Standards",
                 "Annex No. (1) List of Standards",
-                "Annex No. (2)List of Standards"
+                "Annex No. (2)List of Standards",
+                "Annex (1-A)List of Leather Products and Articles Thereof and Related Standards"
                 
               
                 

@@ -1,207 +1,116 @@
 import re
-from typing import List, Dict
 
 
-def extract_standards(raw_text: str, scope: dict) -> List[Dict]:
+def extract_standards(text):
 
-    # ---------------------------------------------------------
-    # SCOPE EXTRACTION
-    # ---------------------------------------------------------
-    start_pattern = re.escape(scope["start"])
+    # ----------------------------------
+    # Remove unwanted sections
+    # ----------------------------------
 
-    # more stable than exact OCR string matching
-    end_pattern = r'Conformity\s+Assessment\s+Form'
-
-    match = re.search(
-        rf'{start_pattern}(.*?){end_pattern}',
-        raw_text,
-        flags=re.DOTALL | re.IGNORECASE
+    stop = re.search(
+        r'B\)\s*List\s+of\s+Products\s+and\s+Customs\s+Coding',
+        text,
+        flags=re.I
     )
 
-    if not match:
-        return []
+    if stop:
+        text = text[:stop.start()]
 
-    text = match.group(1)
-
-    # ---------------------------------------------------------
-    # CLEAN TEXT
-    # ---------------------------------------------------------
-    text = re.sub(r'Page\s+\d+\s+of\s+\d+', '', text, flags=re.I)
-
-    text = re.sub(r'03-03-16-156', '', text)
-
-    text = re.sub(r'Annex No\.\s*\(\d+\)', '', text)
-
-    text = text.replace("List of Standards", "")
-
-    text = text.replace("Standard", "")
-    text = text.replace("Title", "")
-
-    # ---------------------------------------------------------
-    # OCR FIXES
-    # ---------------------------------------------------------
-    fixes = {
-        "CENffR": "CEN/TR",
-        "0 6954": "D6954",
-        "06988": "D6988",
-        "05208": "D5208",
-        "03826": "D3826",
-        "0400 I": "D4001",
-        "04001": "D4001",
-        "02765": "D2765",
-        "05988": "D5988",
-        "1485 1": "14851",
-        "20 13": "2013",
-        "1 2": "12",
-        "ASTMD": "ASTM D",
-        "Detennination": "Determination",
-        "Determ ination": "Determination",
-        "ofthe": "of the",
-        "II ": "11 ",
-        "I ": "1 ",
-        "r!r;": "",
-        "p age": "",
-    }
-
-    for old, new in fixes.items():
-        text = text.replace(old, new)
-
-    # ---------------------------------------------------------
-    # SPLIT LINES
-    # ---------------------------------------------------------
-    lines = [
-        line.strip()
-        for line in text.split("\n")
-        if line.strip()
-    ]
-
-    # ---------------------------------------------------------
-    # PATTERNS
-    # ---------------------------------------------------------
-    serial_only_pattern = re.compile(r'^\d{1,3}$')
-
-    serial_standard_pattern = re.compile(
-        r'^(\d{1,3})\s+(.+)$'
+    text = re.sub(
+        r'Page\s+\d+\s+of\s+\d+',
+        ' ',
+        text,
+        flags=re.I
     )
+
+    text = re.sub(
+        r'WWW\.SASO\.GOV\.SA',
+        ' ',
+        text,
+        flags=re.I
+    )
+
+    text = re.sub(
+        r'\d{2}-\d{2}-\d{2}-\d+',
+        ' ',
+        text
+    )
+
+    text = re.sub(r'\s+', ' ', text)
+
+    # ----------------------------------
+    # Standard pattern
+    # ----------------------------------
+
+    std_pattern = re.compile(
+        r'SASO[- ]?(?:ISO|IEC|ASTM|GSO)[- ]?[A-Z0-9\- ]+?(?=\s+\d+\s+|Note:|$)',
+        re.I
+    )
+
+    matches = list(std_pattern.finditer(text))
 
     results = []
 
-    i = 0
+    for idx, match in enumerate(matches):
 
-    while i < len(lines):
-
-        line = lines[i]
-
-        no = None
-        standard = None
-
-        # -----------------------------------------------------
-        # CASE:
-        # 10 SASO GSO 1863
-        # -----------------------------------------------------
-        m = serial_standard_pattern.match(line)
-
-        if m and (
-            "SASO" in line or
-            "ASTM" in line or
-            "ISO" in line or
-            "CEN" in line
-        ):
-
-            no = int(m.group(1))
-
-            standard = m.group(2).strip()
-
-            j = i + 1
-
-        # -----------------------------------------------------
-        # CASE:
-        # 10
-        # SASO GSO 1863
-        # -----------------------------------------------------
-        elif serial_only_pattern.match(line):
-
-            no = int(line)
-
-            if i + 1 >= len(lines):
-                break
-
-            standard = lines[i + 1].strip()
-
-            j = i + 2
-
-        else:
-            i += 1
-            continue
-
-        # -----------------------------------------------------
-        # CLEAN STANDARD
-        # -----------------------------------------------------
-        standard = re.sub(r'\s*:\s*', ':', standard)
+        standard = match.group().strip()
 
         standard = re.sub(r'\s+', ' ', standard)
 
-        # -----------------------------------------------------
-        # TITLE EXTRACTION
-        # -----------------------------------------------------
-        title_lines = []
+        # remove OCR garbage
+        standard = re.sub(r'\s+Note$', '', standard, flags=re.I)
 
-        while j < len(lines):
+        block_start = (
+            matches[idx - 1].end()
+            if idx > 0
+            else 0
+        )
 
-            next_line = lines[j]
+        block_end = match.start()
 
-            # stop at next serial only
-            if serial_only_pattern.match(next_line):
-                break
+        block = text[block_start:block_end]
 
-            # stop at:
-            # 10 SASO GSO 1863
-            m2 = serial_standard_pattern.match(next_line)
+        # serial number
+        serials = re.findall(r'\b(\d{1,2})\b', block)
 
-            if m2 and (
-                "SASO" in next_line or
-                "ASTM" in next_line or
-                "ISO" in next_line or
-                "CEN" in next_line
-            ):
-                break
+        no = None
 
-            title_lines.append(next_line)
+        if serials:
+            no = int(serials[-1])
 
-            j += 1
+        # English title only
+        english_sentences = re.findall(
+            r'[A-Z][A-Za-z0-9 ,:\-\(\)/\.]+',
+            block
+        )
 
-        title = " ".join(title_lines)
+        title = max(
+            english_sentences,
+            key=len,
+            default=""
+        )
 
-        title = re.sub(r'\s+', ' ', title)
+        title = re.sub(r'\s+', ' ', title).strip()
 
-        title = title.replace("r!r;", "")
-        title = title.replace("p age", "")
-
-        title = title.strip()
-
-        # -----------------------------------------------------
-        # SAVE
-        # -----------------------------------------------------
         results.append({
             "no": no,
             "standard": standard,
             "title": title
         })
+        for idx, item in enumerate(results, start=1):
 
-        i = j
+            item["no"] = idx
+
+            item["standard"] = re.sub(
+                r'\s+',
+                ' ',
+                item["standard"]
+            ).strip()
+
+            item["standard"] = re.sub(
+                r'(\d+-)\s+(\d+)',
+                r'\1\2',
+                item["standard"]
+            )
 
     return results
-
-
-# ---------------------------------------------------------
-# EXAMPLE
-# ---------------------------------------------------------
-
-# scope = {
-#     "start": "List of Standards",
-#     "end": "Conformity Assessment Form"
-# }
-
-# standards = extract_standards(raw_text, scope)
-
-# print(standards)

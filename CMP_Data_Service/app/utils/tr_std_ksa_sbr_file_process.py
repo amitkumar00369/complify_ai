@@ -24,6 +24,7 @@ from app.utils.extract_word import extract_word_file
 from app.utils.extract_pdf_by_pages import extract_text_by_pages
 from app.utils.tr_toc_extracted import extract_toc
 from app.utils.tr_requirements_new import extract_regulation_structures
+# from app.utils.tr_std_codes import extract_standards
 
 from app.utils.tr_clause import transform_regulation_structure
 
@@ -531,10 +532,12 @@ async def process_tr_toc(filename,file):
             text = file.decode("utf-8")
 
         clean_text = TextCleaner.normalize_text(text)
+        # print("sgdgdgdg",clean_text)
         table_of_contents = extract_toc(clean_text)
-        # print("extracted toc", table_of_contents)
+        print("extracted toc", table_of_contents)
         toc_data = []
         for idx, item in enumerate(table_of_contents):
+            # print("toc section", item["section"], "start_page", item["start_page"], "end_page", item["end_page"])
            
             if item["end_page"] is None:
                 # print("end page is greater than 200 for section", item["section"], "adjusting end page to start page + 3")
@@ -552,7 +555,7 @@ async def process_tr_toc(filename,file):
                 }
                 # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
                 toc_data.append(data)
-            if item["end_page"]>100:
+            if( item["end_page"]-item["start_page"])>5:
                 # print("end page is greater than 200 for section", item["section"], "adjusting end page to start page + 3")/
                 item["end_page"]= item["start_page"]+1
                 # toc_data[idx+1]["start_page"]= item["end_page"]
@@ -596,12 +599,13 @@ async def process_tr_toc(filename,file):
                     "end_page": item["end_page"],
                     "content": TextCleaner.normalize_text(title_text)
                 }
-                print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
+                # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
                 toc_data.append(data)
         # print(clean_text)
         all_section_results = []
         all_title = []
         hs_codes = []
+        std_codes = []
         # result = None
         
 
@@ -609,8 +613,11 @@ async def process_tr_toc(filename,file):
             all_title.append( item["section"])
      
             if  item["section"] in Technical_Key_Title.get("hs_code",[]):
-                print(item["content"])
+                # print(item["content"])
                 hs_codes = extract_product_hs_codes(item["content"])
+            if  item["section"] in Technical_Key_Title.get("standard",[]):
+                print(item["content"])
+                std_codes = extract_standards(item["content"])
             try:
                 classification = classify_section(
                     item["section"]
@@ -662,7 +669,7 @@ async def process_tr_toc(filename,file):
                     f"Error processing section: {item['section']}",
                     str(e)
                 )
-        print(all_title)
+        # print(all_title)
 
         # final_json = merge_section_results(
         #     all_section_results
@@ -674,6 +681,7 @@ async def process_tr_toc(filename,file):
             "toc_index_data": toc_data,
             "compliance_data": normalize_requirements(all_section_results),
             "hs_codes": hs_codes,
+            "std_codes": std_codes,
 
         }
 
