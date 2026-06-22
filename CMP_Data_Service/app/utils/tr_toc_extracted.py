@@ -269,6 +269,73 @@ def clean_table_of_contents(table_of_contents):
 
         if is_preamble and not seen_annex:
             cleaned_toc.append(item)
+
+
+
+def refine_toc(toc: list, total_pages: int) -> list:
+    """
+    Fix OCR TOC issues.
+
+    Rules:
+    1. Keep original titles unchanged.
+    2. Remove Article entries appearing after Annex entries.
+    3. If an Annex page > total_pages, set it to total_pages.
+    4. Recalculate end_page.
+    5. Last entry end_page = total_pages.
+    """
+
+    cleaned = []
+
+    seen_annex = False
+
+    for item in toc:
+
+        section = item.get("section", "").strip()
+        start_page = item.get("start_page")
+
+        if not start_page:
+            continue
+
+        is_article = section.lower().startswith("article")
+        is_annex = section.lower().startswith("annex")
+
+        # OCR noise:
+        # Article appearing after Annex section
+        if seen_annex and is_article:
+            continue
+
+        if is_annex:
+            seen_annex = True
+
+            # OCR mistake:
+            # Annex page 71 in a 17-page PDF
+            if start_page > total_pages:
+                start_page = total_pages
+
+        else:
+            # non-annex entries with invalid page
+            if start_page > total_pages:
+                continue
+
+        cleaned.append(
+            {
+                "section": section,
+                "start_page": start_page,
+                "end_page": None,
+            }
+        )
+
+    # sort again
+    cleaned.sort(key=lambda x: x["start_page"])
+
+    # rebuild end pages
+    for i in range(len(cleaned) - 1):
+        cleaned[i]["end_page"] = cleaned[i + 1]["start_page"]
+
+    if cleaned:
+        cleaned[-1]["end_page"] = total_pages
+
+    return cleaned
 def extract_toc(text):
     # print(text)
 

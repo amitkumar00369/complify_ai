@@ -9,7 +9,10 @@ import fitz
 import cv2
 import numpy as np
 
-
+def countDoc(file_path):
+    doc = fitz.open(file_path)
+    return doc.page_count
+    
 
 def extract_text_by_pages(file_path, start_page, end_page):
 

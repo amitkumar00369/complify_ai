@@ -21,8 +21,8 @@ from app.services.std_clause import build_knowledge_objects
 from app.core_complaince.common import normalize
 from app.utils.arbic_char import SmartTranslator
 from app.utils.extract_word import extract_word_file
-from app.utils.extract_pdf_by_pages import extract_text_by_pages
-from app.utils.tr_toc_extracted import extract_toc
+from app.utils.extract_pdf_by_pages import extract_text_by_pages,countDoc
+from app.utils.tr_toc_extracted import extract_toc ,refine_toc
 from app.utils.tr_requirements_new import extract_regulation_structures
 # from app.utils.tr_std_codes import extract_standards
 
@@ -502,11 +502,16 @@ async def process_tr_toc(filename,file):
     
 
         text = ""
+        fullText = ""
         structured = {}
         method = "unknown"
         conf = 0.0
+        totalPagesOfDoc = 0
 
         if ext.endswith(".pdf"):
+            totalPagesOfDoc = await asyncio.to_thread(
+                countDoc,file
+            )
 
             text = await asyncio.to_thread(
                 extract_text_by_pages,
@@ -532,81 +537,31 @@ async def process_tr_toc(filename,file):
             text = file.decode("utf-8")
 
         clean_text = TextCleaner.normalize_text(text)
-        # print("sgdgdgdg",clean_text)
+        # print("totalPagesOfDoc",totalPagesOfDoc , clean_text, totalPagesOfDoc)
         table_of_contents = extract_toc(clean_text)
+        table_of_contents= refine_toc(table_of_contents,totalPagesOfDoc)
         print("extracted toc", table_of_contents)
         toc_data = []
+        allText = ""
         for idx, item in enumerate(table_of_contents):
-            # print("toc section", item["section"], "start_page", item["start_page"], "end_page", item["end_page"])
-           
-            if item["end_page"] is None:
-                # print("end page is greater than 200 for section", item["section"], "adjusting end page to start page + 3")
-                item["start_page"]=table_of_contents[idx-1]["end_page"]
-                item["end_page"]= item["start_page"]
-                title_text = await asyncio.to_thread(
+            title_text = await asyncio.to_thread(
                 extract_text_by_pages,
                 file,item["start_page"],item["end_page"]
-                )
-                data = {
-                    "section": item["section"],
-                    "start_page": item["start_page"],
-                    "end_page": item["end_page"],
-                    "content": TextCleaner.normalize_text(title_text)
-                }
-                # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
-                toc_data.append(data)
-            if( item["end_page"]-item["start_page"])>5:
-                # print("end page is greater than 200 for section", item["section"], "adjusting end page to start page + 3")/
-                item["end_page"]= item["start_page"]+1
-                # toc_data[idx+1]["start_page"]= item["end_page"]
-                # toc_data[idx+1]["end_page"]= item["end_page"]+3
-                title_text = await asyncio.to_thread(
-                extract_text_by_pages,
-                file,item["start_page"],item["end_page"]
-                )
-                data = {
-                    "section": item["section"],
-                    "start_page": item["start_page"],
-                    "end_page": item["end_page"],
-                    "content": TextCleaner.normalize_text(title_text)
-                }
-                # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
-                toc_data.append(data)
-            if item["start_page"] >item["end_page"]:
-                # print("start page is greater than end page for section", item["start_page"], item["end_page"], "adjusting end page to start page + 1")
-                item["end_page"]= item["start_page"]
-                title_text = await asyncio.to_thread(
-                extract_text_by_pages,
-                file,item["start_page"],item["end_page"]
-                )
-                data = {
-                    "section": item["section"],
-                    "start_page": item["start_page"],
-                    "end_page": item["end_page"],
-                    "content": TextCleaner.normalize_text(title_text)
-                }
-                # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
-                toc_data.append(data)
-                break
-            else:
-                title_text = await asyncio.to_thread(
-                    extract_text_by_pages,
-                    file,item["start_page"],item["end_page"]
-                )
-                data = {
-                    "section": item["section"],
-                    "start_page": item["start_page"],
-                    "end_page": item["end_page"],
-                    "content": TextCleaner.normalize_text(title_text)
-                }
-                # print("toc section", data["section"], "start_page", data["start_page"], "end_page", data["end_page"])
-                toc_data.append(data)
+            )
+            data = {
+                "section": item["section"],
+                "start_page": item["start_page"],
+                "end_page": item["end_page"],
+                "content": TextCleaner.normalize_text(title_text) or ""
+            }
+            toc_data.append(data)
+            allText += TextCleaner.normalize_text(title_text)
         # print(clean_text)
         all_section_results = []
         all_title = []
         hs_codes = []
         std_codes = []
-        # result = None
+  
         
 
         for item in toc_data:
@@ -616,7 +571,7 @@ async def process_tr_toc(filename,file):
                 # print(item["content"])
                 hs_codes = extract_product_hs_codes(item["content"])
             if  item["section"] in Technical_Key_Title.get("standard",[]):
-                print(item["content"])
+                # print(item["content"])
                 std_codes = extract_standards(item["content"])
             try:
                 classification = classify_section(
@@ -657,31 +612,23 @@ async def process_tr_toc(filename,file):
                     #     item["content"]
                     # )
                
-
-                # if isinstance(result, str):
-                #     result = json.loads(result)
-
-                # all_section_results.append(result)
-
             except Exception as e:
-
                 print(
                     f"Error processing section: {item['section']}",
                     str(e)
                 )
-        # print(all_title)
+                continue
 
-        # final_json = merge_section_results(
-        #     all_section_results
-        # )
+      
+   
 
         result = {
             "toc_id": "TR_TOC" + str(uuid.uuid4())[:6],
-            # "text": clean_text,
-            "toc_index_data": toc_data,
-            "compliance_data": normalize_requirements(all_section_results),
-            "hs_codes": hs_codes,
-            "std_codes": std_codes,
+            "text": allText,
+            "toc_index_data": toc_data or [],
+            "compliance_data": normalize_requirements(all_section_results) or [],
+            "hs_codes": hs_codes or [],
+            "std_codes": std_codes or [],
 
         }
 

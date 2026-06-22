@@ -2,6 +2,37 @@ import uuid
 import tempfile
 import os
 import aiofiles
+from fastapi import UploadFile, File
+from typing import List
+import tempfile
+import re
+
+import re
+import os
+
+def clean_filename(filename: str):
+
+    name, ext = os.path.splitext(filename)
+
+    name = re.sub(
+        r"[^\w\s-]",
+        "",
+        name
+    )
+
+    name = re.sub(
+        r"[\s_]+",
+        "-",
+        name
+    )
+
+    name = re.sub(
+        r"-+",
+        "-",
+        name
+    )
+
+    return f"{name.strip('-')}{ext.lower()}"
 
 from app.utils.file_counter import FileCounter
 from fastapi import (
@@ -29,7 +60,7 @@ from app.models.document_job import (
 from app.utils.storage_service import (
     storage_service
 )
-
+from datetime import datetime
 # from app.workers.parent_worker import (
 #     process_parent_zip
 # )
@@ -49,7 +80,28 @@ from app.utils.enum import (
     allowedModules,allowedExtensions,subFolderModule
 )
 from core.config import settings
+allowed_extensions = (
 
+            allowedExtensions.zip,
+
+            allowedExtensions.pdf ,
+
+            allowedExtensions.doc,
+
+            allowedExtensions.docx ,
+
+            allowedExtensions.xlsx ,
+
+            allowedExtensions.xls ,
+
+            allowedExtensions.csv,
+
+            allowedExtensions.png,
+
+            allowedExtensions.jpg,
+
+            allowedExtensions.jpeg
+        )
 # ==========================================
 # UPLOAD DOCUMENT
 # ==========================================
@@ -89,28 +141,7 @@ async def upload_document(
         # ==========================================
         # FILE VALIDATION
         # ==========================================
-        allowed_extensions = (
 
-            allowedExtensions.zip,
-
-            allowedExtensions.pdf ,
-
-            allowedExtensions.doc,
-
-            allowedExtensions.docx ,
-
-            allowedExtensions.xlsx ,
-
-            allowedExtensions.xls ,
-
-            allowedExtensions.csv,
-
-            allowedExtensions.png,
-
-            allowedExtensions.jpg,
-
-            allowedExtensions.jpeg
-        )
 
         if not file.filename.lower().endswith(
             allowed_extensions
@@ -325,3 +356,140 @@ async def upload_document(
         except Exception:
 
             pass
+        
+
+def generate_case_number(case_id: int) -> str:
+    return f"CASE{case_id:08d}"
+async def upload_multiple_files(
+    files: List[UploadFile] = File(...)
+):
+    try:
+
+        uploaded_files = []
+        caseId = generate_case_number(1)    #12 digit case id with case00000000
+        print("caseId" ,caseId)
+        timestamp = int(datetime.now().timestamp())
+        print("timestamp",timestamp)
+        
+
+        for file in files:
+
+            # ==========================================
+            # FILE TYPE VALIDATION
+            # ==========================================
+            if not file.filename.lower().endswith(
+                allowed_extensions
+            ):
+                return JSONResponse(
+                    status_code=400,
+                    content={
+                        "success": False,
+                        "message": (
+                            f"Invalid file type: {file.filename}"
+                        )
+                    }
+                )
+
+            # ==========================================
+            # GENERATE JOB ID
+            # ==========================================
+
+            # ==========================================
+            # CREATE TEMP DIRECTORY
+            # ==========================================
+            temp_dir = tempfile.mkdtemp()
+
+            translated_name = (
+                SmartTranslator.smart_translate(
+                    file.filename
+                )
+            )
+            translated_name = clean_filename(translated_name)
+            userType = "user"
+            filestructure = f"{caseId}-{userType}-{timestamp}-{translated_name}"
+            print("filestructure type", type(filestructure))
+            print(f"raw/{filestructure.lower()}")
+
+            temp_file = os.path.join(
+                temp_dir,
+                translated_name
+            )
+
+            # ==========================================
+            # FILE SIZE CONFIG
+            # ==========================================
+            MAX_FILE_SIZE = settings.FILE_SIZE_LIMIT
+            CHUNK_SIZE = settings.CHUNK_SIZE
+
+            current_size = 0
+
+            # ==========================================
+            # STREAM FILE SAVE
+            # ==========================================
+            async with aiofiles.open(
+                temp_file,
+                "wb"
+            ) as out_file:
+
+                while chunk := await file.read(
+                    CHUNK_SIZE
+                ):
+
+                    current_size += len(chunk)
+
+                    # ==============================
+                    # FILE SIZE VALIDATION
+                    # ==============================
+                    if current_size > MAX_FILE_SIZE:
+
+                        await out_file.close()
+
+                        if os.path.exists(
+                            temp_file
+                        ):
+                            os.remove(
+                                temp_file
+                            )
+
+                        return JSONResponse(
+                            status_code=400,
+                            content={
+                                "success": False,
+                                "message": (
+                                    f"File too large: {file.filename}"
+                                )
+                            }
+                        )
+
+                    await out_file.write(
+                        chunk
+                    )
+
+            uploaded_files.append(
+                {
+                    "job_id": caseId,
+                    "filename": translated_name,
+                    "path": temp_file,
+                    "size": current_size
+                }
+            )
+
+            # Upload to S3
+            # Create DB record
+            # Send SQS message
+
+        return {
+            "success": True,
+            "total_files": len(uploaded_files),
+            "files": uploaded_files
+        }
+
+    except Exception as e:
+
+        return JSONResponse(
+            status_code=500,
+            content={
+                "success": False,
+                "message": str(e)
+            }
+        )
