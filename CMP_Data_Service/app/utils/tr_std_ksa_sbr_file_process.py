@@ -7,6 +7,7 @@ import os
 import asyncio
 # from app.services import clause
 # from app.services.llama_service import  extract_section_compliance_data, extract_clauses,extract_requirements
+from app.utils.ollam_service import StandardExtractor
 from app.utils.constants import Technical_Key_Title
 from app.utils.tr_reuirements_file import extract_clauses,extract_requirements,classify_section,extract_article_content,normalize_requirements,find_article_number
 from app.utils.tr_hs_code import extract_product_hs_codes
@@ -540,7 +541,7 @@ async def process_tr_toc(filename,file):
         # print("totalPagesOfDoc",totalPagesOfDoc , clean_text, totalPagesOfDoc)
         table_of_contents = extract_toc(clean_text)
         table_of_contents= refine_toc(table_of_contents,totalPagesOfDoc)
-        print("extracted toc", table_of_contents)
+        # print("extracted toc", table_of_contents)
         toc_data = []
         allText = ""
         for idx, item in enumerate(table_of_contents):
@@ -573,6 +574,9 @@ async def process_tr_toc(filename,file):
             if  item["section"] in Technical_Key_Title.get("standard",[]):
                 # print(item["content"])
                 std_codes = extract_standards(item["content"])
+                # stdData = StandardExtractor.extract_standards(item["content"])
+                # print()
+                # print(stdData)
             try:
                 classification = classify_section(
                     item["section"]
@@ -629,6 +633,7 @@ async def process_tr_toc(filename,file):
             "compliance_data": normalize_requirements(all_section_results) or [],
             "hs_codes": hs_codes or [],
             "std_codes": std_codes or [],
+            "table_of_contents":table_of_contents
 
         }
 

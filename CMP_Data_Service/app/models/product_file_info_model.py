@@ -75,4 +75,4 @@ class ProductFileInfo(Base, BaseMixin):
     sub_folder_name = Column(String(500), nullable=True)
 
     product_info = Column(Text, nullable=True)
->>>>>>> microservice
+
